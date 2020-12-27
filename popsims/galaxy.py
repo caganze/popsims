@@ -42,18 +42,8 @@ class Pointing(object):
 
             del df
 
-    def compute_volume(self, h):
-        self.dist_limits=compute_distance_limits(self.mag_limits)
-        for h in HS:
-        	volumes={}
-        if pnt.dist_limits:
-            lb=[pnt.coord.galactic.l.radian,pnt.coord.galactic.b.radian]
-            for k in SPGRID:
-                volumes[k]= np.array(custom_volume(lb[0],lb[1],  pnt.dist_limits[k][1], pnt.dist_limits[k][0], h))
-        return volumes
-
-            self.volumes[h]=computer_volume(self, h)
-
+    def compute_volume(self):
+    	pass
 
 def galactic_density(r, z, H, R0):
 	"""
@@ -66,7 +56,7 @@ def galactic_density(r, z, H, R0):
 @numba.vectorize("float64(float64, float64)", target='cpu')
 def get_distance(absmag, rel_mag):
     return 10.**(-(absmag-rel_mag)/5. + 1.)
-    
+
 def compute_volume(l,b,dmin, dmax, h):
     nsamp=1000
     ds = np.linspace(dmin,dmax,nsamp)
