@@ -2,7 +2,7 @@ import splat.simulate as spsim
 import splat.evolve as spev
 import splat.empirical as splat_teff_to_spt
 
-from .config import DATA_FOLDER
+from .config import DATA_FOLDER, POLYNOMIALS, EVOL_MODELS_FOLDER
 from .tools import teff_to_spt
 #import pymc3 as pm
 from scipy.interpolate import griddata
@@ -10,6 +10,8 @@ from scipy.interpolate import griddata
 #from theano.compile.ops import as_op
 import astropy.units as u
 import numba
+import pandas as pd
+import numpy as np
 
 def read_bintemplates():
     df=pd.read_pickle(DATA_FOLDER+'/binary_lookup_table.pkl.gz')
@@ -84,13 +86,13 @@ def simulate_spts(**kwargs):
     #all masses should be 0.01
     acceptable_values={'baraffe2003': [0.01, 0.1, 0.01, 8.0],
     'marley2019': [0.01, 0.08, 0.001, 8.0], 'saumon2008':[0.01, 0.09, 0.003, 8.0], 
-    'phillips2020':[0.01, 0.075, 0.001, 8.0 ]}
+    'phillips2020':[0.01, 0.075, 0.001, 8.0 ],'burrows2001':[0.01, 0.075, 10, 12]}
     
     if recompute:
 
         nsim = kwargs.get('nsample', 1e5)
 
-        ranges=acceptable_values[model_name]
+        ranges=kwargs.get('range',None)
         
         # masses for singles [this can be done with pymc but nvm]
         m_singles = spsim.simulateMasses(nsim,range=[ranges[0], ranges[1]],distribution='power-law',alpha=0.6)
@@ -120,7 +122,7 @@ def simulate_spts(**kwargs):
         teffs_second=secondary_evol['temperature'].value
 
         #spectraltypes
-        spts_singl =splat_teff_to_spt(teffs_singl)
+        spts_singl =teff_to_spt(teffs_singl)
 
         #the singles will be fine, remove nans from systems 
         spt_primar=teff_to_spt(teffs_primar)
@@ -140,7 +142,7 @@ def simulate_spts(**kwargs):
         with open(DATA_FOLDER+'/mass_age_spcts_with_bin{}.pkl'.format(model_name), 'wb') as file:
            pickle.dump(values,file)
     else:
-        values=pd.read_pickle(DATA_FOLDER'/mass_age_spcts_with_bin{}.pkl'.format(model_name))
+        values=pd.read_pickle(DATA_FOLDER+'/mass_age_spcts_with_bin{}.pkl'.format(model_name))
 
     return values
 

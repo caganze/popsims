@@ -1,10 +1,10 @@
 import splat
 import numpy as np
 import numba
-
+import bisect
 
 @np.vectorize      
-def splat_teff_to_spt(teff):
+def teff_to_spt(teff):
     rel=splat.SPT_TEFF_RELATIONS['pecaut']
     spt_sorted_idx=np.argsort(rel['values'])
     scatter=108
@@ -20,7 +20,8 @@ def make_spt_number(spt):
         return spt
 
 def dropnans(x):
-    return [~np.isnan(x)]
+    return x[~np.isnan(x)]
+
 
 def random_draw(xvals, cdfvals, nsample=10):
     """
@@ -33,6 +34,3 @@ def random_draw(xvals, cdfvals, nsample=10):
     idx=invert_cdf(x)
     return np.array(xvals)[idx]
 
-
-def dropnans(x):
-    return [~np.isnan(x)]
