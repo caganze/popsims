@@ -2,7 +2,7 @@ import splat.simulate as spsim
 import splat.evolve as spev
 import splat.empirical as splat_teff_to_spt
 
-from .config import DATA_FOLDER, POLYNOMIALS, EVOL_MODELS_FOLDER
+from .config import DATA_FOLDER, POLYNOMIALS, EVOL_MODELS_FOLDER, FIGURES
 from .tools import teff_to_spt
 #import pymc3 as pm
 from scipy.interpolate import griddata
@@ -93,6 +93,8 @@ def simulate_spts(**kwargs):
         nsim = kwargs.get('nsample', 1e5)
 
         ranges=kwargs.get('range',None)
+        if model_name in acceptable_values.keys():
+            ranges=acceptable_values[model_name]
         
         # masses for singles [this can be done with pymc but nvm]
         m_singles = spsim.simulateMasses(nsim,range=[ranges[0], ranges[1]],distribution='power-law',alpha=0.6)
