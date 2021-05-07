@@ -4,6 +4,7 @@ import splat.empirical as splat_teff_to_spt
 
 from .config import DATA_FOLDER, POLYNOMIALS, EVOL_MODELS_FOLDER, FIGURES
 from .tools import teff_to_spt
+from .abs_mags import get_abs_mag
 #import pymc3 as pm
 from scipy.interpolate import griddata
 #import theano.tensor as tt
@@ -12,6 +13,8 @@ import astropy.units as u
 import numba
 import pandas as pd
 import numpy as np
+#use splat for no
+import splat
 
 
 def read_bintemplates():
@@ -148,7 +151,7 @@ def simulate_spts(**kwargs):
         values=pd.read_pickle(filename)
 
     return values
-    
+
 def get_mag_from_luminosity(lumn, bc, log=True):
     if log:
         return -2.5*np.log10(lumn)+4.74-bc
@@ -182,12 +185,12 @@ def fillipazzo_bolometric_correction(spt, filt='2MASS_J', mask=None):
 def make_systems(bfraction=0.2, recompute=False, model='baraffe2003', 
                 mass_age_range=[0.01, 0.1, 0., 8.0], nsample=5e5, return_singles=False):
     
-    model_res=popsims.simulate_spts(name=model,
+    mods=simulate_spts(name=model,
                                    recompute=recompute, range=mass_age_range,\
                               nsample=nsample)
     
     #singles
-    singles=model_res['sing_evol']
+    singles=mods['sing_evol']
     singles['abs_2MASS_J']= get_abs_mag(mods['sing_spt'], '2MASS J')[0]
     singles['abs_2MASS_H']= np.ones_like(singles['abs_2MASS_J'])*np.nan
     singles['is_binary']= np.zeros_like(mods['sing_spt']).astype(bool)
@@ -207,7 +210,7 @@ def make_systems(bfraction=0.2, recompute=False, model='baraffe2003',
     binaries['sec_spt']=mods['sec_spt']
     binaries['is_binary']=np.ones_like(mods['sec_spt']).astype(bool)
     
-    #bolometric corrections
+    #bolometric corrections for 2MASS J
     bcs=fillipazzo_bolometric_correction(binaries['spt'], filt='2MASS_J', 
                                         mask=binaries['spt']>39.)
     
@@ -217,7 +220,7 @@ def make_systems(bfraction=0.2, recompute=False, model='baraffe2003',
 
     
     #compute numbers to choose based on binary fraction
-    ndraw= int(len(mods['sing_spt'])/(1-binary_fraction))-int(len(mods['sing_spt']))
+    ndraw= int(len(mods['sing_spt'])/(1-bfraction))-int(len(mods['sing_spt']))
     
     #random list of binaries to choose
     random_int=np.random.choice(np.arange(len(binaries['spt'])), ndraw)
