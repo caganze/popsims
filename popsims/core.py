@@ -13,6 +13,7 @@ import numba
 import pandas as pd
 import numpy as np
 
+
 def read_bintemplates():
     df=pd.read_pickle(DATA_FOLDER+'/binary_lookup_table.pkl.gz')
     return [df.prim.values, df.sec.values, df.sys.values]
@@ -87,14 +88,14 @@ def simulate_spts(**kwargs):
     acceptable_values={'baraffe2003': [0.01, 0.1, 0.01, 8.0],
     'marley2019': [0.01, 0.08, 0.001, 8.0], 'saumon2008':[0.01, 0.09, 0.003, 8.0], 
     'phillips2020':[0.01, 0.075, 0.001, 8.0 ],'burrows2001':[0.01, 0.075, 10, 12]}
+    fname=kwargs.get('filename', DATA_FOLDER+'/mass_age_spcts_with_bin{}.pkl'.format(model_name))
+    filename=fname
     
     if recompute:
 
         nsim = kwargs.get('nsample', 1e5)
 
-        ranges=kwargs.get('range',None)
-        if model_name in acceptable_values.keys():
-            ranges=acceptable_values[model_name]
+        ranges=kwargs.get('range', None)
         
         # masses for singles [this can be done with pymc but nvm]
         m_singles = spsim.simulateMasses(nsim,range=[ranges[0], ranges[1]],distribution='power-law',alpha=0.6)
@@ -141,14 +142,95 @@ def simulate_spts(**kwargs):
         		'binary_spt': spt_binr }
 
         import pickle
-        with open(DATA_FOLDER+'/mass_age_spcts_with_bin{}.pkl'.format(model_name), 'wb') as file:
+        with open(filename, 'wb') as file:
            pickle.dump(values,file)
     else:
-        values=pd.read_pickle(DATA_FOLDER+'/mass_age_spcts_with_bin{}.pkl'.format(model_name))
+        values=pd.read_pickle(filename)
 
     return values
+    
+def get_mag_from_luminosity(lumn, bc, log=True):
+    if log:
+        return -2.5*np.log10(lumn)+4.74-bc
+    else:
+        return -2.5*lumn+4.74-bc
+    
+def fillipazzo_bolometric_correction(spt, filt='2MASS_J', mask=None):
+    """
+    number spectral type
+    """
+    #for float
+    if isinstance(spt, (np.floating, float, int)):
+        return spe.typeToBC(spt, filt, ref='filippazzo2015')
+    #vectorized solution, masking things outside the range
+    else:
+        ref='filippazzo2015'
+        spt=np.array(spt)
+        res=np.ones_like(spt)*np.nan
+        
+        if mask is None: mask=np.zeros_like(spt).astype(bool)
+    
+        bc = np.polyval(splat.SPT_BC_RELATIONS[ref]['filters'][filt]['coeff'], spt-splat.SPT_BC_RELATIONS[ref]['sptoffset'])
+        bc_error = splat.SPT_BC_RELATIONS[ref]['filters'][filt]['fitunc']
+        
+        rands=np.random.normal(bc, bc_error)
+        
+        np.place(res, ~mask, rands )
 
-def make_systems(**kwargs):
+        return res
+
+def make_systems(bfraction=0.2, recompute=False, model='baraffe2003', 
+                mass_age_range=[0.01, 0.1, 0., 8.0], nsample=5e5, return_singles=False):
+    
+    model_res=popsims.simulate_spts(name=model,
+                                   recompute=recompute, range=mass_age_range,\
+                              nsample=nsample)
+    
+    #singles
+    singles=model_res['sing_evol']
+    singles['abs_2MASS_J']= get_abs_mag(mods['sing_spt'], '2MASS J')[0]
+    singles['abs_2MASS_H']= np.ones_like(singles['abs_2MASS_J'])*np.nan
+    singles['is_binary']= np.zeros_like(mods['sing_spt']).astype(bool)
+    singles['spt']=mods['sing_spt']
+    singles['prim_spt']=mods['sing_spt']
+    singles['sec_spt']=np.ones_like(mods['sing_spt'])*np.nan
+    
+    #binary
+    binaries={}
+    binaries['age']=mods['prim_evol']['age']
+    binaries['mass']=mods['prim_evol']['mass']+mods['sec_evol']['mass']
+    binaries['luminosity']=np.log10(10**(mods['prim_evol']['luminosity']).value+\
+    10**(mods['sec_evol']['luminosity']).value)
+    binaries['temperature']=mods['prim_evol']['temperature']
+    binaries['spt']=mods['binary_spt']
+    binaries['prim_spt']=mods['prim_spt']
+    binaries['sec_spt']=mods['sec_spt']
+    binaries['is_binary']=np.ones_like(mods['sec_spt']).astype(bool)
+    
+    #bolometric corrections
+    bcs=fillipazzo_bolometric_correction(binaries['spt'], filt='2MASS_J', 
+                                        mask=binaries['spt']>39.)
+    
+    binaries['abs_2MASS_J']=get_mag_from_luminosity( binaries['luminosity'],\
+                                                    bcs, log=False)
+    binaries['abs_2MASS_H']=np.ones_like(mods['prim_spt'])*np.nan
+
+    
+    #compute numbers to choose based on binary fraction
+    ndraw= int(len(mods['sing_spt'])/(1-binary_fraction))-int(len(mods['sing_spt']))
+    
+    #random list of binaries to choose
+    random_int=np.random.choice(np.arange(len(binaries['spt'])), ndraw)
+    
+    chosen_binaries={}
+    for k in binaries.keys():
+        chosen_binaries[k]=binaries[k][random_int]
+        
+   
+    #combine the to dictionaries 
+    return pd.concat([pd.DataFrame(singles), pd.DataFrame(chosen_binaries)])
+
+def make_systems_nocombined_light(**kwargs):
     """
     choose a random sets of primaries and secondaries 
     and a sample of single systems based off a preccomputed-evolutionary model grid 
@@ -170,11 +252,13 @@ def make_systems(**kwargs):
     
     choices={'spt': np.random.choice(model_vals['binary_spt'][~nans], ndraw),
             'teff': np.random.choice(model_vals['prim_evol']['temperature'].value[~nans], ndraw), 
-            'age': np.random.choice(model_vals['prim_evol']['age'].value[~nans],ndraw)}
+            'age': np.random.choice(model_vals['prim_evol']['age'].value[~nans],ndraw),
+            'mass': np.random.choice(model_vals['prim_evol']['mass'].value[~nans]+model_vals['sec_evol']['mass'].value[~nans],ndraw)}
 
 
     vs={'system_spts': np.concatenate([model_vals['sing_spt'], choices['spt']]), 
             'system_teff':  np.concatenate([(model_vals['sing_evol']['temperature']).value, choices['teff']]),
-            'system_age':  np.concatenate([(model_vals['sing_evol']['age']).value,  choices['age']])}
+            'system_age':  np.concatenate([(model_vals['sing_evol']['age']).value,  choices['age']]),
+            'system_mass': np.concatenate([(model_vals['sing_evol']['mass']).value,  choices['mass']])}
 
     return vs

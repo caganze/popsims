@@ -1,0 +1,25 @@
+name	uniform_J14
+nsamp	10000
+type	wide
+longitude_range	[0.0, 360.0]
+latitude_range	[-90.0, 90.0]
+exclude_longitude_range	[]
+exclude_latitude_range	[-15.0, 15.0]
+frame	galactic
+area	9.313954571546354 sr
+filter	MKO J
+magnitude_limit	14.0
+mass_distribution	chabrier
+mass_range	[0.01, 0.15]
+spt_teff_ref	dupuy
+age_range	[0.2, 10.0]
+age_distribution	uniform
+emodel	burrows
+spt_absmag_ref	dupuy
+binary_fraction	0.2
+q_distribution	powerlaw
+q_range	[0.1, 1.0]
+q_gamma	1.8
+galaxy_model	juric
+spt_ranges	[['M6', 'L0'], ['L0', 'L5'], ['L5', 'T0'], ['T0', 'T5'], ['T5', 'Y0']]
+output_folder	.//sim_uniform_J14/
