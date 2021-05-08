@@ -202,12 +202,18 @@ def make_systems(bfraction=0.2, recompute=False, model='baraffe2003',
     binaries={}
     binaries['age']=mods['prim_evol']['age']
     binaries['mass']=mods['prim_evol']['mass']+mods['sec_evol']['mass']
+    binaries['pri_mass']=mods['prim_evol']['mass']
+    binaries['sec_mass']=mods['sec_evol']['mass']
+    
     binaries['luminosity']=np.log10(10**(mods['prim_evol']['luminosity']).value+\
     10**(mods['sec_evol']['luminosity']).value)
     binaries['temperature']=mods['prim_evol']['temperature']
     binaries['spt']=mods['binary_spt']
     binaries['prim_spt']=mods['prim_spt']
     binaries['sec_spt']=mods['sec_spt']
+    binaries['prim_luminosity']=10**(mods['prim_evol']['luminosity']).value
+    binaries['sec_luminosity']=10**(mods['sec_evol']['luminosity']).value
+
     binaries['is_binary']=np.ones_like(mods['sec_spt']).astype(bool)
     
     #bolometric corrections for 2MASS J

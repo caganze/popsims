@@ -25,6 +25,17 @@ def make_spt_number(spt):
 def dropnans(x):
     return x[~np.isnan(x)]
 
+def group_by(xvalues, yvalues, grid= np.linspace(np.nanmin(xvalues), np.nanmax(xvalues))):
+    res=np.ones_like(grid)*np.nan
+    std=np.ones_like(grid)*np.nan
+    for idx, g in enumerate(grid):
+        if idx < len(grid)-1:
+            bools=np.logical_and(xvalues>=grid[idx], xvalues<grid[idx+1])
+        else:
+            bools=xvalues>=grid[-1]
+        np.place(res, grid==[grid[idx]], np.nanmedian(yvalues[bools]) )
+        np.place(std, grid==[grid[idx]], np.nanstd(yvalues[bools]))
+    return {'grid': grid, 'median': res, 'std': std}
 
 def random_draw(xvals, cdfvals, nsample=10):
     """

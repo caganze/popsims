@@ -140,9 +140,9 @@ def get_magnitudes(spt, d):
             res.update({k: absmag+5*np.log10(d/10.0) })
     return pd.DataFrame(res)
 
-def create_population(model, coord, kind='disk', h=350, ds=None, mask=None):
+def create_population(coord, kind='disk', h=350, ds=None, mask=None, bfraction=None, model=None):
     #create population 
-    df=pd.DataFrame()
+    df=popsims.make_systems()
     if mask is None:
         mask=np.ones(len(model['system_spts'])).astype(bool)
     df['spt']=(model['system_spts'].flatten())[mask]
