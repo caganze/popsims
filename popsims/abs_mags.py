@@ -9,6 +9,10 @@ kirkpa2019pol={'2MASS H':{'pol':np.poly1d(np.flip([36.9714, -8.66856, 1.05122 ,-
 kirkpa2020pol={'2MASS H':{'pol':np.poly1d(np.flip([-6.918e01, 1.1863e+01,-5.4084e-1, 8.466e-03 ])), 
                     'scatter':.51, 'range':[36, 44]}}
 
+kirkap202_teff_to_mag_pol={'2MASS H':{'coeffs':[1.2516e+04, -1.5666e+03, 6.7502e+01, -9.2430e-01, -1.9530e-03],\
+                                    'coeff_unc':[1.0770e+03, 2.7058e+02, 2.4638e+01, 9.6594e-01, 1.3793e-02], \
+                                    'range':[9, 25]}}
+
 def k_clip_fit(x, y, sigma_y, sigma = 5, n=6):
     
     '''Fit a polynomial to y vs. x, and k-sigma clip until convergence
@@ -92,7 +96,52 @@ def absolute_mag_kirkpatrick(spt, filt):
         pol=kirkpa2019pol[filt]['pol']
         unc=kirkpa2019pol[filt]['scatter']
         return pol(spt-30), unc
+
+def get_teff_from_mag_ignore_unc(mag):
+    corr=splat.photometry.vegaToAB('2MASS H')
+    pol=np.poly1d(np.flip(kirkap202_teff_to_mag_pol['2MASS H']['coeffs']))
+    #ignore objects outside the [9, 25] range
+    rng=kirkap202_teff_to_mag_pol['2MASS H']['coeffs']
+    res=None
+    if np.isscalar(mag):
+        #check outisde the range
+        if np.logical_or(mag>rng[1], mag<rng[0]): mag=np.nan
+        res=pol(mag)
+    else:
+        res=np.ones_like(mag)*np.nan
+        bools=np.logical_or(mag>rng[1], mag<rng[0])
+        res[bools]=pol(mag)[bools]
+    return res+corr
+
+
+
+def get_teff_from_mag(mag, mag_unc=0.0, flt='2MASS H'):
+    nsample=int(1e4)
+    #ignore coeffs_unc_for_no
+    coff_unc=np.array(kirkap202_teff_to_mag_pol[flt]['coeff_unc'])#*(1e-3)
+    coeffs=np.random.normal(np.array(kirkap202_teff_to_mag_pol[flt]['coeffs']),\
+                            coff_unc,(nsample, 5))
     
+    x=mag
+    xerr=mag_unc
+    res=(np.nan, np.nan)
+
+    if np.isscalar(mag):
+        x=np.random.normal(mag, xerr, nsample)
+        vals=coeffs[:,0] + coeffs[:,1]*x+ coeffs[:,2]*(x**2)+coeffs[:,3]*(x**3)+coeffs[:,4]*(x**4)
+        res=np.nanmedian(vals), np.nanstd(vals)
+    else:
+        if mag_unc==0.0:
+            xerr=np.zeros_like(mag)
+            
+        x=np.random.normal(mag, xerr, (nsample, len(mag))).T
+    
+        vals=coeffs[:,0] + coeffs[:,1]*x+ coeffs[:,2]*(x**2)+coeffs[:,3]*(x**3)+coeffs[:,4]*(x**4)
+        
+        res=np.nanmedian(vals, axis=1), np.nanstd(vals, axis=1)
+
+    return res
+
 
 def get_abs_mag(spt, flter):
     m, munc=(np.nan, np.nan)
@@ -104,17 +153,26 @@ def get_abs_mag(spt, flter):
         
     if flter=='2MASS H':
         corr=splat.photometry.vegaToAB('2MASS H')
-        if spt <36:
-            
-            #m=BEST['2MASS H'][1](spt)
-            #munc= np.nanmedian(best_dict[k]['rms'])
-            #m, munc=spe.typeToMag(spt, '2MASS H')
-            ((j, junc), (m, munc))=make_mamajek_fit(spt)
-            m= m+corr
+        if np.isscalar(spt):
+            if spt <36:
+                #m=BEST['2MASS H'][1](spt)
+                #munc= np.nanmedian(best_dict[k]['rms'])
+                #m, munc=spe.typeToMag(spt, '2MASS H')
+                ((j, junc), (m, munc))=make_mamajek_fit(spt)
+                m= m+corr
+            else:
+                m, munc=absolute_mag_kirkpatrick(spt, '2MASS H')
+                m= m+corr
         else:
-            m, munc=absolute_mag_kirkpatrick(spt, '2MASS H')
-            m= m+corr
-           
+            m=np.ones_like(spt)*np.nan
+
+            #np.place(m, spt>36,(make_mamajek_fit(spt[spt<36])[1][0])+corr )
+            #np.place(m, spt>=36, absolute_mag_kirkpatrick(spt[spt>=36], '2MASS H')[0]+corr)
+          
+            m[spt<36]= (make_mamajek_fit(spt[spt<36])[1][0])+corr
+            m[spt>=36]= (absolute_mag_kirkpatrick(spt[spt>=36], '2MASS H')[0])+corr
+            munc=(0.4**2+0.67**2)**0.5
+               
             
     if flter=='PANSTARRS_R':
         corr=splat.photometry.vegaToAB('PANSTARRS_R')

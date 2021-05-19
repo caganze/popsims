@@ -25,7 +25,7 @@ def make_spt_number(spt):
 def dropnans(x):
     return x[~np.isnan(x)]
 
-def group_by(xvalues, yvalues, grid= np.linspace(np.nanmin(xvalues), np.nanmax(xvalues))):
+def group_by(xvalues, yvalues, grid= np.arange(0, 1, 1000)):
     res=np.ones_like(grid)*np.nan
     std=np.ones_like(grid)*np.nan
     for idx, g in enumerate(grid):

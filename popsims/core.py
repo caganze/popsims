@@ -4,7 +4,7 @@ import splat.empirical as splat_teff_to_spt
 
 from .config import DATA_FOLDER, POLYNOMIALS, EVOL_MODELS_FOLDER, FIGURES
 from .tools import teff_to_spt
-from .abs_mags import get_abs_mag
+from .abs_mags import get_abs_mag, get_teff_from_mag, get_teff_from_mag_ignore_unc
 #import pymc3 as pm
 from scipy.interpolate import griddata
 #import theano.tensor as tt
@@ -15,6 +15,7 @@ import pandas as pd
 import numpy as np
 #use splat for no
 import splat
+import splat.empirical as spe
 
 
 def read_bintemplates():
@@ -152,11 +153,12 @@ def simulate_spts(**kwargs):
 
     return values
 
-def get_mag_from_luminosity(lumn, bc, log=True):
+def get_mag_from_luminosity(lumn, bc, log=False):
     if log:
         return -2.5*np.log10(lumn)+4.74-bc
     else:
         return -2.5*lumn+4.74-bc
+
     
 def fillipazzo_bolometric_correction(spt, filt='2MASS_J', mask=None):
     """
@@ -183,16 +185,33 @@ def fillipazzo_bolometric_correction(spt, filt='2MASS_J', mask=None):
         return res
 
 def make_systems(bfraction=0.2, recompute=False, model='baraffe2003', 
-                mass_age_range=[0.01, 0.1, 0., 8.0], nsample=5e5, return_singles=False):
+                mass_age_range=[0.01, 0.1, 0., 8.0], nsample=5e5, return_singles=False, **kwargs):
     
-    mods=simulate_spts(name=model,
+
+    #quick but dirty
+    if 'filename' in kwargs:
+        mods=simulate_spts(name=model,
+                                   recompute=recompute, range=mass_age_range,\
+                              nsample=nsample, filename= kwargs.get('filename', ''))
+    else:
+        mods=simulate_spts(name=model,
                                    recompute=recompute, range=mass_age_range,\
                               nsample=nsample)
+
     
     #singles
     singles=mods['sing_evol']
-    singles['abs_2MASS_J']= get_abs_mag(mods['sing_spt'], '2MASS J')[0]
-    singles['abs_2MASS_H']= np.ones_like(singles['abs_2MASS_J'])*np.nan
+    #singles['abs_2MASS_J']= get_abs_mag(mods['sing_spt'], '2MASS J')[0]
+        #bolometric corrections for 2MASS J
+    bcs_sings=fillipazzo_bolometric_correction(mods['sing_spt'], filt='2MASS_J', 
+                                        mask=None)
+
+    singles['bolometric_cor_2MASS_J']=bcs_sings
+    #singles['abs_2MASS_J']=get_mag_from_luminosity(singles['luminosity'].value,\
+    #                                                bcs_sings, log=False)
+    singles['abs_2MASS_J']=get_abs_mag(mods['sing_spt'],'2MASS J')[0]
+    #singles['abs_2MASS_H']= np.ones_like(singles['abs_2MASS_J'])*np.nan
+    singles['abs_2MASS_H']=get_abs_mag(mods['sing_spt'],'2MASS J')[0]
     singles['is_binary']= np.zeros_like(mods['sing_spt']).astype(bool)
     singles['spt']=mods['sing_spt']
     singles['prim_spt']=mods['sing_spt']
@@ -207,7 +226,7 @@ def make_systems(bfraction=0.2, recompute=False, model='baraffe2003',
     
     binaries['luminosity']=np.log10(10**(mods['prim_evol']['luminosity']).value+\
     10**(mods['sec_evol']['luminosity']).value)
-    binaries['temperature']=mods['prim_evol']['temperature']
+    #binaries['temperature']=mods['prim_evol']['temperature']
     binaries['spt']=mods['binary_spt']
     binaries['prim_spt']=mods['prim_spt']
     binaries['sec_spt']=mods['sec_spt']
@@ -217,16 +236,25 @@ def make_systems(bfraction=0.2, recompute=False, model='baraffe2003',
     binaries['is_binary']=np.ones_like(mods['sec_spt']).astype(bool)
     
     #bolometric corrections for 2MASS J
-    bcs=fillipazzo_bolometric_correction(binaries['spt'], filt='2MASS_J', 
-                                        mask=binaries['spt']>39.)
+    bcs_bins=fillipazzo_bolometric_correction(binaries['spt'], filt='2MASS_J', 
+                                        mask=None)
     
-    binaries['abs_2MASS_J']=get_mag_from_luminosity( binaries['luminosity'],\
-                                                    bcs, log=False)
-    binaries['abs_2MASS_H']=np.ones_like(mods['prim_spt'])*np.nan
+    #binaries['abs_2MASS_J']=get_mag_from_luminosity(binaries['luminosity'],\
+    #                                                bcs_bins, log=False)
+    #binaries['abs_2MASS_H']=np.ones_like(mods['prim_spt'])*np.nan
+    binaries['abs_2MASS_J']= -2.5*np.log10(10**(-0.4*get_abs_mag(mods['prim_spt'],'2MASS J')[0])+\
+        10**(-0.4*get_abs_mag(mods['sec_spt'],'2MASS J')[0]))
+    binaries['abs_2MASS_H']= -2.5*np.log10(10**(-0.4*get_abs_mag(mods['prim_spt'],'2MASS H')[0])+\
+        10**(-0.4*get_abs_mag(mods['sec_spt'],'2MASS H')[0]))
+    binaries['bolometric_cor_2MASS_J']=bcs_bins
+    #print (binaries['abs_2MASS_H'])
+    binaries['temperature']=get_teff_from_mag_ignore_unc(binaries['abs_2MASS_H'])
 
     
     #compute numbers to choose based on binary fraction
     ndraw= int(len(mods['sing_spt'])/(1-bfraction))-int(len(mods['sing_spt']))
+    #ndraw=int(len(mods['sing_spt'])* bfraction)
+
     
     #random list of binaries to choose
     random_int=np.random.choice(np.arange(len(binaries['spt'])), ndraw)
@@ -234,10 +262,48 @@ def make_systems(bfraction=0.2, recompute=False, model='baraffe2003',
     chosen_binaries={}
     for k in binaries.keys():
         chosen_binaries[k]=binaries[k][random_int]
-        
-   
+    
+    #add scale to the local lf
+    res=pd.concat([pd.DataFrame(singles), pd.DataFrame(chosen_binaries)])
+    scl=scale_to_local_lf(res.temperature.values)
+    #print (scl
+    res['scale']=scl[0]
+    res['scale_unc']=scl[1]
+    res['scale_times_model']=scl[-1]
+
     #combine the to dictionaries 
-    return pd.concat([pd.DataFrame(singles), pd.DataFrame(chosen_binaries)])
+    return res
+
+def scale_to_local_lf(teffs):
+    """
+    scale a teff distribution to the local lf
+    """
+    kirkpatrick2020LF={'bin_center': np.array([ 525,  675,  825,  975, 1125, 1275, 1425, 1575, 1725, 1875, 2025]),
+    'values': np.array([4.24, 2.8 , 1.99, 1.72, 1.11, 1.95, 0.94, 0.81, 0.78, 0.5 , 0.72]),
+    'unc': np.array([0.7 , 0.37, 0.32, 0.3 , 0.25, 0.3 , 0.22, 0.2 , 0.2 , 0.17, 0.18])}
+
+    binedges= np.append(kirkpatrick2020LF['bin_center']-75, kirkpatrick2020LF['bin_center'][-1]+75)
+    #bools=np.logical_and(teffs <= binedges[-1], teffs >= binedges[0])
+    #print (binedges[0], binedges[-1])
+    preds=np.histogram(teffs, bins=binedges, normed=False)[0]
+    
+    obs=np.array(kirkpatrick2020LF['values'])
+    unc=np.array(kirkpatrick2020LF['unc'])
+    
+    obs_monte_carlo= np.random.normal(obs, unc, (10000, len(obs)))
+    pred_monte= np.ones_like(obs_monte_carlo)*(preds)
+    unc_monte=  np.ones_like(obs_monte_carlo)*(unc)
+    
+    
+
+    scale=(np.nansum((obs_monte_carlo*pred_monte)/(unc_monte**2), axis=1)\
+           /np.nansum(((pred_monte**2)/(unc_monte**2)), axis=1))*(10**-3)
+    
+    
+    res=[np.nanmedian(scale), np.nanstd(scale), \
+                                     np.sum(preds*np.nanmedian(scale))]
+
+    return res
 
 def make_systems_nocombined_light(**kwargs):
     """
@@ -254,7 +320,8 @@ def make_systems_nocombined_light(**kwargs):
 
 
     #nbin= int(len(model_vals['sing_spt'])*binary_fraction) #number of binaries
-    ndraw= int(len(model_vals['sing_spt'])/(1-binary_fraction))-int(len(model_vals['sing_spt']))
+    #ndraw= int(len(model_vals['sing_spt'])/(1-binary_fraction))-int(len(model_vals['sing_spt']))
+    ndraw=int(len(model_vals['sing_spt'])* binary_fraction)
 
 
     nans=np.isnan(model_vals['binary_spt'])
