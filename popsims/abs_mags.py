@@ -3,6 +3,7 @@ import splat.empirical as spe
 import numpy as np
 from astropy.io import ascii
 import splat
+import numba
 
 kirkpa2019pol={'2MASS H':{'pol':np.poly1d(np.flip([36.9714, -8.66856, 1.05122 ,-0.0344809])), 
                     'scatter':.67, 'range':[36, 44]}}
@@ -98,7 +99,6 @@ def absolute_mag_kirkpatrick(spt, filt):
         return pol(spt-30), unc
 
 def get_teff_from_mag_ignore_unc(mag):
-    corr=splat.photometry.vegaToAB('2MASS H')
     pol=np.poly1d(np.flip(kirkap202_teff_to_mag_pol['2MASS H']['coeffs']))
     #ignore objects outside the [9, 25] range
     rng=kirkap202_teff_to_mag_pol['2MASS H']['coeffs']
@@ -111,9 +111,14 @@ def get_teff_from_mag_ignore_unc(mag):
         res=np.ones_like(mag)*np.nan
         bools=np.logical_or(mag>rng[1], mag<rng[0])
         res[bools]=pol(mag)[bools]
-    return res+corr
+    return res
 
-
+@numba.jit(nopython=True)
+def multiply_coeffs_and_values(x, coeffs, power):
+    vals=coeffs[:,0]*(x**0)
+    for i in range(0, power-1):
+        vals +=coeffs[:,i]*(x**i) 
+    return vals
 
 def get_teff_from_mag(mag, mag_unc=0.0, flt='2MASS H'):
     nsample=int(1e4)
@@ -136,9 +141,9 @@ def get_teff_from_mag(mag, mag_unc=0.0, flt='2MASS H'):
             
         x=np.random.normal(mag, xerr, (nsample, len(mag))).T
     
-        vals=coeffs[:,0] + coeffs[:,1]*x+ coeffs[:,2]*(x**2)+coeffs[:,3]*(x**3)+coeffs[:,4]*(x**4)
+        vals=multiply_coeffs_and_values(x, coeffs, 4)
         
-        res=np.nanmedian(vals, axis=1), np.nanstd(vals, axis=1)
+        res=np.nanmedian(vals, axis=1)#, np.nanstd(vals, axis=1)
 
     return res
 

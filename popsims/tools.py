@@ -6,13 +6,23 @@ import bisect
 import astropy.units as u
 from astropy.coordinates import SkyCoord, FK5
  
-@np.vectorize      
+#@np.vectorize      
 def teff_to_spt(teff):
     rel=splat.SPT_TEFF_RELATIONS['pecaut']
     spt_sorted_idx=np.argsort(rel['values'])
     scatter=108
     teffsc=np.random.normal(teff, scatter)
     return np.interp(teffsc, np.array(rel['values'])[spt_sorted_idx], np.array(rel['spt'])[spt_sorted_idx])
+    
+#@np.vectorize      
+def teff_from_spt(spt):
+    rel=splat.SPT_TEFF_RELATIONS['pecaut']
+    spt_sorted_idx=np.argsort(rel['values'])
+
+    teff=np.interp(spt, np.array(rel['spt'])[spt_sorted_idx],  np.array(rel['values'])[spt_sorted_idx])
+    return np.random.normal(teff, 108)
+
+
 
 @numba.jit
 def make_spt_number(spt):

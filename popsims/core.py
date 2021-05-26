@@ -1,9 +1,8 @@
 import splat.simulate as spsim
 import splat.evolve as spev
-import splat.empirical as splat_teff_to_spt
 
 from .config import DATA_FOLDER, POLYNOMIALS, EVOL_MODELS_FOLDER, FIGURES
-from .tools import teff_to_spt
+from .tools import teff_to_spt, teff_from_spt
 from .abs_mags import get_abs_mag, get_teff_from_mag, get_teff_from_mag_ignore_unc
 #import pymc3 as pm
 from scipy.interpolate import griddata
@@ -203,15 +202,12 @@ def make_systems(bfraction=0.2, recompute=False, model='baraffe2003',
     singles=mods['sing_evol']
     #singles['abs_2MASS_J']= get_abs_mag(mods['sing_spt'], '2MASS J')[0]
         #bolometric corrections for 2MASS J
-    bcs_sings=fillipazzo_bolometric_correction(mods['sing_spt'], filt='2MASS_J', 
-                                        mask=None)
+    #bcs_sings=fillipazzo_bolometric_correction(mods['sing_spt'], filt='2MASS_J', 
+    #                                    mask=None)
 
-    singles['bolometric_cor_2MASS_J']=bcs_sings
+    #singles['bolometric_cor_2MASS_J']=bcs_sings
     #singles['abs_2MASS_J']=get_mag_from_luminosity(singles['luminosity'].value,\
     #                                                bcs_sings, log=False)
-    singles['abs_2MASS_J']=get_abs_mag(mods['sing_spt'],'2MASS J')[0]
-    #singles['abs_2MASS_H']= np.ones_like(singles['abs_2MASS_J'])*np.nan
-    singles['abs_2MASS_H']=get_abs_mag(mods['sing_spt'],'2MASS J')[0]
     singles['is_binary']= np.zeros_like(mods['sing_spt']).astype(bool)
     singles['spt']=mods['sing_spt']
     singles['prim_spt']=mods['sing_spt']
@@ -227,7 +223,7 @@ def make_systems(bfraction=0.2, recompute=False, model='baraffe2003',
     binaries['luminosity']=np.log10(10**(mods['prim_evol']['luminosity']).value+\
     10**(mods['sec_evol']['luminosity']).value)
     #binaries['temperature']=mods['prim_evol']['temperature']
-    binaries['spt']=mods['binary_spt']
+    binaries['spt']=np.random.normal(mods['binary_spt'], 0.3)
     binaries['prim_spt']=mods['prim_spt']
     binaries['sec_spt']=mods['sec_spt']
     binaries['prim_luminosity']=10**(mods['prim_evol']['luminosity']).value
@@ -236,19 +232,43 @@ def make_systems(bfraction=0.2, recompute=False, model='baraffe2003',
     binaries['is_binary']=np.ones_like(mods['sec_spt']).astype(bool)
     
     #bolometric corrections for 2MASS J
-    bcs_bins=fillipazzo_bolometric_correction(binaries['spt'], filt='2MASS_J', 
-                                        mask=None)
+    #bcs_bins=fillipazzo_bolometric_correction(binaries['spt'], filt='2MASS_J', 
+    #                                    mask=None)
+    #binaries['bolometric_cor_2MASS_J']=bcs_bins
     
-    #binaries['abs_2MASS_J']=get_mag_from_luminosity(binaries['luminosity'],\
-    #                                                bcs_bins, log=False)
-    #binaries['abs_2MASS_H']=np.ones_like(mods['prim_spt'])*np.nan
-    binaries['abs_2MASS_J']= -2.5*np.log10(10**(-0.4*get_abs_mag(mods['prim_spt'],'2MASS J')[0])+\
-        10**(-0.4*get_abs_mag(mods['sec_spt'],'2MASS J')[0]))
-    binaries['abs_2MASS_H']= -2.5*np.log10(10**(-0.4*get_abs_mag(mods['prim_spt'],'2MASS H')[0])+\
-        10**(-0.4*get_abs_mag(mods['sec_spt'],'2MASS H')[0]))
-    binaries['bolometric_cor_2MASS_J']=bcs_bins
-    #print (binaries['abs_2MASS_H'])
-    binaries['temperature']=get_teff_from_mag_ignore_unc(binaries['abs_2MASS_H'])
+
+    #magnitudes ugh
+    """
+    ignore 2mass photometry
+
+    js_singles, j_single_unc=get_abs_mag(mods['sing_spt'],'2MASS J')
+    hs_singles, h_single_unc=get_abs_mag(mods['sing_spt'],'2MASS H')
+
+    singles['abs_2MASS_J']=np.random.normal(js_singles, j_single_unc)
+    singles['abs_2MASS_H']=np.random.normal(hs_singles, h_single_unc)
+
+    js_primns, junc_prims=get_abs_mag(mods['prim_spt'], '2MASS J')
+    js_prims_to_use=np.random.normal(js_primns, junc_prims)
+
+    hs_primns, hunc_prims=get_abs_mag(mods['prim_spt'], '2MASS H')
+    hs_prims_to_use=np.random.normal(hs_primns, junc_prims)
+
+    js_secs, junc_secs=get_abs_mag(mods['sec_spt'], '2MASS J')
+    js_secs_to_use=np.random.normal(js_secs, junc_secs)
+
+    hs_secs, hunc_secs=get_abs_mag(mods['sec_spt'], '2MASS H')
+    hs_secs_to_use=np.random.normal(hs_secs, hunc_secs)
+
+    #print (np.isnan(js_prims_to_us).any())
+
+    binaries['abs_2MASS_J']= -2.5*np.log10(10**(-0.4*js_prims_to_use)+ 10**(-0.4*js_secs_to_use))
+    binaries['abs_2MASS_H']=  -2.5*np.log10(10**(-0.4*hs_prims_to_use)+ 10**(-0.4*hs_secs_to_use))
+    """
+
+    #assign teff from absolute mag
+    #binaries['temperature']=get_teff_from_mag_ignore_unc(binaries['abs_2MASS_H'])
+    binaries['temperature']=teff_from_spt(binaries['spt'])
+    #binaries['temperature']=
 
     
     #compute numbers to choose based on binary fraction
