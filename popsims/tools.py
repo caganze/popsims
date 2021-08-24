@@ -14,12 +14,12 @@ def teff_to_spt(teff):
     teffsc=np.random.normal(teff, scatter)
     return np.interp(teffsc, np.array(rel['values'])[spt_sorted_idx], np.array(rel['spt'])[spt_sorted_idx])
     
-#@np.vectorize      
+  
 def teff_from_spt(spt):
     rel=splat.SPT_TEFF_RELATIONS['pecaut']
-    spt_sorted_idx=np.argsort(rel['values'])
+    #spt_sorted_idx=np.argsort(rel['values'])
 
-    teff=np.interp(spt, np.array(rel['spt'])[spt_sorted_idx],  np.array(rel['values'])[spt_sorted_idx])
+    teff=np.interp(spt,    np.array(rel['spt']), np.array(rel['values']))
     return np.random.normal(teff, 108)
 
 

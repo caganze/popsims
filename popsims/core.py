@@ -18,7 +18,7 @@ import splat.empirical as spe
 
 
 def read_bintemplates():
-    df=pd.read_pickle(DATA_FOLDER+'/binary_lookup_table.pkl.gz')
+    df=pd.read_pickle(DATA_FOLDER+'/binary_lookup_table.pkl')
     return [df.prim.values, df.sec.values, df.sys.values]
 
 def get_system_type(pr, sc, interpolators):
@@ -53,7 +53,7 @@ def evolutionary_model_interpolator(mass, age, model):
  
     #make age, teff, mass logarithm scale
     valuest=np.log10(evolutiomodel.temperature.values)
-    valueslogg=evolutiomodel.gravity.values
+    #valueslogg=evolutiomodel.gravity.values
     valueslumn=evolutiomodel.luminosity.values
 
     valuesm=np.log10(evolutiomodel.mass.values)

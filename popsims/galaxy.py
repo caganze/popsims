@@ -60,7 +60,7 @@ class Pointing(object):
         #compute distance limits for each 
         for k in new_lts.keys():
             ds={}
-            for s in np.arange(15, 41):
+            for s in np.arange(10, 41):
                 dmin= get_distance(POLYNOMIALS[k][0](s), new_lts[k][0])
                 dmax= get_distance(POLYNOMIALS[k][0](s), new_lts[k][1])
                 ds.update({s: [dmin, dmax]})
@@ -79,7 +79,7 @@ class Pointing(object):
         return random_draw(d, cdfvals/np.nanmax(cdfvals), int(nsample))
         
 
-def get_uvw(age, kind='dwarf',z=None):
+def get_uvw(age, kind='thin_disk',z=None):
     #velocity paremeters
     #returns simple gaussians from velocity dispersions
     
@@ -106,7 +106,7 @@ def get_uvw(age, kind='dwarf',z=None):
     vs =np.random.normal(loc=voff, scale=sigma_v, size=len(age))
     ws =np.random.normal(loc=0.0, scale=sigma_w, size=len(age))
     
-    if kind=='subdwarf':
+    if kind=='halo':
         us=np.zeros(len(age))
         vs=np.zeros(len(age))
         ws=np.zeros(len(age))
@@ -116,7 +116,7 @@ def get_uvw(age, kind='dwarf',z=None):
         bools1=np.logical_and(np.abs(z) >4000, np.abs(z)>=8000)
         bools2=np.abs(z)>8000
         
-        us[bools0]=np.random.normal(loc=-52+270, scale=-242+270 , size=len(z[bools0]))
+        us[bools0]=np.random.normal(loc=-52+270, scale=-242+270, size=len(z[bools0]))
         vs[bools0]=np.random.normal(loc=-242+270, scale=-103+270, size=len(z[bools0]))
         ws[bools0]=np.random.normal(loc=0+270, scale=67+270, size=len(z[bools0]))
         
@@ -127,17 +127,25 @@ def get_uvw(age, kind='dwarf',z=None):
         us[bools2]=np.random.normal(loc=-1+270, scale=172+270, size=len(z[bools2]))
         vs[bools2]=np.random.normal(loc=-328+270, scale=-119+270, size=len(z[bools2]))
         ws[bools2]=np.random.normal(loc=-32+270, scale=106+270, size=len(z[bools2]))
-        
+
+    if kind=='thick_disk':
+        #use Bensby et al
+        v_assym=-46
+        #uvw_lsr=
+        us=np.random.normal(loc=uvw_lsr[0], scale=67,size=len(age))
+        vs=np.random.normal(loc=uvw_lsr[1]-v_assym, scale=38,size=len(age))
+        ws=np.random.normal(loc=uvw_lsr[-1], scale=35,size=len(age))
     
     return us, vs, ws
 
-def get_magnitudes(spt, d):
+def get_magnitudes(spt, d, keys=POLYNOMIALS.keys()):
     res={}
-    for k in POLYNOMIALS.keys():
+    for k in keys:
         if k != 'subdwarfs':
             absmag= np.random.normal((POLYNOMIALS[k][0])(spt), 
                                      POLYNOMIALS[k][1])
             res.update({k: absmag+5*np.log10(d/10.0) })
+            res.update({'abs_'+k: absmag})
     return pd.DataFrame(res)
 
 def create_population(coord, kind='disk', h=350, ds=None, mask=None, bfraction=None, model=None):
@@ -172,22 +180,22 @@ def create_population(coord, kind='disk', h=350, ds=None, mask=None, bfraction=N
     df['w']=ws
     dff=get_magnitudes(df.spt, df.d).join(df)
     #proper motion 
-    a, b= p.coord.icrs.ra.radian, p.coord.icrs.dec.radian
-    T=np.matrix([[-0.06699, -0.87276, -0.48354],
-    [0.49273, -0.45035, 0.74458],
-    [-0.86760, -0.18837,0.46020]])
+    #a, b= p.coord.icrs.ra.radian, p.coord.icrs.dec.radian
+    #T=np.matrix([[-0.06699, -0.87276, -0.48354],
+    #[0.49273, -0.45035, 0.74458],
+    #[-0.86760, -0.18837,0.46020]])
 
-    A=np.matrix([[np.cos(a)*np.cos(b), -np.sin(a), -np.cos(a)*np.sin(b)],
-       [np.sin(a)*np.cos(b) ,np.cos(a), -np.sin(a)*np.cos(b)],
-       [np.sin(b), 0,np.cos(b)]])
-    B= A @ T
+    #A=np.matrix([[np.cos(a)*np.cos(b), -np.sin(a), -np.cos(a)*np.sin(b)],
+    #   [np.sin(a)*np.cos(b) ,np.cos(a), -np.sin(a)*np.cos(b)],
+    #   [np.sin(b), 0,np.cos(b)]])
+    #B= A @ T
     
-    props_dfs=np.linalg.solve( B, np.vstack([us, vs, ws]))
+    #props_dfs=np.linalg.solve( B, np.vstack([us, vs, ws]))
     
-    dff['rv']=props_dfs[0]
-    dff['mu_alpha']=props_dfs[1]/dff.d
-    dff['mu_delta']=props_dfs[-1]/(4.74057*dff.d)
-    dff['vtan']=np.sqrt(4.74* (dff['mu_alpha']**2+ dff['mu_delta']**2))*dff.d
+    #dff['rv']=props_dfs[0]
+    #dff['mu_alpha']=props_dfs[1]/dff.d
+    #dff['mu_delta']=props_dfs[-1]/(4.74057*dff.d)
+    #dff['vtan']=np.sqrt(4.74* (dff['mu_alpha']**2+ dff['mu_delta']**2))*dff.d
     return dff
 
 
