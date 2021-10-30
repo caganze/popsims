@@ -10,7 +10,7 @@ from .config import DATA_FOLDER, POLYNOMIALS
 from .tools import random_draw
 import scipy.integrate as integrate
 from .core import make_systems,  POLYNOMIALS
-from .galaxy import exponential_density, spheroid_density, Rsun, Zsun, get_uvw, get_magnitudes
+from .galaxy import exponential_density, spheroid_density, Rsun, Zsun, get_uvw
 from scipy.interpolate import interp1d
 import pandas as pd
 from astropy.coordinates import SkyCoord
@@ -26,7 +26,7 @@ def galactic_density(rd, zd, Hthin):
     thin=exponential_density(rd, zd, Hthin, 2600)
     thick=exponential_density(rd, zd, 900, 2600)
     halo=spheroid_density(rd, zd)
-    return thin+ft*thick+fh*halo
+    return {'thin': thin, 'thick': ft*thick , 'halo': fh*halo}
 
 def logtotal_galaxy_density_likelihood(r, z, d,Hthin):
     return np.log((d**2)*galactic_density(r, z, Hthin))

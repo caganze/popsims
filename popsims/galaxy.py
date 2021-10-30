@@ -1,4 +1,5 @@
 
+
 ################################
 #population simulations routines
 #includes copied functions from splat
@@ -13,7 +14,13 @@ from .core import make_systems,  POLYNOMIALS
 from scipy.interpolate import interp1d
 import pandas as pd
 from astropy.coordinates import SkyCoord
+import astropy.coordinates as astro_coord
 import astropy.units as u
+import warnings
+import gala.coordinates as gc
+import gala.dynamics as gd
+import collections
+from tqdm import tqdm
 
 #some constants
 MAG_KEYS=['WFIRST_WFIJ', 'WFIRST_WFIH', 'WFIRST_WFIK', 'WFIRST_WFIY', 'WFIRST_WFIZ']
@@ -21,6 +28,19 @@ HS=[350, 900]
 Rsun=8300.
 Zsun=27.
 R0=2600.
+
+#coordinaete frame 
+#choose coordinate frame
+_ = astro_coord.galactocentric_frame_defaults.set('v4.0')
+#galactocentric reference frame
+v_sun = astro_coord.CartesianDifferential([11.1, 220 + 24.0, 7.25]*u.km/u.s)
+
+galcen_frame =astro_coord.Galactocentric(galcen_distance=8.1*u.kpc,
+                                    galcen_v_sun=v_sun)
+def transform_tocylindrical(l, b, ds):
+    rd=np.sqrt( (ds * np.cos( b ) )**2 + Rsun * (Rsun - 2 * ds * np.cos( b ) * np.cos( l ) ) )
+    zd=Zsun+ ds * np.sin( b - np.arctan( Zsun / Rsun) )
+    return (rd, zd)
 
 class Pointing(object):
     ## a pointing object making it easier to draw samples
@@ -61,8 +81,9 @@ class Pointing(object):
         for k in new_lts.keys():
             ds={}
             for s in np.arange(10, 41):
-                dmin= get_distance(POLYNOMIALS[k][0](s), new_lts[k][0])
-                dmax= get_distance(POLYNOMIALS[k][0](s), new_lts[k][1])
+                pol=POLYNOMIALS['absmags']['dwarfs'][k]['fit']
+                dmin= get_distance(pol(s), new_lts[k][0])
+                dmax= get_distance(pol(s), new_lts[k][1])
                 ds.update({s: [dmin, dmax]})
 
             self._dist_limits.update({k: ds})
@@ -79,124 +100,53 @@ class Pointing(object):
         return random_draw(d, cdfvals/np.nanmax(cdfvals), int(nsample))
         
 
-def get_uvw(age, kind='thin_disk',z=None):
-    #velocity paremeters
-    #returns simple gaussians from velocity dispersions
-    
-    v10 = 41.899
-    tau1 = 0.001
-    beta = 0.307
 
-    v10_v = 28.823
-    tau_v = 0.715
-    beta_v = 0.430
-
-    v10_w = 23.381
-    tau_w = 0.001
-    beta_w = 0.445
-
-    k = 74.
-    sigma_u = v10*((age+tau1)/(10.+tau1))**beta
-    sigma_v =  v10_v*((age+tau_v)/(10.+tau_v))**beta_v
-    sigma_w =  v10_w*((age+tau_w)/(10.+tau_w))**beta_w
-
-    voff = -1.*(sigma_v**2)/k
-    
-    us=np.random.normal(loc=0, scale=sigma_u, size=len(age))
-    vs =np.random.normal(loc=voff, scale=sigma_v, size=len(age))
-    ws =np.random.normal(loc=0.0, scale=sigma_w, size=len(age))
-    
-    if kind=='halo':
-        us=np.zeros(len(age))
-        vs=np.zeros(len(age))
-        ws=np.zeros(len(age))
-        
-        #0-4 kpc
-        bools0=np.logical_and(np.abs(z) >=0, np.abs(z)>=4000)
-        bools1=np.logical_and(np.abs(z) >4000, np.abs(z)>=8000)
-        bools2=np.abs(z)>8000
-        
-        us[bools0]=np.random.normal(loc=-52+270, scale=-242+270, size=len(z[bools0]))
-        vs[bools0]=np.random.normal(loc=-242+270, scale=-103+270, size=len(z[bools0]))
-        ws[bools0]=np.random.normal(loc=0+270, scale=67+270, size=len(z[bools0]))
-        
-        us[bools1]=np.random.normal(loc=-12+270, scale=131+270, size=len(z[bools1]))
-        vs[bools1]=np.random.normal(loc=-282+270, scale=-111+270, size=len(z[bools1]))
-        ws[bools1]=np.random.normal(loc=-37+270, scale=85+270, size=len(z[bools1]))
-        
-        us[bools2]=np.random.normal(loc=-1+270, scale=172+270, size=len(z[bools2]))
-        vs[bools2]=np.random.normal(loc=-328+270, scale=-119+270, size=len(z[bools2]))
-        ws[bools2]=np.random.normal(loc=-32+270, scale=106+270, size=len(z[bools2]))
-
-    if kind=='thick_disk':
-        #use Bensby et al
-        v_assym=-46
-        #uvw_lsr=
-        us=np.random.normal(loc=uvw_lsr[0], scale=67,size=len(age))
-        vs=np.random.normal(loc=uvw_lsr[1]-v_assym, scale=38,size=len(age))
-        ws=np.random.normal(loc=uvw_lsr[-1], scale=35,size=len(age))
-    
-    return us, vs, ws
-
-def get_magnitudes(spt, d, keys=POLYNOMIALS.keys()):
+def pop_mags_from_type(spt, d=None, keys=[], object_type='dwarfs', reference=None):
+    """
+    SPT is an array of spectral types from a Monte Carlo sampling
+    """
     res={}
+    pol=POLYNOMIALS['absmags'][object_type]
+    if reference is not None: pol=POLYNOMIALS['references'][reference]
     for k in keys:
-        if k != 'subdwarfs':
-            absmag= np.random.normal((POLYNOMIALS[k][0])(spt), 
-                                     POLYNOMIALS[k][1])
-            res.update({k: absmag+5*np.log10(d/10.0) })
-            res.update({'abs_'+k: absmag})
+        #sometimes sds don't have absolute magnitudes defined 
+        if k not in pol.keys():
+            warnings.warn("Key not available for {} using {} instead".format(object_type, 'dwarfs'))
+            object_type='dwarfs'
+            pol=POLYNOMIALS['absmags'][object_type]
+
+        fit=pol[k]['fit']
+        scat=pol[k]['scatter']
+        rng=pol[k]['range']
+        mag_key=pol[k]['y']
+        offset=pol[k]['x0']
+        absmag= np.random.normal(fit(spt-offset),scat)
+        #make it nans outside the range
+        absmag[np.logical_and(spt <rng[0], spt <rng[-1])]=np.nan
+        if d is not None: res.update({ mag_key: absmag+5*np.log10(d/10.0) })
+        res.update({'abs_'+ mag_key: absmag})
+
     return pd.DataFrame(res)
 
-def create_population(coord, kind='disk', h=350, ds=None, mask=None, bfraction=None, model=None):
-    #create population 
-    df=popsims.make_systems()
-    if mask is None:
-        mask=np.ones(len(model['system_spts'])).astype(bool)
-    df['spt']=(model['system_spts'].flatten())[mask]
-    df['teff']=(model['system_teff'].flatten())[mask]
-    df['age']=(model['system_age'].flatten())[mask]
-    if kind=='disk':
-        p= Pointing(coord=coord, name='wfirst0')
-        us, vs, ws=get_uvw(df.age, kind='dwarf')
-        #draw distances if None
-        if ds is None: 
-            df['d']=p.draw_distances(10, 7e4, h, nsample=len(df.age))
-        else:
-            df['d']=ds
-    if kind=='halo':
-        p= Pointing(coord=coord, density='spheroid')
-        if ds is None: 
-            df['d']=p.draw_distances(10, 7e4, h, nsample=len(df.age))
-        else:
-            df['ds']=ds
-        crx=SkyCoord(p.coord, distance=df['d'].values*u.pc).cartesian
-        us, vs, ws=get_uvw(df.age, z= crx.z.value, kind='subdwarf')
-    #print ('age', len(us), len(df.age))
-    assert (len(us)== len(df.age))
-    #print (len(df.age))
-    df['u']=us
-    df['v']=vs
-    df['w']=ws
-    dff=get_magnitudes(df.spt, df.d).join(df)
-    #proper motion 
-    #a, b= p.coord.icrs.ra.radian, p.coord.icrs.dec.radian
-    #T=np.matrix([[-0.06699, -0.87276, -0.48354],
-    #[0.49273, -0.45035, 0.74458],
-    #[-0.86760, -0.18837,0.46020]])
+def pop_mags_from_color(color, d=None, keys=[], object_type='dwarfs'):
+    """
+    color is an array of colors from a Monte Carlo sampling
+    """
+    res={}
+    for k in tqdm(keys):
+        pol=POLYNOMIALS['colors'][object_type]
+        fit=pol[k]['fit']
+        scat=pol[k]['scatter']
+        rng=pol[k]['range']
+        mag_key=pol[k]['y']
+        absmag= np.random.normal(fit(color),scat)
+        #make it nans outside the range
+        absmag[np.logical_and(color <rng[0], color <rng[-1])]=np.nan
+        if d is not None: res.update({ mag_key: absmag+5*np.log10(d/10.0) })
+        res.update({'abs_'+ mag_key: absmag})
 
-    #A=np.matrix([[np.cos(a)*np.cos(b), -np.sin(a), -np.cos(a)*np.sin(b)],
-    #   [np.sin(a)*np.cos(b) ,np.cos(a), -np.sin(a)*np.cos(b)],
-    #   [np.sin(b), 0,np.cos(b)]])
-    #B= A @ T
-    
-    #props_dfs=np.linalg.solve( B, np.vstack([us, vs, ws]))
-    
-    #dff['rv']=props_dfs[0]
-    #dff['mu_alpha']=props_dfs[1]/dff.d
-    #dff['mu_delta']=props_dfs[-1]/(4.74057*dff.d)
-    #dff['vtan']=np.sqrt(4.74* (dff['mu_alpha']**2+ dff['mu_delta']**2))*dff.d
-    return dff
+    return pd.DataFrame(res)
+
 
 
 def interpolated_cdf(l, b, h, **kwargs):
@@ -317,3 +267,137 @@ def volume_calc(l,b,dmin, dmax, h, kind='exp'):
         rh0= rh0+fh*spheroid_density(rd, zd)
     val=integrate.trapz(rh0*(ds**2), x=ds)
     return val
+
+def get_velocities(age, kind='thin_disk',z=None):
+    #velocity paremeters
+    #returns simple gaussians from velocity dispersions
+    
+    v10 = 41.899
+    tau1 = 0.001
+    beta = 0.307
+
+    v10_v = 28.823
+    tau_v = 0.715
+    beta_v = 0.430
+
+    v10_w = 23.381
+    tau_w = 0.001
+    beta_w = 0.445
+
+    k = 74.
+    sigma_u = v10*((age+tau1)/(10.+tau1))**beta
+    sigma_v =  v10_v*((age+tau_v)/(10.+tau_v))**beta_v
+    sigma_w =  v10_w*((age+tau_w)/(10.+tau_w))**beta_w
+
+    voff = -1.*(sigma_v**2)/k
+
+    us=np.random.normal(loc=0, scale=sigma_u, size=len(age))
+    vs =np.random.normal(loc=voff, scale=sigma_v, size=len(age))
+    ws =np.random.normal(loc=0.0, scale=sigma_w, size=len(age))
+    vels={'U': us, 'V':vs,  'W':ws }
+    if kind=='halo':
+        #values from carollo et al. not exactly right but close
+        #these are actually vr, vphi, vz
+        vr=np.random.normal(loc=3, scale=150, size=len(age))
+        vphi=np.random.normal(loc=7, scale=95, size=len(age))
+        vz=np.random.normal(loc=3, scale=85, size=len(age))
+        vels={'Vr': vr, 'Vphi':vphi,  'Vz':vz }
+        
+    if kind=='thick_disk':
+        #use Bensby et al
+        v_assym=46
+        uvw_lsr=[0, 0, 0]
+        us=np.random.normal(loc=uvw_lsr[0], scale=67,size=len(age))
+        vs=np.random.normal(loc=uvw_lsr[1]-v_assym, scale=38,size=len(age))
+        ws=np.random.normal(loc=uvw_lsr[-1], scale=35,size=len(age))
+        vels={'U': us, 'V':vs,  'W':ws }
+    
+    return  pd.DataFrame(vels)
+
+def get_proper_motion(ra, dec, d, u, v, w):
+    
+    motions=compute_pm_from_uvw(ra, dec,d, u, v, w,\
+                               correct_lsr=False)
+    return pd.Series({'RV':  motions[0] ,\
+                      'mu_alpha': motions[1],\
+                      'mu_delta': motions[2],
+                      'Vtan': motions[-1]})
+
+def get_proper_motion_cylindrical(ra,dec, d, vr, vphi, vz):
+    
+    """
+    vphi must be in rad/s not km/s
+    ra, dec in deg and distance in kpc
+    
+    """
+    
+    c=astro_coord.CylindricalDifferential(d_rho=vr*u.km/u.s,\
+                                      d_phi=(vphi*u.rad/u.s).to(u.deg/u.s),\
+                                      d_z=vz*u.km/u.s)
+
+    co=astro_coord.SkyCoord(ra=ra*u.degree, dec=dec*u.degree, \
+                       distance=d*u.kpc).transform_to(galcen_frame ).cylindrical
+    
+    c.to_cartesian(co)
+    co.to_cartesian()
+    xyz = astro_coord.SkyCoord(x=co.to_cartesian().x, 
+                               y=co.to_cartesian().y, \
+                               z=co.to_cartesian().z, frame=galcen_frame)
+    vxyz = [c.to_cartesian(co).x.to(u.km/u.s).value,\
+     c.to_cartesian(co).y.to(u.km/u.s).value, \
+     c.to_cartesian(co).z.to(u.km/u.s).value]*u.km/u.s
+    
+    w = gd.PhaseSpacePosition(pos=xyz.cartesian.xyz, vel=vxyz)
+    gal_c = w.to_coord_frame(astro_coord.ICRS)
+    
+  
+    return {'RV': gal_c.radial_velocity ,\
+                      'mu_alpha':gal_c.pm_ra_cosdec/np.cos(dec*u.degree),\
+                      'mu_delta': gal_c.pm_dec}
+
+
+def create_pop(bfraction=None,\
+                     model=None,  nsample=None,
+                     dmax=None, l=None, b=None, \
+               absmag_keys=['WFIRST_WFIJ'], 
+              population='thin_disk', distances=None, poptype='dwarfs'):
+    
+    mass_age_ranges={'thin_disk':[0.01, 0.15, 0., 8.0],\
+                    'thick_disk': [0.01, 0.15, 8., 13.0],\
+                    'halo':[0.01, 0.15, 10., 13.0]}
+    #get fundamental parameters
+    df=make_systems(model=model, bfraction=bfraction,\
+                            mass_age_range= mass_age_ranges[population],\
+                                nsample=nsample,
+                                recompute=True)
+    #trim to desired types to reduce size of dataframe
+    #df=(df[df.spt.between(grid[0], grid[-1])]).reset_index(drop=True)
+    ls=l
+    bs=b
+
+    if isinstance(l, collections.Sequence): 
+        ls= np.random.choice(l, len(df))
+    if isinstance(b, collections.Sequence): 
+        bs= np.random.choice(b, len(df))
+    
+    #assign distances and directions
+    df['d']= np.random.choice(distances, len(df))
+    df['l']= ls
+    df['b']= bs
+    #computer r and z
+    r, z=transform_tocylindrical(df.l.values, df.b.values, df.d.values)
+    df['r']=r
+    df['z']=z
+    #get velocities  and add magnitude
+    if population != 'halo':
+        vels=get_velocities(df.age, z= df.z, kind=population).reset_index(drop=True)
+        #compute proper motions
+    
+    if population == 'halo':
+        vels= get_velocities(df.age, z= df.z, kind=population).reset_index(drop=True)
+        #use astropy to computer proper motions #no need to compute at this stage
+       
+    dff=pop_mags_from_type(df.spt.values, d=df.d.values, \
+            keys=absmag_keys, object_type=poptype).join(df).join(vels)
+
+    return dff
