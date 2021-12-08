@@ -8,7 +8,7 @@ import numpy as np
 import numba
 import scipy
 from .config import DATA_FOLDER, POLYNOMIALS
-from .tools import random_draw
+from .tools import random_draw, compute_pm_from_uvw
 import scipy.integrate as integrate
 from .core import make_systems,  POLYNOMIALS
 from scipy.interpolate import interp1d
@@ -24,19 +24,25 @@ from tqdm import tqdm
 
 #some constants
 MAG_KEYS=['WFIRST_WFIJ', 'WFIRST_WFIH', 'WFIRST_WFIK', 'WFIRST_WFIY', 'WFIRST_WFIZ']
-HS=[350, 900]
 Rsun=8300.
 Zsun=27.
-R0=2600.
 
-#coordinaete frame 
-#choose coordinate frame
 _ = astro_coord.galactocentric_frame_defaults.set('v4.0')
 #galactocentric reference frame
 v_sun = astro_coord.CartesianDifferential([11.1, 220 + 24.0, 7.25]*u.km/u.s)
 
-galcen_frame =astro_coord.Galactocentric(galcen_distance=8.1*u.kpc,
+galcen_frame =astro_coord.Galactocentric(galcen_distance=8.3*u.kpc,
                                     galcen_v_sun=v_sun)
+
+def galactic_density(rd, zd, Hthin=350, Hthick=900):
+    fh=0.0051
+    ft=0.12
+    #only change thin disk scaleheight, keep thick disk and halo fixed
+    thin=exponential_density(rd, zd, Hthin, 2600)
+    thick=exponential_density(rd, zd, Hthick, 3600)
+    halo=spheroid_density(rd, zd)
+    return {'thin': thin, 'thick': ft*thick , 'halo': fh*halo}
+
 def transform_tocylindrical(l, b, ds):
     rd=np.sqrt( (ds * np.cos( b ) )**2 + Rsun * (Rsun - 2 * ds * np.cos( b ) * np.cos( l ) ) )
     zd=Zsun+ ds * np.sin( b - np.arctan( Zsun / Rsun) )
@@ -57,10 +63,10 @@ class Pointing(object):
         self.dens_profile=kwargs.get('density', 'exp')
 
         #compute volumes after initialization
-        if self.coord is not None:
-            for h in HS:
-               self.distance_cdf.update({h:interpolated_cdf(self.coord.galactic.l.radian, \
-                   self.coord.galactic.b.radian, h, kind=self.dens_profile)})
+        #if self.coord is not None:
+        #    for idx in range(0 , len(HS)):
+        #       self.distance_cdf.update({'h{}l{}'.format(HS[idx], LS[idx]):interpolated_cdf(self.coord.galactic.l.radian, \
+        #           self.coord.galactic.b.radian, HS[idx], LS[idx], kind=self.dens_profile)})
 
     @property
     def volume(self):
@@ -80,7 +86,7 @@ class Pointing(object):
         #compute distance limits for each 
         for k in new_lts.keys():
             ds={}
-            for s in np.arange(10, 41):
+            for s in np.arange(10, 43):
                 pol=POLYNOMIALS['absmags']['dwarfs'][k]['fit']
                 dmin= get_distance(pol(s), new_lts[k][0])
                 dmax= get_distance(pol(s), new_lts[k][1])
@@ -89,14 +95,15 @@ class Pointing(object):
             self._dist_limits.update({k: ds})
 
 
-    def draw_distances(self, dmin, dmax, h, nsample=1e3):
+    def draw_distances(self, dmin, dmax, scaleH, scaleL, nsample=1e3):
         ##draw random distances in this direction for a specific spectral type
         d=np.logspace(np.log10(dmin), np.log10(dmax), int(nsample))
         #print (d, dmin, dmax)
-        cdfvals=self.distance_cdf[h](d)
-        #dgrid=np.concatenate([[0], np.logspace(-1, np.log10(dmax+50), int(1e4))])
-        #cdfvals=np.array([volume_calc(self.coord.galactic.l.radian, self.coord.galactic.b.radian, 0, dx, h,kind=self.dens_profile) \
-        #    for dx in dgrid])
+        if not 'h{}l{}'.format(scaleH, scaleL) in self.distance_cdf.keys():
+            self.distance_cdf['h{}l{}'.format(scaleH, scaleL)]=interpolated_cdf(self.coord.galactic.l.radian, \
+                   self.coord.galactic.b.radian, scaleH, scaleL, kind=self.dens_profile)
+
+        cdfvals=self.distance_cdf['h{}l{}'.format(scaleH, scaleL)](d)
         return random_draw(d, cdfvals/np.nanmax(cdfvals), int(nsample))
         
 
@@ -149,22 +156,22 @@ def pop_mags_from_color(color, d=None, keys=[], object_type='dwarfs'):
 
 
 
-def interpolated_cdf(l, b, h, **kwargs):
+def interpolated_cdf(l, b, scaleH, scaleL, **kwargs):
     #interpolated cdf up a further distance to avoid using each time I have to draw a distance
     d=np.concatenate([[10**-2], np.logspace(-1, 6, int(1e4))])
     #print (d)
-    cdfvals=np.array([volume_calc(l,b,0, dx, h, **kwargs) for dx in d])
+    cdfvals=np.array([volume_calc(l,b,0, dx, scaleH,scaleL, **kwargs) for dx in d])
     #remove nans and infinities
     cdfvals= cdfvals/np.nanmax(cdfvals)
     bools= np
     return interp1d(d, cdfvals)
 
-def exponential_density(r, z, H, R0):
+def exponential_density(r, z, H,L):
     """
         expoential galactic density porfile
     """
     zpart=np.exp(-abs(z-Zsun)/H)
-    rpart=np.exp(-(r-Rsun)/R0)
+    rpart=np.exp(-(r-Rsun)/L)
     return zpart*rpart
 
 def spheroid_density(r, z):
@@ -254,13 +261,13 @@ def scaleheight_to_vertical_disp(hs):
     sigma_68=1.
     return np.sqrt((np.array(hs))/shape)*20
 
-def volume_calc(l,b,dmin, dmax, h, kind='exp'):
+def volume_calc(l,b,dmin, dmax, scaleH, scaleL, kind='exp'):
     nsamp=1000
     fh=0.0051
     ds = np.linspace(dmin,dmax,nsamp)
     rd=np.sqrt( (ds * np.cos( b ) )**2 + Rsun * (Rsun - 2 * ds * np.cos( b ) * np.cos( l ) ) )
     zd=Zsun+ ds * np.sin( b - np.arctan( Zsun / Rsun) )
-    rh0=exponential_density(rd, zd, h, R0)
+    rh0=exponential_density(rd, zd, scaleH, scaleL)
     if kind =='spheroid':
          rh0=spheroid_density(rd, zd)
     if kind=='both':
