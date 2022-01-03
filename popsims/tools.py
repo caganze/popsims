@@ -48,7 +48,7 @@ def group_by(xvalues, yvalues, grid= np.arange(0, 1, 1000)):
         np.place(std, grid==[grid[idx]], np.nanstd(yvalues[bools]))
     return {'grid': grid, 'median': res, 'std': std}
 
-def random_draw(xvals, cdfvals, nsample=10):
+def random_draw_old(xvals, cdfvals, nsample=10):
     """
     randomly drawing from a discrete distribution
     """
@@ -58,6 +58,15 @@ def random_draw(xvals, cdfvals, nsample=10):
     x=np.random.rand(nsample)
     idx=invert_cdf(x)
     return np.array(xvals)[idx]
+
+
+def random_draw(x_grid, cdf, nsample=10):
+   # cdf = np.cumsum(pdf)
+    cdf = cdf / cdf[-1]
+    values = np.random.rand(nsample)
+    value_bins = np.searchsorted(cdf, values)
+    random_from_cdf = x_grid[value_bins]
+    return random_from_cdf
 
 def compute_uvw_from_pm(ra_J2000, dec_J2000, parallax, rv, mu_ra, mu_dec, e_parallax, e_rv, e_mu_ra, e_mu_dec, correct_lsr=True):
     #from Dino's code
