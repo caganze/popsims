@@ -1,20 +1,15 @@
-import splat.simulate as spsim
-import splat.evolve as spev
 
-from .config import DATA_FOLDER, POLYNOMIALS, EVOL_MODELS_FOLDER, FIGURES
-from .tools import teff_to_spt, teff_from_spt
-from .abs_mags import get_abs_mag, get_teff_from_mag, get_teff_from_mag_ignore_unc
-#import pymc3 as pm
 from scipy.interpolate import griddata
-#import theano.tensor as tt
-#from theano.compile.ops import as_op
 import astropy.units as u
 import numba
 import pandas as pd
 import numpy as np
-#use splat for no
-import splat
-import splat.empirical as spe
+import os
+
+from .relations import teff_to_spt, scale_to_local_lf, spt_to_teff
+from .tools import sample_from_powerlaw
+
+DATA_FOLDER=os.environ['POPSIMS_DATA_FOLDER']
 
 
 def read_bintemplates():
@@ -44,7 +39,7 @@ def evolutionary_model_interpolator(mass, age, model):
     model: model name
     """
 
-    model_filename=EVOL_MODELS_FOLDER+'//'+model.lower()+'.csv'
+    model_filename=DATA_FOLDER+'/evmodels//'+model.lower()+'.csv'
     evolutiomodel=pd.read_csv( model_filename)
 
     #use the full cloud treatment for saumon models
@@ -71,13 +66,11 @@ def evolutionary_model_interpolator(mass, age, model):
 
 
 
-def simulate_spts(**kwargs):
+def simulate_spts(nsample=int(1e4), model_name='baraffe2003', save=False, mass_age_range=None, filename=None ):
     """
     Simulate parameters from mass function,
     mass ratio distribution and age distribution
     """
-    recompute=kwargs.get('recompute', False)
-    model_name=kwargs.get('name','baraffe2003')
 
     #use hybrid models that predit the T dwarf bump for Saumon Models
     if model_name=='saumon2008':
@@ -88,115 +81,62 @@ def simulate_spts(**kwargs):
     #automatically set maxima and minima to avoid having too many nans
     #mass age and age,  min, max
     #all masses should be 0.01
-    acceptable_values={'baraffe2003': [0.01, 0.1, 0.01, 8.0],
+    default_values={'baraffe2003': [0.01, 0.1, 0.01, 8.0],
     'marley2019': [0.01, 0.08, 0.001, 8.0], 'saumon2008':[0.01, 0.09, 0.003, 8.0], 
     'phillips2020':[0.01, 0.075, 0.001, 8.0 ],'burrows2001':[0.01, 0.075, 10, 12]}
-    fname=kwargs.get('filename', DATA_FOLDER+'/mass_age_spcts_with_bin{}.pkl'.format(model_name))
-    filename=fname
-    
-    if recompute:
 
-        nsim = kwargs.get('nsample', 1e5)
+    if  mass_age_range is None:
+        mass_age_range= default_values[model_name]
+        #raise ValueError('mass and age range is none')
+    # masses for singles [this can be done with pymc but nvm]
+    #m_singles = spsim.simulateMasses(nsim,range=[ mass_age_range[0], ranges[1]],distribution='power-law',alpha=0.6)
+    m_singles=sample_from_powerlaw(-0.6, xmin= mass_age_range[0], xmax=mass_age_range[1], nsample=nsample)
+    ages_singles= np.random.uniform(mass_age_range[2], mass_age_range[-1], nsample)
 
-        ranges=kwargs.get('range', None)
-        
-        # masses for singles [this can be done with pymc but nvm]
-        m_singles = spsim.simulateMasses(nsim,range=[ranges[0], ranges[1]],distribution='power-law',alpha=0.6)
-        #ages for singles
-        ages_singles= spsim.simulateAges(nsim,range=[ranges[2], ranges[3]], distribution='uniform')
+    #parameters for binaries
+    qs=sample_from_powerlaw(4, xmin= 0., xmax=1., nsample=nsample)
+    m_prims = sample_from_powerlaw(-0.6, xmin= mass_age_range[0], xmax=mass_age_range[1], nsample=nsample)
+    m_sec=m_prims*qs
+    ages_bin=np.random.uniform(mass_age_range[2], mass_age_range[-1], nsample)
 
-        #parameters for binaries
-        #binrs=simulate_binary(int(nsim), [ranges[0], ranges[1]], [ranges[2], ranges[3]])
-        qs=spsim.simulateMassRatios(nsim,distribution='power-law',q_range=[0.1,1.0],gamma=4)
-        m_prims = spsim.simulateMasses(nsim,range=[ranges[0], ranges[1]],distribution='power-law',alpha=0.6)
-        m_sec=m_prims*qs
-        ages_bin= spsim.simulateAges(nsim,range=[ranges[2], ranges[3]], distribution='uniform')
+    #interpolate evolurionary models
+    single_evol=evolutionary_model_interpolator(m_singles, ages_singles, model_name)
+    primary_evol=evolutionary_model_interpolator(m_prims,ages_bin, model_name)
+    secondary_evol=evolutionary_model_interpolator(m_sec,ages_bin, model_name)
 
-        #single_evol=spev.modelParameters(mass=m_singles,age=ages_singles, set=model_name, cloud=cloud)
-        single_evol=evolutionary_model_interpolator(m_singles, ages_singles, model_name)
+    #temperatures
+    teffs_singl =single_evol['temperature'].value
+    teffs_primar=primary_evol['temperature'].value
+    teffs_second=secondary_evol['temperature'].value
 
-        #primary_evol=spev.modelParameters(mass=binrs[0],age=binrs[-1], set=model_name, cloud=cloud)
-        primary_evol=evolutionary_model_interpolator(m_prims,ages_bin, model_name)
+    #spectraltypes
+    spts_singl =teff_to_spt(teffs_singl)
+    spt_primar=teff_to_spt(teffs_primar)
+    spt_second=teff_to_spt(teffs_second)
 
-        #secondary_evol=spev.modelParameters(mass=binrs[1],age=binrs[-1], set=model_name, cloud=cloud)
-        secondary_evol=evolutionary_model_interpolator(m_sec,ages_bin, model_name)
-        #save luminosities
+    #compute binary spectral types
+    xy=np.vstack([np.round(np.array(spt_primar), decimals=0), np.round(np.array(spt_second), decimals=0)]).T
+    spt_binr=get_system_type(xy[:,0], xy[:,1], read_bintemplates())
 
-        #temperatures
-        teffs_singl =single_evol['temperature'].value
-        teffs_primar=primary_evol['temperature'].value
-        teffs_second=secondary_evol['temperature'].value
 
-        #spectraltypes
-        spts_singl =teff_to_spt(teffs_singl)
 
-        #the singles will be fine, remove nans from systems 
-        spt_primar=teff_to_spt(teffs_primar)
-        spt_second=teff_to_spt(teffs_second)
-
-        xy=np.vstack([np.round(np.array(spt_primar), decimals=0), np.round(np.array(spt_second), decimals=0)]).T
-
-        spt_binr=get_system_type(xy[:,0], xy[:,1], read_bintemplates())
-
-   
-        values={ 'sing_evol': single_evol, 'sing_spt':spts_singl,
+    values={ 'sing_evol': single_evol, 'sing_spt':spts_singl,
         		 'prim_evol': primary_evol, 'prim_spt':spt_primar,
         		 'sec_evol': secondary_evol, 'sec_spt': spt_second,
         		'binary_spt': spt_binr }
 
+    if save and (filename is not None):
         import pickle
         with open(filename, 'wb') as file:
            pickle.dump(values,file)
-    else:
-        values=pd.read_pickle(filename)
+    if save and (filename is not None):
+        raise ValueError('file name empty')
 
     return values
 
-def get_mag_from_luminosity(lumn, bc, log=False):
-    if log:
-        return -2.5*np.log10(lumn)+4.74-bc
-    else:
-        return -2.5*lumn+4.74-bc
+def make_systems(bfraction=0.2, **kwargs):
 
-    
-def fillipazzo_bolometric_correction(spt, filt='2MASS_J', mask=None):
-    """
-    number spectral type
-    """
-    #for float
-    if isinstance(spt, (np.floating, float, int)):
-        return spe.typeToBC(spt, filt, ref='filippazzo2015')
-    #vectorized solution, masking things outside the range
-    else:
-        ref='filippazzo2015'
-        spt=np.array(spt)
-        res=np.ones_like(spt)*np.nan
-        
-        if mask is None: mask=np.zeros_like(spt).astype(bool)
-    
-        bc = np.polyval(splat.SPT_BC_RELATIONS[ref]['filters'][filt]['coeff'], spt-splat.SPT_BC_RELATIONS[ref]['sptoffset'])
-        bc_error = splat.SPT_BC_RELATIONS[ref]['filters'][filt]['fitunc']
-        
-        rands=np.random.normal(bc, bc_error)
-        
-        np.place(res, ~mask, rands )
-
-        return res
-
-def make_systems(bfraction=0.2, recompute=False, model='baraffe2003', 
-                mass_age_range=[0.01, 0.1, 0., 8.0], nsample=5e5, return_singles=False, **kwargs):
-    
-
-    #quick but dirty
-    if 'filename' in kwargs:
-        mods=simulate_spts(name=model,
-                                   recompute=recompute, range=mass_age_range,\
-                              nsample=nsample, filename= kwargs.get('filename', ''))
-    else:
-        mods=simulate_spts(name=model,
-                                   recompute=recompute, range=mass_age_range,\
-                              nsample=nsample)
-
+    mods=simulate_spts(**kwargs)
     
     #singles
     singles=mods['sing_evol']
@@ -267,7 +207,7 @@ def make_systems(bfraction=0.2, recompute=False, model='baraffe2003',
 
     #assign teff from absolute mag
     #binaries['temperature']=get_teff_from_mag_ignore_unc(binaries['abs_2MASS_H'])
-    binaries['temperature']=teff_from_spt(binaries['spt'])
+    binaries['temperature']=spt_to_teff(binaries['spt'])
     #binaries['temperature']=
 
     
@@ -294,36 +234,6 @@ def make_systems(bfraction=0.2, recompute=False, model='baraffe2003',
     #combine the to dictionaries 
     return res
 
-def scale_to_local_lf(teffs):
-    """
-    scale a teff distribution to the local lf
-    """
-    kirkpatrick2020LF={'bin_center': np.array([ 525,  675,  825,  975, 1125, 1275, 1425, 1575, 1725, 1875, 2025]),
-    'values': np.array([4.24, 2.8 , 1.99, 1.72, 1.11, 1.95, 0.94, 0.81, 0.78, 0.5 , 0.72]),
-    'unc': np.array([0.7 , 0.37, 0.32, 0.3 , 0.25, 0.3 , 0.22, 0.2 , 0.2 , 0.17, 0.18])}
-
-    binedges= np.append(kirkpatrick2020LF['bin_center']-75, kirkpatrick2020LF['bin_center'][-1]+75)
-    #bools=np.logical_and(teffs <= binedges[-1], teffs >= binedges[0])
-    #print (binedges[0], binedges[-1])
-    preds=np.histogram(teffs, bins=binedges, normed=False)[0]
-    
-    obs=np.array(kirkpatrick2020LF['values'])
-    unc=np.array(kirkpatrick2020LF['unc'])
-    
-    obs_monte_carlo= np.random.normal(obs, unc, (10000, len(obs)))
-    pred_monte= np.ones_like(obs_monte_carlo)*(preds)
-    unc_monte=  np.ones_like(obs_monte_carlo)*(unc)
-    
-    
-
-    scale=(np.nansum((obs_monte_carlo*pred_monte)/(unc_monte**2), axis=1)\
-           /np.nansum(((pred_monte**2)/(unc_monte**2)), axis=1))*(10**-3)
-    
-    
-    res=[np.nanmedian(scale), np.nanstd(scale), \
-                                     np.sum(preds*np.nanmedian(scale))]
-
-    return res
 
 def make_systems_nocombined_light(**kwargs):
     """
@@ -333,10 +243,8 @@ def make_systems_nocombined_light(**kwargs):
 
     """
     #recompute for different evolutionary models
-    model=kwargs.get('model_name', 'baraffe2003')
-    binary_fraction=kwargs.get('bfraction', 0.2)
-
-    model_vals=simulate_spts(name=model, **kwargs)
+   
+    model_vals=simulate_spts(**kwargs)
 
 
     #nbin= int(len(model_vals['sing_spt'])*binary_fraction) #number of binaries

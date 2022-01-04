@@ -1,8 +1,11 @@
-#absolute magnitude relation
-import splat.empirical as spe
+
+################################
+#Should clean up later
+
+##############################
 import numpy as np
 from astropy.io import ascii
-import splat
+#import splat
 import numba
 
 kirkpa2019pol={'2MASS H':{'pol':np.poly1d(np.flip([36.9714, -8.66856, 1.05122 ,-0.0344809])), 
@@ -13,6 +16,36 @@ kirkpa2020pol={'2MASS H':{'pol':np.poly1d(np.flip([-6.918e01, 1.1863e+01,-5.4084
 kirkap202_teff_to_mag_pol={'2MASS H':{'coeffs':[1.2516e+04, -1.5666e+03, 6.7502e+01, -9.2430e-01, -1.9530e-03],\
                                     'coeff_unc':[1.0770e+03, 2.7058e+02, 2.4638e+01, 9.6594e-01, 1.3793e-02], \
                                     'range':[9, 25]}}
+
+def get_mag_from_luminosity(lumn, bc, log=False):
+    if log:
+        return -2.5*np.log10(lumn)+4.74-bc
+    else:
+        return -2.5*lumn+4.74-bc
+
+def fillipazzo_bolometric_correction(spt, filt='2MASS_J', mask=None):
+    """
+    number spectral type
+    """
+    #for float
+    if isinstance(spt, (np.floating, float, int)):
+        return spe.typeToBC(spt, filt, ref='filippazzo2015')
+    #vectorized solution, masking things outside the range
+    else:
+        ref='filippazzo2015'
+        spt=np.array(spt)
+        res=np.ones_like(spt)*np.nan
+        
+        if mask is None: mask=np.zeros_like(spt).astype(bool)
+    
+        bc = np.polyval(splat.SPT_BC_RELATIONS[ref]['filters'][filt]['coeff'], spt-splat.SPT_BC_RELATIONS[ref]['sptoffset'])
+        bc_error = splat.SPT_BC_RELATIONS[ref]['filters'][filt]['fitunc']
+        
+        rands=np.random.normal(bc, bc_error)
+        
+        np.place(res, ~mask, rands )
+
+        return res
 
 def k_clip_fit(x, y, sigma_y, sigma = 5, n=6):
     

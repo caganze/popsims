@@ -7,10 +7,9 @@
 import numpy as np
 import numba
 import scipy
-from .config import DATA_FOLDER, POLYNOMIALS
 from .tools import random_draw, compute_pm_from_uvw
 import scipy.integrate as integrate
-from .core import make_systems,  POLYNOMIALS
+from .core import make_systems
 from scipy.interpolate import interp1d
 import pandas as pd
 from astropy.coordinates import SkyCoord
@@ -24,6 +23,8 @@ from tqdm import tqdm
 
 #some constants
 MAG_KEYS=['WFIRST_WFIJ', 'WFIRST_WFIH', 'WFIRST_WFIK', 'WFIRST_WFIY', 'WFIRST_WFIZ']
+POLYNOMIALS=pd.read_pickle(DATA_FOLDER+'/absmag_relations.pkl')
+
 Rsun=8300.
 Zsun=27.
 
@@ -61,12 +62,6 @@ class Pointing(object):
         self._volume={}
         self.distance_cdf={}
         self.dens_profile=kwargs.get('density', 'exp')
-
-        #compute volumes after initialization
-        #if self.coord is not None:
-        #    for idx in range(0 , len(HS)):
-        #       self.distance_cdf.update({'h{}l{}'.format(HS[idx], LS[idx]):interpolated_cdf(self.coord.galactic.l.radian, \
-        #           self.coord.galactic.b.radian, HS[idx], LS[idx], kind=self.dens_profile)})
 
     @property
     def volume(self):

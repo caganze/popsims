@@ -1,4 +1,3 @@
-import splat
 import numpy as np
 import numba
 import bisect
@@ -7,25 +6,20 @@ import matplotlib.pyplot as plt
 import astropy.units as u
 from astropy.coordinates import SkyCoord, FK5
  
-#@np.vectorize      
-def teff_to_spt(teff):
-    rel=splat.SPT_TEFF_RELATIONS['pecaut']
-    spt_sorted_idx=np.argsort(rel['values'])
-    scatter=108
-    teffsc=np.random.normal(teff, scatter)
-    return np.interp(teffsc, np.array(rel['values'])[spt_sorted_idx], np.array(rel['spt'])[spt_sorted_idx])
-    
-  
-def teff_from_spt(spt):
-    rel=splat.SPT_TEFF_RELATIONS['pecaut']
-    #spt_sorted_idx=np.argsort(rel['values'])
+def sample_from_powerlaw(alpha, xmin=0.1, xmax=1, nsample=int(1e4)):
+    x= np.linspace(xmin, xmax, int(1e6))
+    pdf=x**alpha
+    cdf=np.cumsum(pdf)
+    return random_draw(x, cdf, nsample=int(nsample))
 
-    teff=np.interp(spt,    np.array(rel['spt']), np.array(rel['values']))
-    return np.random.normal(teff, 108)
+def random_draw(x_grid, cdf, nsample=10):
+   # cdf = np.cumsum(pdf)
+    cdf = cdf / cdf[-1]
+    values = np.random.rand(nsample)
+    value_bins = np.searchsorted(cdf, values)
+    random_from_cdf = x_grid[value_bins]
+    return random_from_cdf
 
-
-
-@numba.jit
 def make_spt_number(spt):
     ##make a spt a number
     if isinstance(spt, str):
@@ -58,15 +52,6 @@ def random_draw_old(xvals, cdfvals, nsample=10):
     x=np.random.rand(nsample)
     idx=invert_cdf(x)
     return np.array(xvals)[idx]
-
-
-def random_draw(x_grid, cdf, nsample=10):
-   # cdf = np.cumsum(pdf)
-    cdf = cdf / cdf[-1]
-    values = np.random.rand(nsample)
-    value_bins = np.searchsorted(cdf, values)
-    random_from_cdf = x_grid[value_bins]
-    return random_from_cdf
 
 def compute_uvw_from_pm(ra_J2000, dec_J2000, parallax, rv, mu_ra, mu_dec, e_parallax, e_rv, e_mu_ra, e_mu_dec, correct_lsr=True):
     #from Dino's code
