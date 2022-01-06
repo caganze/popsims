@@ -8,6 +8,7 @@ import os
 
 from .relations import teff_to_spt, scale_to_local_lf, spt_to_teff
 from .tools import sample_from_powerlaw
+from .config import *
 
 DATA_FOLDER=os.environ['POPSIMS_DATA_FOLDER']
 
@@ -18,11 +19,34 @@ def read_bintemplates():
 
 def get_system_type(pr, sc, interpolators):
     """
-    use the lookup table to get a spectral type for the binary
-    using a linear interpolation to avoid nans
-    pr: primary type (float, M0=10)
-    sc: secondary type float, M0=10)
-    interpolatotrs: (3, N) array of loats (0: primary, 1: secondary, 2: system)
+    Fetches rows from a Smalltable.
+
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by table_handle.  String keys will be UTF-8 encoded.
+
+    Args:
+        table_handle: An open smalltable.Table instance.
+        keys: A sequence of strings representing the key of each table
+          row to fetch.  String keys will be UTF-8 encoded.
+        require_all_keys: If True only rows with values set for all keys will be
+          returned.
+
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {b'Serak': ('Rigel VII', 'Preparer'),
+         b'Zim': ('Irk', 'Invader'),
+         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        Returned keys are always bytes.  If a key from the keys argument is
+        missing from the dictionary, then that row was not found in the
+        table (and require_all_keys must have been False).
+
+    Raises:
+        IOError: An error occurred accessing the smalltable.
+
     """
     #where secondary are nans set to primaries
     sc[np.isnan(sc)]=pr[np.isnan(sc)]
@@ -33,10 +57,33 @@ def get_system_type(pr, sc, interpolators):
 
 
 def evolutionary_model_interpolator(mass, age, model):
-    """
-    Evolutionary model interpolator
-    input: mass, age
-    model: model name
+     """Fetches rows from a Smalltable.
+
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by table_handle.  String keys will be UTF-8 encoded.
+
+    Args:
+        table_handle: An open smalltable.Table instance.
+        keys: A sequence of strings representing the key of each table
+          row to fetch.  String keys will be UTF-8 encoded.
+        require_all_keys: If True only rows with values set for all keys will be
+          returned.
+
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {b'Serak': ('Rigel VII', 'Preparer'),
+         b'Zim': ('Irk', 'Invader'),
+         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        Returned keys are always bytes.  If a key from the keys argument is
+        missing from the dictionary, then that row was not found in the
+        table (and require_all_keys must have been False).
+
+    Raises:
+        IOError: An error occurred accessing the smalltable.
     """
 
     model_filename=DATA_FOLDER+'/evmodels//'+model.lower()+'.csv'
@@ -67,9 +114,33 @@ def evolutionary_model_interpolator(mass, age, model):
 
 
 def simulate_spts(nsample=int(1e4), model_name='baraffe2003', save=False, mass_age_range=None, filename=None ):
-    """
-    Simulate parameters from mass function,
-    mass ratio distribution and age distribution
+    """Fetches rows from a Smalltable.
+
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by table_handle.  String keys will be UTF-8 encoded.
+
+    Args:
+        table_handle: An open smalltable.Table instance.
+        keys: A sequence of strings representing the key of each table
+          row to fetch.  String keys will be UTF-8 encoded.
+        require_all_keys: If True only rows with values set for all keys will be
+          returned.
+
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {b'Serak': ('Rigel VII', 'Preparer'),
+         b'Zim': ('Irk', 'Invader'),
+         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        Returned keys are always bytes.  If a key from the keys argument is
+        missing from the dictionary, then that row was not found in the
+        table (and require_all_keys must have been False).
+
+    Raises:
+        IOError: An error occurred accessing the smalltable.
     """
 
     #use hybrid models that predit the T dwarf bump for Saumon Models
@@ -135,6 +206,34 @@ def simulate_spts(nsample=int(1e4), model_name='baraffe2003', save=False, mass_a
     return values
 
 def make_systems(bfraction=0.2, **kwargs):
+     """Fetches rows from a Smalltable.
+
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by table_handle.  String keys will be UTF-8 encoded.
+
+    Args:
+        table_handle: An open smalltable.Table instance.
+        keys: A sequence of strings representing the key of each table
+          row to fetch.  String keys will be UTF-8 encoded.
+        require_all_keys: If True only rows with values set for all keys will be
+          returned.
+
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {b'Serak': ('Rigel VII', 'Preparer'),
+         b'Zim': ('Irk', 'Invader'),
+         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        Returned keys are always bytes.  If a key from the keys argument is
+        missing from the dictionary, then that row was not found in the
+        table (and require_all_keys must have been False).
+
+    Raises:
+        IOError: An error occurred accessing the smalltable.
+    """
 
     mods=simulate_spts(**kwargs)
     
@@ -236,19 +335,36 @@ def make_systems(bfraction=0.2, **kwargs):
 
 
 def make_systems_nocombined_light(**kwargs):
-    """
-    choose a random sets of primaries and secondaries 
-    and a sample of single systems based off a preccomputed-evolutionary model grid 
-    and an unresolved binary fraction
+     """Fetches rows from a Smalltable.
 
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by table_handle.  String keys will be UTF-8 encoded.
+
+    Args:
+        table_handle: An open smalltable.Table instance.
+        keys: A sequence of strings representing the key of each table
+          row to fetch.  String keys will be UTF-8 encoded.
+        require_all_keys: If True only rows with values set for all keys will be
+          returned.
+
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {b'Serak': ('Rigel VII', 'Preparer'),
+         b'Zim': ('Irk', 'Invader'),
+         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        Returned keys are always bytes.  If a key from the keys argument is
+        missing from the dictionary, then that row was not found in the
+        table (and require_all_keys must have been False).
+
+    Raises:
+        IOError: An error occurred accessing the smalltable.
     """
-    #recompute for different evolutionary models
    
     model_vals=simulate_spts(**kwargs)
-
-
-    #nbin= int(len(model_vals['sing_spt'])*binary_fraction) #number of binaries
-    #ndraw= int(len(model_vals['sing_spt'])/(1-binary_fraction))-int(len(model_vals['sing_spt']))
     ndraw=int(len(model_vals['sing_spt'])* binary_fraction)
 
 
