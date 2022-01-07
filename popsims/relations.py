@@ -26,7 +26,7 @@ kirkpatrick2020LF={'bin_center': np.array([ 525,  675,  825,  975, 1125, 1275, 1
     'unc': np.array([0.7 , 0.37, 0.32, 0.3 , 0.25, 0.3 , 0.22, 0.2 , 0.2 , 0.17, 0.18])}
 
 def teff_to_spt(teff):
-	 """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -60,7 +60,7 @@ def teff_to_spt(teff):
     return fx(teffsc)
   
 def spt_to_teff(spt):
-	 """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.

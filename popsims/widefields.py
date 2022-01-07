@@ -14,8 +14,6 @@ from .galaxy import exponential_density, spheroid_density, Rsun, Zsun, get_uvw
 from scipy.interpolate import interp1d
 import pandas as pd
 from astropy.coordinates import SkyCoord
-import astropy.units as u
-from tqdm import tqdm
 import pymc3 as pm
 
 

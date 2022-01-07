@@ -57,7 +57,7 @@ def get_system_type(pr, sc, interpolators):
 
 
 def evolutionary_model_interpolator(mass, age, model):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -85,7 +85,6 @@ def evolutionary_model_interpolator(mass, age, model):
     Raises:
         IOError: An error occurred accessing the smalltable.
     """
-
     model_filename=DATA_FOLDER+'/evmodels//'+model.lower()+'.csv'
     evolutiomodel=pd.read_csv( model_filename)
 
@@ -206,7 +205,7 @@ def simulate_spts(nsample=int(1e4), model_name='baraffe2003', save=False, mass_a
     return values
 
 def make_systems(bfraction=0.2, **kwargs):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -335,7 +334,7 @@ def make_systems(bfraction=0.2, **kwargs):
 
 
 def make_systems_nocombined_light(**kwargs):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
