@@ -179,7 +179,53 @@ def group_by(xvalues, yvalues, grid= np.arange(0, 1, 1000)):
         np.place(res, grid==[grid[idx]], np.nanmedian(yvalues[bools]) )
         np.place(std, grid==[grid[idx]], np.nanstd(yvalues[bools]))
     return {'grid': grid, 'median': res, 'std': std}
+    
+def k_clip_fit(x, y, sigma_y, sigma = 5, n=6):
+    """Fetches rows from a Smalltable.
 
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by table_handle.  String keys will be UTF-8 encoded.
+
+    Args:
+        table_handle: An open smalltable.Table instance.
+        keys: A sequence of strings representing the key of each table
+          row to fetch.  String keys will be UTF-8 encoded.
+        require_all_keys: If True only rows with values set for all keys will be
+          returned.
+
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {b'Serak': ('Rigel VII', 'Preparer'),
+         b'Zim': ('Irk', 'Invader'),
+         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        Returned keys are always bytes.  If a key from the keys argument is
+        missing from the dictionary, then that row was not found in the
+        table (and require_all_keys must have been False).
+
+    Raises:
+        IOError: An error occurred accessing the smalltable.
+    """
+    
+    not_clipped = np.ones_like(y).astype(bool)
+    n_remove = 1
+    
+    #use median sigma
+    #median_sigma= np.nanmedian(sigma_y)
+    
+    while n_remove > 0:
+
+        best_fit = np.poly1d(np.polyfit(x[not_clipped], y[not_clipped], n))
+        
+        norm_res = (np.abs(y - best_fit(x)))/(sigma_y)
+        remove = np.logical_and(norm_res >= sigma, not_clipped == 1)
+        n_remove = sum(remove)
+        not_clipped[remove] = 0   
+        
+    return  not_clipped
 def random_draw_old(xvals, cdfvals, nsample=10):
     """Fetches rows from a Smalltable.
 

@@ -2,11 +2,13 @@
 ################################
 #Should clean up later
 
+#requires splat installation to use
+
 ##############################
 import numpy as np
 from astropy.io import ascii
+
 #import splat
-import numba
 
 kirkpa2019pol={'2MASS H':{'pol':np.poly1d(np.flip([36.9714, -8.66856, 1.05122 ,-0.0344809])), 
                     'scatter':.67, 'range':[36, 44]}}
@@ -18,16 +20,68 @@ kirkap202_teff_to_mag_pol={'2MASS H':{'coeffs':[1.2516e+04, -1.5666e+03, 6.7502e
                                     'range':[9, 25]}}
 
 def get_mag_from_luminosity(lumn, bc, log=False):
+    """Fetches rows from a Smalltable.
+
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by table_handle.  String keys will be UTF-8 encoded.
+
+    Args:
+        table_handle: An open smalltable.Table instance.
+        keys: A sequence of strings representing the key of each table
+          row to fetch.  String keys will be UTF-8 encoded.
+        require_all_keys: If True only rows with values set for all keys will be
+          returned.
+
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {b'Serak': ('Rigel VII', 'Preparer'),
+         b'Zim': ('Irk', 'Invader'),
+         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        Returned keys are always bytes.  If a key from the keys argument is
+        missing from the dictionary, then that row was not found in the
+        table (and require_all_keys must have been False).
+
+    Raises:
+        IOError: An error occurred accessing the smalltable.
+    """
     if log:
         return -2.5*np.log10(lumn)+4.74-bc
     else:
         return -2.5*lumn+4.74-bc
 
 def fillipazzo_bolometric_correction(spt, filt='2MASS_J', mask=None):
+    """Fetches rows from a Smalltable.
+
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by table_handle.  String keys will be UTF-8 encoded.
+
+    Args:
+        table_handle: An open smalltable.Table instance.
+        keys: A sequence of strings representing the key of each table
+          row to fetch.  String keys will be UTF-8 encoded.
+        require_all_keys: If True only rows with values set for all keys will be
+          returned.
+
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {b'Serak': ('Rigel VII', 'Preparer'),
+         b'Zim': ('Irk', 'Invader'),
+         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        Returned keys are always bytes.  If a key from the keys argument is
+        missing from the dictionary, then that row was not found in the
+        table (and require_all_keys must have been False).
+
+    Raises:
+        IOError: An error occurred accessing the smalltable.
     """
-    number spectral type
-    """
-    #for float
     if isinstance(spt, (np.floating, float, int)):
         return spe.typeToBC(spt, filt, ref='filippazzo2015')
     #vectorized solution, masking things outside the range
@@ -47,28 +101,7 @@ def fillipazzo_bolometric_correction(spt, filt='2MASS_J', mask=None):
 
         return res
 
-def k_clip_fit(x, y, sigma_y, sigma = 5, n=6):
-    
-    '''Fit a polynomial to y vs. x, and k-sigma clip until convergence
-    hard-coded, returns mask array
-    '''
-    
-    not_clipped = np.ones_like(y).astype(bool)
-    n_remove = 1
-    
-    #use median sigma
-    #median_sigma= np.nanmedian(sigma_y)
-    
-    while n_remove > 0:
 
-        best_fit = np.poly1d(np.polyfit(x[not_clipped], y[not_clipped], n))
-        
-        norm_res = (np.abs(y - best_fit(x)))/(sigma_y)
-        remove = np.logical_and(norm_res >= sigma, not_clipped == 1)
-        n_remove = sum(remove)
-        not_clipped[remove] = 0   
-        
-    return  not_clipped
 
 def fit_with_nsigma_clipping(x, y, y_unc, n, sigma=3.):
     not_clipped = k_clip_fit(x, y, y_unc, sigma = sigma)

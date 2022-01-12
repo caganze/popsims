@@ -21,22 +21,21 @@ import gala.dynamics as gd
 import collections
 from tqdm import tqdm
 
-#some constants
+
 MAG_KEYS=['WFIRST_WFIJ', 'WFIRST_WFIH', 'WFIRST_WFIK', 'WFIRST_WFIY', 'WFIRST_WFIZ']
 POLYNOMIALS=pd.read_pickle(DATA_FOLDER+'/absmag_relations.pkl')
-
 Rsun=8300.
 Zsun=27.
 
-_ = astro_coord.galactocentric_frame_defaults.set('v4.0')
 #galactocentric reference frame
+_ = astro_coord.galactocentric_frame_defaults.set('v4.0')
 v_sun = astro_coord.CartesianDifferential([11.1, 220 + 24.0, 7.25]*u.km/u.s)
 
 galcen_frame =astro_coord.Galactocentric(galcen_distance=8.3*u.kpc,
                                     galcen_v_sun=v_sun)
 
-def galactic_density(rd, zd, Hthin=350, Hthick=900):
-     """Fetches rows from a Smalltable.
+def galactic_density(rd, zd, Hthin=350, Hthick=900, Lthin=2600, Lthick=3600):
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -67,13 +66,13 @@ def galactic_density(rd, zd, Hthin=350, Hthick=900):
     fh=0.0051
     ft=0.12
     #only change thin disk scaleheight, keep thick disk and halo fixed
-    thin=exponential_density(rd, zd, Hthin, 2600)
-    thick=exponential_density(rd, zd, Hthick, 3600)
+    thin=exponential_density(rd, zd, Hthin, Lthin)
+    thick=exponential_density(rd, zd, Hthick, Lthick)
     halo=spheroid_density(rd, zd)
     return {'thin': thin, 'thick': ft*thick , 'halo': fh*halo}
 
 def transform_tocylindrical(l, b, ds):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -212,7 +211,7 @@ def pop_mags_from_type(spt, d=None, keys=[], object_type='dwarfs', reference=Non
     return pd.DataFrame(res)
 
 def pop_mags_from_color(color, d=None, keys=[], object_type='dwarfs'):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -258,7 +257,7 @@ def pop_mags_from_color(color, d=None, keys=[], object_type='dwarfs'):
 
 
 def interpolated_cdf(l, b, scaleH, scaleL, **kwargs):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -295,7 +294,7 @@ def interpolated_cdf(l, b, scaleH, scaleL, **kwargs):
     return interp1d(d, cdfvals)
 
 def exponential_density(r, z, H,L):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -328,7 +327,7 @@ def exponential_density(r, z, H,L):
     return zpart*rpart
 
 def spheroid_density(r, z):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -365,7 +364,7 @@ def get_distance(absmag, rel_mag):
     return 10.**(-(absmag-rel_mag)/5. + 1.)
     
 def avr_aumer(sigma,  direction='vertical', verbose=False):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -410,7 +409,7 @@ def avr_aumer(sigma,  direction='vertical', verbose=False):
     return result
 
 def avr_yu(sigma, verbose=False, disk='thin', direction='vertical', height='above', nsample=1e4):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -473,7 +472,7 @@ def avr_yu(sigma, verbose=False, disk='thin', direction='vertical', height='abov
         return np.vstack([np.nanmedian(sigmas, axis=0), np.nanstd(sigmas, axis=0)])
 
 def avr_sanders(sigma, verbose=False, direction='vertical'):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -509,7 +508,7 @@ def avr_sanders(sigma, verbose=False, direction='vertical'):
     return sigma**(beta)
 
 def avr_just(sigma, verbose=False, direction='vertical'):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -546,7 +545,7 @@ def avr_just(sigma, verbose=False, direction='vertical'):
     return ((sigma/sigma0)**(1/alpha))*(tp+t0)-t0
 
 def scaleheight_to_vertical_disp(hs):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -579,7 +578,7 @@ def scaleheight_to_vertical_disp(hs):
     return np.sqrt((np.array(hs))/shape)*20
 
 def volume_calc(l,b,dmin, dmax, scaleH, scaleL, kind='exp'):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -621,7 +620,7 @@ def volume_calc(l,b,dmin, dmax, scaleH, scaleL, kind='exp'):
     return val
 
 def get_velocities(age, kind='thin_disk',z=None):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -693,7 +692,7 @@ def get_velocities(age, kind='thin_disk',z=None):
     return  pd.DataFrame(vels)
 
 def get_proper_motion(ra, dec, d, u, v, w):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -730,7 +729,7 @@ def get_proper_motion(ra, dec, d, u, v, w):
                       'Vtan': motions[-1]})
 
 def get_proper_motion_cylindrical(ra,dec, d, vr, vphi, vz):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
@@ -789,7 +788,7 @@ def create_pop(bfraction=None,\
                      dmax=None, l=None, b=None, \
                absmag_keys=['WFIRST_WFIJ'], 
               population='thin_disk', distances=None, poptype='dwarfs'):
-     """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
