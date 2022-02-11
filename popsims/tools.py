@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 import astropy.units as u
 from astropy.coordinates import SkyCoord, FK5
+import functools
  
 def sample_from_powerlaw(alpha, xmin=0.1, xmax=1, nsample=int(1e4)):
     """Fetches rows from a Smalltable.
@@ -428,6 +429,47 @@ def plot_annotated_heatmap(ax, data, gridpoints, columns, cmap='viridis',
 
     ax.set_ylim(ymax, ymin)
     return 
+
+
+def alias(aliases):
+    """Fetches rows from a Smalltable.
+
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by table_handle.  String keys will be UTF-8 encoded.
+
+    Args:
+        table_handle: An open smalltable.Table instance.
+        keys: A sequence of strings representing the key of each table
+          row to fetch.  String keys will be UTF-8 encoded.
+        require_all_keys: If True only rows with values set for all keys will be
+          returned.
+
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {b'Serak': ('Rigel VII', 'Preparer'),
+         b'Zim': ('Irk', 'Invader'),
+         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        Returned keys are always bytes.  If a key from the keys argument is
+        missing from the dictionary, then that row was not found in the
+        table (and require_all_keys must have been False).
+
+    Raises:
+        IOError: An error occurred accessing the smalltable.
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(**kwargs):
+            for name, alias in aliases.items():
+                if name not in kwargs and alias in kwargs:
+                    kwargs[name] = kwargs[alias]
+            return func(**kwargs)
+        return wrapper
+    return decorator
+
 
 def compute_pm_from_uvw(ra_J2000, dec_J2000, parallax, us, vs, ws, correct_lsr=False):
     """

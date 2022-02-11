@@ -141,3 +141,41 @@ def scale_to_local_lf(teffs):
                                      np.sum(preds*np.nanmedian(scale))]
 
     return res
+
+
+def interpolated_local_lf():
+    """
+     Fetches rows from a Smalltable.
+
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by table_handle.  String keys will be UTF-8 encoded.
+
+    Args:
+        table_handle: An open smalltable.Table instance.
+        keys: A sequence of strings representing the key of each table
+          row to fetch.  String keys will be UTF-8 encoded.
+        require_all_keys: If True only rows with values set for all keys will be
+          returned.
+
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {b'Serak': ('Rigel VII', 'Preparer'),
+         b'Zim': ('Irk', 'Invader'),
+         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        Returned keys are always bytes.  If a key from the keys argument is
+        missing from the dictionary, then that row was not found in the
+        table (and require_all_keys must have been False).
+
+    Raises:
+        IOErro
+    """
+
+    binedges= np.append(kirkpatrick2020LF['bin_center']-75, kirkpatrick2020LF['bin_center'][-1]+75)
+    obs=np.array(kirkpatrick2020LF['values'])
+    unc=np.array(kirkpatrick2020LF['unc'])
+
+    return interp1d( binedges, obs, assume_sorted = False, fill_value = np.nan, bounds_error=False)

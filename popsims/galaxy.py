@@ -619,7 +619,7 @@ def volume_calc(l,b,dmin, dmax, scaleH, scaleL, kind='exp'):
     val=integrate.trapz(rh0*(ds**2), x=ds)
     return val
 
-def get_velocities(age, kind='thin_disk',z=None):
+def get_velocities(age, population='thin_disk'):
     """Fetches rows from a Smalltable.
 
     Retrieves rows pertaining to the given keys from the Table instance
@@ -672,7 +672,7 @@ def get_velocities(age, kind='thin_disk',z=None):
     vs =np.random.normal(loc=voff, scale=sigma_v, size=len(age))
     ws =np.random.normal(loc=0.0, scale=sigma_w, size=len(age))
     vels={'U': us, 'V':vs,  'W':ws }
-    if kind=='halo':
+    if population=='halo':
         #values from carollo et al. not exactly right but close
         #these are actually vr, vphi, vz
         vr=np.random.normal(loc=3, scale=150, size=len(age))
@@ -680,7 +680,7 @@ def get_velocities(age, kind='thin_disk',z=None):
         vz=np.random.normal(loc=3, scale=85, size=len(age))
         vels={'Vr': vr, 'Vphi':vphi,  'Vz':vz }
         
-    if kind=='thick_disk':
+    if population=='thick_disk':
         #use Bensby et al
         v_assym=46
         uvw_lsr=[0, 0, 0]
@@ -817,9 +817,9 @@ def create_pop(bfraction=None,\
         IOError: An error occurred accessing the smalltable.
     """
     
-    mass_age_ranges={'thin_disk':[0.01, 0.15, 0., 8.0],\
-                    'thick_disk': [0.01, 0.15, 8., 13.0],\
-                    'halo':[0.01, 0.15, 10., 13.0]}
+    mass_age_ranges={'thin_disk':[0.01, 0.2, 0., 8.0],\
+                    'thick_disk': [0.01, 0.2, 8., 13.0],\
+                    'halo':[0.01, 0.2, 10., 14.0]}
     #get fundamental parameters
     df=make_systems(model_name=model, bfraction=bfraction,\
                             mass_age_range= mass_age_ranges[population],\
@@ -843,13 +843,13 @@ def create_pop(bfraction=None,\
     df['r']=r
     df['z']=z
     #get velocities  and add magnitude
-    if population != 'halo':
-        vels=get_velocities(df.age, z= df.z, kind=population).reset_index(drop=True)
-        #compute proper motions
+    #if population != 'halo':
+    vels=get_velocities(df.age,  population=population).reset_index(drop=True)
+    #compute proper motions
     
-    if population == 'halo':
-        vels= get_velocities(df.age, z= df.z, kind=population).reset_index(drop=True)
-        #use astropy to computer proper motions #no need to compute at this stage
+    #if population == 'halo':
+    #vels= get_velocities(df.age, z= df.z, kind=population).reset_index(drop=True)
+    #use astropy to computer proper motions #no need to compute at this stage
        
     dff=pop_mags_from_type(df.spt.values, d=df.d.values, \
             keys=absmag_keys, object_type=poptype).join(df).join(vels)

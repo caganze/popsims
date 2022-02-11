@@ -105,7 +105,6 @@ def evolutionary_model_interpolator(mass, age, model):
     teffs=griddata(evolpoints, valuest , (np.log10(mass), np.log10(age)), method='linear')
     lumn=griddata(evolpoints, valueslumn , (np.log10(mass), np.log10(age)), method='linear')
 
-
     return {'mass': mass*u.Msun, 'age': age*u.Gyr, 'temperature': 10**teffs*u.Kelvin, 
     'luminosity': lumn*u.Lsun}
 
@@ -250,6 +249,8 @@ def make_systems(bfraction=0.2, **kwargs):
     singles['spt']=mods['sing_spt']
     singles['prim_spt']=mods['sing_spt']
     singles['sec_spt']=np.ones_like(mods['sing_spt'])*np.nan
+
+    #print (np.isnan(singles['temperature']).all())
     
     #binary
     binaries={}
@@ -268,6 +269,7 @@ def make_systems(bfraction=0.2, **kwargs):
     binaries['sec_luminosity']=10**(mods['sec_evol']['luminosity']).value
 
     binaries['is_binary']=np.ones_like(mods['sec_spt']).astype(bool)
+
     
     #bolometric corrections for 2MASS J
     #bcs_bins=fillipazzo_bolometric_correction(binaries['spt'], filt='2MASS_J', 
@@ -307,6 +309,7 @@ def make_systems(bfraction=0.2, **kwargs):
     #binaries['temperature']=get_teff_from_mag_ignore_unc(binaries['abs_2MASS_H'])
     binaries['temperature']=spt_to_teff(binaries['spt'])
     #binaries['temperature']=
+    #print (np.isnan(binaries['temperature']).all())
 
     
     #compute numbers to choose based on binary fraction
@@ -330,6 +333,8 @@ def make_systems(bfraction=0.2, **kwargs):
     res['scale_times_model']=scl[-1]
 
     #combine the to dictionaries 
+    #print (np.isnan(res['temperature']).all())
+
     return res
 
 
