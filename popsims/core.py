@@ -6,7 +6,8 @@ import pandas as pd
 import numpy as np
 import os
 
-from .relations import teff_to_spt, scale_to_local_lf, spt_to_teff
+from .relations import teff_to_spt, scale_to_local_lf, spt_to_teff, teff_to_spt_kirkpatrick, \
+spt_to_teff_kirkpatrick
 from .tools import sample_from_powerlaw
 from .config import *
 
@@ -179,9 +180,9 @@ def simulate_spts(nsample=int(1e4), model_name='baraffe2003', save=False, mass_a
     teffs_second=secondary_evol['temperature'].value
 
     #spectraltypes
-    spts_singl =teff_to_spt(teffs_singl)
-    spt_primar=teff_to_spt(teffs_primar)
-    spt_second=teff_to_spt(teffs_second)
+    spts_singl =teff_to_spt_kirkpatrick(teffs_singl)
+    spt_primar=teff_to_spt_kirkpatrick(teffs_primar)
+    spt_second=teff_to_spt_kirkpatrick(teffs_second)
 
     #compute binary spectral types
     xy=np.vstack([np.round(np.array(spt_primar), decimals=0), np.round(np.array(spt_second), decimals=0)]).T
@@ -307,7 +308,7 @@ def make_systems(bfraction=0.2, **kwargs):
 
     #assign teff from absolute mag
     #binaries['temperature']=get_teff_from_mag_ignore_unc(binaries['abs_2MASS_H'])
-    binaries['temperature']=spt_to_teff(binaries['spt'])
+    binaries['temperature']=spt_to_teff_kirkpatrick(binaries['spt'])
     #binaries['temperature']=
     #print (np.isnan(binaries['temperature']).all())
 
