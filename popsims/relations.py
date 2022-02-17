@@ -5,7 +5,7 @@
 
 from scipy.interpolate import interp1d
 import numpy as np
-
+import splat.empirical as spe
 
 TEFF_SPT_RELATIONS={'pecaut': {'bibcode': '2013ApJS..208....9P', 'url': 'http://www.pas.rochester.edu/~emamajek/EEM_dwarf_UBVIJHK_colors_Teff.txt', \
 'method': 'interpolate', 'range': [0.0, 29.0], 'fitunc': 108.0, 
@@ -19,7 +19,9 @@ TEFF_SPT_RELATIONS={'pecaut': {'bibcode': '2013ApJS..208....9P', 'url': 'http://
        108., 108., 108., 108., 108., 108., 108., 108., 108., 108., 108.,
        108., 108., 108., 108., 108., 108., 108., 108., 108., 108., 108.,
        108., 108., 108., 108., 108., 108., 108., 108., 108., 108., 108.,
-       108.]}}
+       108.]}, \
+
+'kirkpatrick2021': {'bibcode': None, 'method':''}}
 
 kirkpatrick2020LF={'bin_center': np.array([ 525,  675,  825,  975, 1125, 1275, 1425, 1575, 1725, 1875, 2025]),
     'values': np.array([4.24, 2.8 , 1.99, 1.72, 1.11, 1.95, 0.94, 0.81, 0.78, 0.5 , 0.72]),
@@ -142,6 +144,99 @@ def scale_to_local_lf(teffs):
 
     return res
 
+def  spt_to_teff_kirkpatrick(spt):
+    """
+     Fetches rows from a Smalltable.
+
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by table_handle.  String keys will be UTF-8 encoded.
+
+    Args:
+        table_handle: An open smalltable.Table instance.
+        keys: A sequence of strings representing the key of each table
+          row to fetch.  String keys will be UTF-8 encoded.
+        require_all_keys: If True only rows with values set for all keys will be
+          returned.
+
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {b'Serak': ('Rigel VII', 'Preparer'),
+         b'Zim': ('Irk', 'Invader'),
+         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        Returned keys are always bytes.  If a key from the keys argument is
+        missing from the dictionary, then that row was not found in the
+        table (and require_all_keys must have been False).
+
+    Raises:
+        IOError
+    """
+    #change to convetion L0=0
+    spt=spt-20
+    res= np.nan
+    rms=79
+    if spt<0:
+        res, rms=spe.typeToTeff(float(spt+20), ref='mamajek')
+        res=res.value
+        rms=rms.value
+        
+    if np.logical_and(spt>=0, spt<=8.75):
+        res= 2.2375e+03-1.4496e+02*spt+4.0301e+00*(spt**2)
+        rms=134
+    if np.logical_and(spt>=8.75, spt<=14.75):
+        res= 1.4379e+03-1.8309e+01*spt
+    if np.logical_and(spt>=14.75, spt<=22):
+        res= 5.1413e+03-3.6865e+02*spt+6.7301e+00*(spt**2)
+    
+    return res, rms
+
+def teff_to_spt_kirkpatrick(teff):
+    """
+     Fetches rows from a Smalltable.
+
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by table_handle.  String keys will be UTF-8 encoded.
+
+    Args:
+        table_handle: An open smalltable.Table instance.
+        keys: A sequence of strings representing the key of each table
+          row to fetch.  String keys will be UTF-8 encoded.
+        require_all_keys: If True only rows with values set for all keys will be
+          returned.
+
+    Returns:
+        A dict mapping keys to the corresponding table row data
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {b'Serak': ('Rigel VII', 'Preparer'),
+         b'Zim': ('Irk', 'Invader'),
+         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        Returned keys are always bytes.  If a key from the keys argument is
+        missing from the dictionary, then that row was not found in the
+        table (and require_all_keys must have been False).
+
+    Raises:
+        IOError
+    """
+    
+    #spectral type grid
+    sp_grid=np.arange(10, 43)
+    teff_grid, unc= np.vstack([list(spt_to_teff_kirkpatrick(x)) for x in sp_grid]).T
+    
+    
+    #randomize
+    rand_teffs= np.random.normal(teff_grid, unc, size=(10_000, len(unc)) ).flatten()
+    rand_types= np.vstack([sp_grid for x in range(0, 10_000)]).flatten()
+   
+    #return interpolated value and uncertainties
+    f=interp1d(rand_teffs, rand_types, assume_sorted = False, fill_value = np.nan, bounds_error=False)
+
+    return f(teff)
 
 def interpolated_local_lf():
     """
@@ -171,7 +266,7 @@ def interpolated_local_lf():
         table (and require_all_keys must have been False).
 
     Raises:
-        IOErro
+        IOError
     """
 
     binedges= np.append(kirkpatrick2020LF['bin_center']-75, kirkpatrick2020LF['bin_center'][-1]+75)
