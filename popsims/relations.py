@@ -19,7 +19,7 @@ TEFF_SPT_RELATIONS={'pecaut': {'bibcode': '2013ApJS..208....9P', 'url': 'http://
        108., 108., 108., 108., 108., 108., 108., 108., 108., 108., 108.,
        108., 108., 108., 108., 108., 108., 108., 108., 108., 108., 108.,
        108., 108., 108., 108., 108., 108., 108., 108., 108., 108., 108.,
-       108.]}, \
+       108.]}}
 
 kirkpatrick2020LF={'bin_center': np.array([ 525,  675,  825,  975, 1125, 1275, 1425, 1575, 1725, 1875, 2025]),
     'values': np.array([4.24, 2.8 , 1.99, 1.72, 1.11, 1.95, 0.94, 0.81, 0.78, 0.5 , 0.72]),
@@ -143,84 +143,46 @@ def scale_to_local_lf(teffs):
     return res
 
 def  spt_to_teff_kirkpatrick(spt):
-    """
-     Fetches rows from a Smalltable.
-
-    Retrieves rows pertaining to the given keys from the Table instance
-    represented by table_handle.  String keys will be UTF-8 encoded.
-
-    Args:
-        table_handle: An open smalltable.Table instance.
-        keys: A sequence of strings representing the key of each table
-          row to fetch.  String keys will be UTF-8 encoded.
-        require_all_keys: If True only rows with values set for all keys will be
-          returned.
-
-    Returns:
-        A dict mapping keys to the corresponding table row data
-        fetched. Each row is represented as a tuple of strings. For
-        example:
-
-        {b'Serak': ('Rigel VII', 'Preparer'),
-         b'Zim': ('Irk', 'Invader'),
-         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
-
-        Returned keys are always bytes.  If a key from the keys argument is
-        missing from the dictionary, then that row was not found in the
-        table (and require_all_keys must have been False).
-
-    Raises:
-        IOError
-    """
+    #change to array to vectorize
+    spt=np.array(spt)
+    size=0 #just a flag 
+    if spt.size==1:
+        spt=np.array([spt, spt])
+        size=-1
+    
+    spt=np.array(spt).astype(float)
     #change to convetion L0=0
     spt=spt-20
-    res= np.nan
-    rms=79
-    if spt<0:
-        res, rms=spe.typeToTeff(float(spt+20), ref='mamajek')
-        res=res.value
-        rms=rms.value
-        
-    if np.logical_and(spt>=0, spt<=8.75):
-        res= 2.2375e+03-1.4496e+02*spt+4.0301e+00*(spt**2)
-        rms=134
-    if np.logical_and(spt>=8.75, spt<=14.75):
-        res= 1.4379e+03-1.8309e+01*spt
-    if np.logical_and(spt>=14.75, spt<=22):
-        res= 5.1413e+03-3.6865e+02*spt+6.7301e+00*(spt**2)
     
-    return res, rms
+    res= np.nan*(np.ones_like(spt))
+    rms=79*(np.ones_like(spt))
+    
+    mask0= spt<0
+    mask1= np.logical_and(spt>=0, spt<=8.75)
+    mask2= np.logical_and(spt>=8.75, spt<=14.75)
+    mask3= np.logical_and(spt>=14.75, spt<=22)
+    
+    #use mamjek for earlier
+    res0, rms0=spe.typeToTeff(spt+20, ref='mamajek')
+    res0=res0.value
+    rms0=rms0.value
+    res[mask0]= res0[mask0]
+    rms[mask0]=rms[mask0]
+    
+    #use davy's for later
+    res[mask1]= (2.2375e+03-1.4496e+02*spt+4.0301e+00*(spt**2))[mask1]
+    rms[mask1]=134
+    
+    res[mask2]= (1.4379e+03-1.8309e+01*spt)[mask2]
+    
+    res[mask3]= (5.1413e+03-3.6865e+02*spt+6.7301e+00*(spt**2))[mask3]
+    
+    if size==-1:
+        return res[0], rms[0]
+    if size !=-1:
+        return res, rms
 
 def teff_to_spt_kirkpatrick(teff):
-    """
-     Fetches rows from a Smalltable.
-
-    Retrieves rows pertaining to the given keys from the Table instance
-    represented by table_handle.  String keys will be UTF-8 encoded.
-
-    Args:
-        table_handle: An open smalltable.Table instance.
-        keys: A sequence of strings representing the key of each table
-          row to fetch.  String keys will be UTF-8 encoded.
-        require_all_keys: If True only rows with values set for all keys will be
-          returned.
-
-    Returns:
-        A dict mapping keys to the corresponding table row data
-        fetched. Each row is represented as a tuple of strings. For
-        example:
-
-        {b'Serak': ('Rigel VII', 'Preparer'),
-         b'Zim': ('Irk', 'Invader'),
-         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
-
-        Returned keys are always bytes.  If a key from the keys argument is
-        missing from the dictionary, then that row was not found in the
-        table (and require_all_keys must have been False).
-
-    Raises:
-        IOError
-    """
     
     #spectral type grid
     sp_grid=np.arange(10, 43)
@@ -235,6 +197,7 @@ def teff_to_spt_kirkpatrick(teff):
     f=interp1d(rand_teffs, rand_types, assume_sorted = False, fill_value = np.nan, bounds_error=False)
 
     return f(teff)
+
 
 def interpolated_local_lf():
     """
