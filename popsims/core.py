@@ -308,7 +308,7 @@ def make_systems(bfraction=0.2, **kwargs):
 
     #assign teff from absolute mag
     #binaries['temperature']=get_teff_from_mag_ignore_unc(binaries['abs_2MASS_H'])
-    binaries['temperature']=spt_to_teff_kirkpatrick(binaries['spt'])
+    binaries['temperature']=spt_to_teff_kirkpatrick(binaries['spt'])[0]
     #binaries['temperature']=
     #print (np.isnan(binaries['temperature']).all())
 
@@ -337,7 +337,6 @@ def make_systems(bfraction=0.2, **kwargs):
     #print (np.isnan(res['temperature']).all())
 
     return res
-
 
 def make_systems_nocombined_light(**kwargs):
     """Fetches rows from a Smalltable.
