@@ -91,7 +91,8 @@ def  spt_to_teff_kirkpatrick(spt):
 
 def teff_to_spt_kirkpatrick(teff):
     tgrid=np.linspace(0, 3000, 1000)
-    return inverse_polynomial_relation(LITERATURE_POLYNOMIALS['kirkpatrick2021']['x=spt,y=teff'], teff, tgrid)
+    return inverse_polynomial_relation(LITERATURE_POLYNOMIALS['kirkpatrick2021']['x=spt,y=teff'], teff, tgrid, \
+        nsample=1000)
 
 
 def interpolated_local_lf():

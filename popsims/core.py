@@ -185,9 +185,10 @@ def simulate_spts(nsample=int(1e4), model_name='baraffe2003', save=False, mass_a
     spt_second=teff_to_spt_kirkpatrick(teffs_second)[0]
 
     #use pecaut relations for objects of higher teff (teff < 2000 degrees)
-    spts_singl[teffs_singl <2000]= teff_to_spt_pecaut(teffs_singl[teffs_singl<2000])
-    spt_primar[teffs_primar <2000]= teff_to_spt_pecaut(teffs_primar[teffs_primar<2000])
-    spt_second[spt_second <2000]= teff_to_spt_pecaut(teffs_second[teffs_second<2000])
+    spts_singl[teffs_singl >2000]= teff_to_spt_pecaut(teffs_singl[teffs_singl>2000])
+    spt_primar[teffs_primar >2000]= teff_to_spt_pecaut(teffs_primar[teffs_primar>2000])
+    spt_second[teffs_second>2000]= teff_to_spt_pecaut(teffs_second[teffs_second>2000])
+
 
     #compute binary spectral types
     xy=np.vstack([np.round(np.array(spt_primar), decimals=0), np.round(np.array(spt_second), decimals=0)]).T
@@ -313,7 +314,8 @@ def make_systems(bfraction=0.2, **kwargs):
 
     #assign teff from absolute mag
     #binaries['temperature']=get_teff_from_mag_ignore_unc(binaries['abs_2MASS_H'])
-    mask= binaries['spt'] <20.
+    mask= binaries['spt'] >20.
+    binaries['temperature']= np.ones_like( binaries['spt'])*np.nan
     binaries['temperature'][mask]=spt_to_teff_kirkpatrick(binaries['spt'])[0][mask]
     binaries['temperature'][~mask]=spt_to_teff_pecaut(binaries['spt'])[~mask]
     #use 
