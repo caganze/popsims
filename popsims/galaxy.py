@@ -507,6 +507,36 @@ def avr_sanders(sigma, verbose=False, direction='vertical'):
     verboseprint("Assuming Sanders et al. 2018 Power for  velocity {}".format(direction))
     return sigma**(beta)
 
+def avr_sharma(sigma,  direction='vertical', verbose=False):
+    verboseprint = print if verbose else lambda *a, **k: None
+    result=None
+    sigma=np.array(sigma).flatten()
+    
+    beta_dict={'radial': [(0.251, 0.006), 0.1,  (39.4, 0.3)],
+                'vertical':[(0.441, 0.007), 0.1, (21.1, 0.2)],
+               
+                }
+
+    verboseprint("Assuming Sharma et al. 2021 Metal-Rich Fits and {} velocity ".format(direction))
+                            
+    #propagate uncertainties via monte-carlo
+    beta, tau1, sigma10=beta_dict[direction]
+   
+    #case for floats
+    if sigma.size==1:
+        beta_norm= np.random.normal(*beta, 1000)
+        sigma10_norm= np.random.normal(*sigma10, 1000)
+        result=((sigma/ sigma10_norm)**(1/ beta_norm))*(10+tau1)-tau1
+        return np.nanmedian(result), np.nanstd(result)
+    
+    #case for arrays
+    if sigma.size >1:
+        beta_norm= np.random.normal(*beta, (1000, len(sigma)))
+        sigma10_norm= np.random.normal(*sigma10, (1000, len(sigma)))
+
+        result=((sigma/ sigma10_norm)**(1/ beta_norm))*(10+tau1)-tau1
+        return np.nanmedian(result, axis=0), np.nanstd(result, axis=0) 
+        
 def avr_just(sigma, verbose=False, direction='vertical'):
     """Fetches rows from a Smalltable.
 

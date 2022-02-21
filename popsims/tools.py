@@ -380,6 +380,118 @@ def compute_uvw_from_pm(ra_J2000, dec_J2000, parallax, rv, mu_ra, mu_dec, e_para
 
     return uvw, np.sqrt(e_uvw2)
 
+def apply_polynomial_relation(pol, x, xerr=0.0, nsample=100):
+    
+    """
+    
+    Applies a polynomial function to a data point c_0+ c_1*x**2+ ..
+
+    
+
+    Args:
+        pol: Polynomial dictionary where keys are valid parameter ranges for x.
+             Must have the following syntax
+             {'mask0': {'coeffs': [], 'yerr':, 'xshift': },
+             'mask1': {'coeffs': [], 'yerr':  'xshift':}, 
+             'mask2': {'coeffs': [], 'yerr': 'xshift': }, ..} etc.
+             Where mask0 are bounds on x, mask0= '10_20' interprested as valid for [10]
+             Keys must be strings separated by underscore.
+            
+             Coeffs are lists of coefficients starting from the LOWEST i.e 0th order 
+             Xshift is the shift to x, (x-shift)**n ... set this to 0 if no shift required
+             
+        x:
+            x data, can be a float or list or array
+        
+        xerr:
+            Optional: uncertainty in x, the data is resampled assuming this uncertainty. Default is 0
+        
+
+    Returns: a tuple of y and yunc (both arrays or floats )
+
+    Raises:
+    
+    
+    """
+    x=np.array(x)
+ 
+    #handle cases where x is a float
+    size=0
+    if x.size==1:
+        x=np.array([x, x]).astype(float)
+        xerr=np.array([xerr, xerr]).astype(float)
+        size=-1
+
+    x=np.random.normal(x, xerr, (int(nsample), len(x)))
+
+    #if xerr is None
+    res= []
+    unc= []
+
+    #loop through each coefficient
+    for k in pol.keys():
+        #compute the shift to x values
+        xshift= pol[k]['xshift']
+        coeffs=pol[k]['coeffs']
+        scatter=pol[k]['yerr']
+        
+        #shit x
+        x_s=x-xshift
+        
+        #mask the low limit and high limit
+        lowlim= float(k.split('_')[0])-xshift
+        uplim= float(k.split('_')[-1])-xshift
+    
+        
+        #compute masked arrays
+        masked_x= np.ma.masked_outside(x_s, lowlim, uplim, copy=True)
+      
+        #compute polynomials
+        ans= np.nansum([coeffs[i]*(masked_x**i) for i in range(len(coeffs))], axis=0)
+        
+        #update the result inside bounds
+        masked_ans=np.ma.masked_array(ans, mask=masked_x.mask)
+        
+        #resample with uncertainties
+        vals=np.random.normal(masked_ans.filled(fill_value=np.nan), scatter )
+        
+    
+        
+        res.append(vals)
+
+    res=np.nanmean(res, axis=0)
+    if size ==-1:
+        return np.nanmedian(res.flatten()), np.nanstd(res.flatten())
+    if size !=-1:
+        return np.nanmean(res, axis=0), np.nanstd(res, axis=0)
+    
+def inverse_polynomial_relation(pol, y, xgrid, nsample=1000):
+    
+    """
+    Inverting a polynomial, see apply_polynomial_relation for more information
+    Does not resample y uncertainties
+    Must provide the grid
+    pol is a dictionary, where keys are parameter ranges
+    
+    {'mask0': {'coeffs': [], 'yerr':, 'xshift': },
+    'mask1': {'coeffs': [], 'yerr':  'xshift':}, 
+    'mask2': {'coeffs': [], 'yerr': 'xshift': }} etc.
+    
+    where mask0 are bounds on x, mask0= '10_20' interprested as valid for [10]
+    
+    """
+    ygrid, yunc= apply_polynomial_relation(pol, xgrid, xerr=0.0, nsample=nsample)
+    
+    #randomize 
+    rand_y= np.random.normal(ygrid, yunc, size=(int(nsample), len(yunc)) ).flatten()
+    rand_x= np.vstack([xgrid for x in range(0, int(nsample))]).flatten()
+   
+    #return interpolated value and uncertainties
+    f=interp1d(rand_y, rand_x, assume_sorted = False, fill_value = np.nan, bounds_error=False)
+
+    return f(y), np.nanmedian(yunc)
+
+
 def plot_annotated_heatmap(ax, data, gridpoints, columns, cmap='viridis', 
                            annotate=False, vmin=0.0, vmax=1.0, textsize=14):
     #plot an annotated heatmap
