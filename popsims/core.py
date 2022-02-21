@@ -6,8 +6,8 @@ import pandas as pd
 import numpy as np
 import os
 
-from .relations import teff_to_spt, scale_to_local_lf, spt_to_teff, teff_to_spt_kirkpatrick, \
-spt_to_teff_kirkpatrick
+from .relations import  scale_to_local_lf, teff_to_spt_kirkpatrick, \
+spt_to_teff_kirkpatrick, teff_to_spt_pecaut, spt_to_teff_pecaut
 from .tools import sample_from_powerlaw
 from .config import *
 
@@ -180,9 +180,14 @@ def simulate_spts(nsample=int(1e4), model_name='baraffe2003', save=False, mass_a
     teffs_second=secondary_evol['temperature'].value
 
     #spectraltypes
-    spts_singl =teff_to_spt_kirkpatrick(teffs_singl)
-    spt_primar=teff_to_spt_kirkpatrick(teffs_primar)
-    spt_second=teff_to_spt_kirkpatrick(teffs_second)
+    spts_singl =teff_to_spt_kirkpatrick(teffs_singl)[0]
+    spt_primar=teff_to_spt_kirkpatrick(teffs_primar)[0]
+    spt_second=teff_to_spt_kirkpatrick(teffs_second)[0]
+
+    #use pecaut relations for objects of higher teff (teff < 2000 degrees)
+    spts_singl[teffs_singl <2000]= teff_to_spt_pecaut(teffs_singl[teffs_singl<2000])
+    spt_primar[teffs_primar <2000]= teff_to_spt_pecaut(teffs_primar[teffs_primar<2000])
+    spt_second[spt_second <2000]= teff_to_spt_pecaut(teffs_second[teffs_second<2000])
 
     #compute binary spectral types
     xy=np.vstack([np.round(np.array(spt_primar), decimals=0), np.round(np.array(spt_second), decimals=0)]).T
@@ -308,7 +313,10 @@ def make_systems(bfraction=0.2, **kwargs):
 
     #assign teff from absolute mag
     #binaries['temperature']=get_teff_from_mag_ignore_unc(binaries['abs_2MASS_H'])
-    binaries['temperature']=spt_to_teff_kirkpatrick(binaries['spt'])[0]
+    mask= binaries['spt'] <20.
+    binaries['temperature'][mask]=spt_to_teff_kirkpatrick(binaries['spt'])[0][mask]
+    binaries['temperature'][~mask]=spt_to_teff_pecaut(binaries['spt'])[~mask]
+    #use 
     #binaries['temperature']=
     #print (np.isnan(binaries['temperature']).all())
 

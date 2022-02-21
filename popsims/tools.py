@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import astropy.units as u
 from astropy.coordinates import SkyCoord, FK5
 import functools
+from scipy.interpolate import interp1d
  
 def sample_from_powerlaw(alpha, xmin=0.1, xmax=1, nsample=int(1e4)):
     """Fetches rows from a Smalltable.
