@@ -153,7 +153,8 @@ def simulate_spts(nsample=int(1e4), model_name='baraffe2003', save=False, mass_a
     #all masses should be 0.01
     default_values={'baraffe2003': [0.01, 0.1, 0.01, 8.0],
     'marley2019': [0.01, 0.08, 0.001, 8.0], 'saumon2008':[0.01, 0.09, 0.003, 8.0], 
-    'phillips2020':[0.01, 0.075, 0.001, 8.0 ],'burrows2001':[0.01, 0.075, 10, 12]}
+    'phillips2020':[0.01, 0.075, 0.001, 8.0 ],'burrows2001':[0.01, 0.075, 10, 12], \
+    'burrows1997':[0.01, 0.075, 10, 12]}
 
     if  mass_age_range is None:
         mass_age_range= default_values[model_name]

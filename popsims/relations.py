@@ -33,13 +33,13 @@ LITERATURE_POLYNOMIALS={'kirkpatrick2021':{'x=spt,y=teff': {'20_28.75': {'coeffs
                                           'x=j_mko,y=spt': {'14.2_24': {'coeffs': [-7.7784e+01, 1.3260e+01, -6.1185e-01,9.6221e-03], 'xshift':0.0, 'yerr':0.53}},
                                           'x=h_2mass,y=spt':{'14.5_24.0': {'coeffs': [-6.9184e+01, 1.1863e+01,-5.4084e-01,8.4661e-03],'xshift':0.0,'yerr':0.51}}},
                                           
-                       'dupuy2012': {'x=spt,y=y_mko': {'16_39': {'coeffs': [-.00000252638, .000285027, -.0126151, .279438, -3.26895, 19.5444, -35.1560],'xshift':10.0,'yerr':0.4}},
-                                    'x=spt,y=j_mko': {'16_39': {'coeffs': [-.00000194920, .000227641, -.0103332, .232771, -2.74405, 16.3986, -28.3129],'xshift':10.0,'yerr':0.4}},
-                                    'x=spt,y=h_mko': {'16_39': {'coeffs': [-.00000224083, .000251601, -.0110960, .245209, -2.85705, 16.9138, -29.7306],'xshift':10.0,'yerr':0.4}},
-                                    'x=spt,y=ks_mko': {'16_39': {'coeffs': [-.00000104935, .000125731, -.00584342, .135177, -1.63930, 10.1248, -15.2200],'xshift':10.0,'yerr':0.38}},
-                                    'x=spt,y=j_2mass': {'16_39': {'coeffs': [-.000000784614, .000100820, -.00482973, .111715, -1.33053, 8.16362, -9.67994],'xshift':10.0,'yerr':0.4}},
-                                    'x=spt,y=h_2mass': {'16_39': {'coeffs': [-.00000111499, .000129363, -.00580847, .129202, -1.50370, 9.00279, -11.7526],'xshift':10.0,'yerr':0.4}},
-                                    'x=spt,y=ks_2mass': {'16_39': {'coeffs': [1.06693e-4, -6.42118e-3, 1.34163e-1, -8.67471e-1, 1.10114e1],'xshift':10.0,'yerr':0.43}}}}
+                       'dupuy2012': {'x=spt,y=y_mko': {'16_39': {'coeffs': np.flip([-.00000252638, .000285027, -.0126151, .279438, -3.26895, 19.5444, -35.1560]),'xshift':10.0,'yerr':0.4}},
+                                    'x=spt,y=j_mko': {'16_39': {'coeffs': np.flip([-.00000194920, .000227641, -.0103332, .232771, -2.74405, 16.3986, -28.3129]),'xshift':10.0,'yerr':0.4}},
+                                    'x=spt,y=h_mko': {'16_39': {'coeffs': np.flip([-.00000224083, .000251601, -.0110960, .245209, -2.85705, 16.9138, -29.7306]),'xshift':10.0,'yerr':0.4}},
+                                    'x=spt,y=ks_mko': {'16_39': {'coeffs':np.flip([-.00000104935, .000125731, -.00584342, .135177, -1.63930, 10.1248, -15.2200]),'xshift':10.0,'yerr':0.38}},
+                                    'x=spt,y=j_2mass': {'16_39': {'coeffs': np.flip([-.000000784614, .000100820, -.00482973, .111715, -1.33053, 8.16362, -9.67994]),'xshift':10.0,'yerr':0.4}},
+                                    'x=spt,y=h_2mass': {'16_39': {'coeffs': np.flip([-.00000111499, .000129363, -.00580847, .129202, -1.50370, 9.00279, -11.7526]),'xshift':10.0,'yerr':0.4}},
+                                    'x=spt,y=ks_2mass': {'16_39': {'coeffs': np.flip([1.06693e-4, -6.42118e-3, 1.34163e-1, -8.67471e-1, 1.10114e1]),'xshift':10.0,'yerr':0.43}}}}
                                                    
 
 kirkpatrick2020LF={'bin_center': np.array([ 525,  675,  825,  975, 1125, 1275, 1425, 1575, 1725, 1875, 2025]),
@@ -90,7 +90,7 @@ def  spt_to_teff_kirkpatrick(spt):
  
 
 def teff_to_spt_kirkpatrick(teff):
-    tgrid=np.linspace(0, 3000, 1000)
+    tgrid=np.linspace(0, 3000, 5000)
     return inverse_polynomial_relation(LITERATURE_POLYNOMIALS['kirkpatrick2021']['x=spt,y=teff'], teff, tgrid, \
         nsample=1000)
 
@@ -103,3 +103,23 @@ def interpolated_local_lf():
     unc=np.array(kirkpatrick2020LF['unc'])
 
     return interp1d( binedges, obs, assume_sorted = False, fill_value = np.nan, bounds_error=False)
+
+def absolute_mag_j(spt,ref='kirkpatrick2021', syst='2mass', nsample=1000):
+    #return dupuy or kirkpatrick relation
+    pol=None
+    if syst=='mko':
+        pol= LITERATURE_POLYNOMIALS[ref]['x=spt,y=j_mko']
+    if syst=='2mass':
+        pol= LITERATURE_POLYNOMIALS[ref]['x=spt,y=j_2mass']
+        
+    return apply_polynomial_relation(pol, spt, xerr=0.0, nsample=nsample)
+
+def absolute_mag_h(spt,ref='kirkpatrick2021', syst='2mass', nsample=1000):
+    #return dupuy or kirkpatrick relation
+    pol=None
+    if syst=='mko':
+        pol= LITERATURE_POLYNOMIALS[ref]['x=spt,y=h_mko']
+    if syst=='2mass':
+        pol= LITERATURE_POLYNOMIALS[ref]['x=spt,y=h_2mass']
+        
+    return apply_polynomial_relation(pol, spt, xerr=0.0, nsample=nsample)

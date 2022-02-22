@@ -465,7 +465,6 @@ def apply_polynomial_relation(pol, x, xerr=0.0, nsample=100):
         return np.nanmedian(res.flatten()), np.nanstd(res.flatten())
     if size !=-1:
         return np.nanmean(res, axis=0), np.nanstd(res, axis=0)
-    
 def inverse_polynomial_relation(pol, y, xgrid, nsample=1000):
     
     """
@@ -484,8 +483,11 @@ def inverse_polynomial_relation(pol, y, xgrid, nsample=1000):
     ygrid, yunc= apply_polynomial_relation(pol, xgrid, xerr=0.0, nsample=nsample)
     
     #randomize 
-    rand_y= np.random.normal(ygrid, yunc, size=(int(nsample), len(yunc)) ).flatten()
-    rand_x= np.vstack([xgrid for x in range(0, int(nsample))]).flatten()
+    #rand_y= np.random.normal(ygrid, yunc, size=(int(nsample), len(yunc)) ).flatten()
+    #rand_x= np.vstack([xgrid for x in range(0, int(nsample))]).flatten()
+    #forget about randomization
+    rand_y= ygrid
+    rand_x= xgrid
    
     #return interpolated value and uncertainties
     f=interp1d(rand_y, rand_x, assume_sorted = False, fill_value = np.nan, bounds_error=False)
