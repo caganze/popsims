@@ -181,11 +181,19 @@ def simulate_spts(nsample=int(1e4), model_name='baraffe2003', save=False, mass_a
     teffs_second=secondary_evol['temperature'].value
 
     #spectraltypes
-    spts_singl =teff_to_spt_kirkpatrick(teffs_singl)[0]
-    spt_primar=teff_to_spt_kirkpatrick(teffs_primar)[0]
-    spt_second=teff_to_spt_kirkpatrick(teffs_second)[0]
 
+    spts_singl=teff_to_spt_kirkpatrick(teffs_singl)
+    spt_primar=teff_to_spt_kirkpatrick(teffs_primar)
+    spt_second=teff_to_spt_kirkpatrick(teffs_second)
+
+    #randomize bro [NO ACTUALLY DOUBLE WORK, SPTS ALREADY ACCOUNT FOR UNCERTAINTY]
+    #spts_singl=np.random.normal(spts_singl, spts_sing_unc)
+    #spt_primar=np.random.normal(spt_primar, spt_primar_unc)
+    #spt_second= np.random.normal(spt_second, spt_second_unc )
+
+    #print (len(spts_singl[np.logical_and(teffs_singl <2000, teffs_singl >100) ]))
     #use pecaut relations for objects of higher teff (teff < 2000 degrees)
+    #pri
     spts_singl[teffs_singl >2000]= teff_to_spt_pecaut(teffs_singl[teffs_singl>2000])
     spt_primar[teffs_primar >2000]= teff_to_spt_pecaut(teffs_primar[teffs_primar>2000])
     spt_second[teffs_second>2000]= teff_to_spt_pecaut(teffs_second[teffs_second>2000])

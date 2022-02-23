@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import astropy.units as u
 from astropy.coordinates import SkyCoord, FK5
 import functools
-from scipy.interpolate import interp1d
+from scipy.interpolate import interp1d, griddata, InterpolatedUnivariateSpline
  
 def sample_from_powerlaw(alpha, xmin=0.1, xmax=1, nsample=int(1e4)):
     """Fetches rows from a Smalltable.
@@ -465,7 +465,9 @@ def apply_polynomial_relation(pol, x, xerr=0.0, nsample=100):
         return np.nanmedian(res.flatten()), np.nanstd(res.flatten())
     if size !=-1:
         return np.nanmean(res, axis=0), np.nanstd(res, axis=0)
-def inverse_polynomial_relation(pol, y, xgrid, nsample=1000):
+
+
+def inverse_polynomial_relation(pol, y, xgrid, nsample=1000, interpolation='griddata'):
     
     """
     Inverting a polynomial, see apply_polynomial_relation for more information
@@ -481,18 +483,25 @@ def inverse_polynomial_relation(pol, y, xgrid, nsample=1000):
     
     """
     ygrid, yunc= apply_polynomial_relation(pol, xgrid, xerr=0.0, nsample=nsample)
-    
-    #randomize 
-    #rand_y= np.random.normal(ygrid, yunc, size=(int(nsample), len(yunc)) ).flatten()
-    #rand_x= np.vstack([xgrid for x in range(0, int(nsample))]).flatten()
-    #forget about randomization
-    rand_y= ygrid
-    rand_x= xgrid
-   
-    #return interpolated value and uncertainties
-    f=interp1d(rand_y, rand_x, assume_sorted = False, fill_value = np.nan, bounds_error=False)
 
-    return f(y), np.nanmedian(yunc)
+    #remove nans
+    nans= np.logical_or(np.isnan(ygrid), np.isnan(yunc))
+    
+    #reshape
+    rand_y= np.random.normal(ygrid[~nans], yunc[~nans], size=(int(nsample), len(yunc[~nans]))).flatten()
+    rand_x= np.random.normal(xgrid[~nans], np.zeros_like(xgrid[~nans]), size=(int(nsample), len(yunc[~nans]))).flatten()
+    
+    #f=interp1d(rand_y, rand_x, assume_sorted = False, fill_value = np.nan, bounds_error=False)
+
+    if interpolation=='griddata':
+        return  griddata(rand_y, rand_x, y, fill_value=np.nan, method='linear', rescale=True)
+    if interpolation=='spline':
+        #1 degree spline, will extrapolate to zeros 
+        rand_y= rand_y[~np.isnan(rand_y)]
+        rand_x= rand_x[~np.isnan(rand_y)]
+        mask=np.argsort(rand_y)
+        f=InterpolatedUnivariateSpline(rand_y[mask], rand_x[mask], ext='const', k=1)
+        return f(y)
 
 
 def plot_annotated_heatmap(ax, data, gridpoints, columns, cmap='viridis', 

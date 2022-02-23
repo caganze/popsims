@@ -533,10 +533,9 @@ def avr_sharma(sigma,  direction='vertical', verbose=False):
     if sigma.size >1:
         beta_norm= np.random.normal(*beta, (1000, len(sigma)))
         sigma10_norm= np.random.normal(*sigma10, (1000, len(sigma)))
-
         result=((sigma/ sigma10_norm)**(1/ beta_norm))*(10+tau1)-tau1
         return np.nanmedian(result, axis=0), np.nanstd(result, axis=0) 
-        
+
 def avr_just(sigma, verbose=False, direction='vertical'):
     """Fetches rows from a Smalltable.
 
