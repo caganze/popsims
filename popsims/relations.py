@@ -24,6 +24,8 @@ PECAUT_TEFF_SPT_RELATIONS={'pecaut': {'bibcode': '2013ApJS..208....9P', 'url': '
        108., 108., 108., 108., 108., 108., 108., 108., 108., 108., 108.,
        108.]}}
 
+LITERATURE_LOOKUP_TABLES={
+}
 
 LITERATURE_POLYNOMIALS={'kirkpatrick2021':{'x=spt,y=teff': {'20_28.75': {'coeffs': [2.2375e+03, -1.4496e+02, 4.0301e+00],'xshift':20, 'yerr':134}, '28.75_34.75':{ 'coeffs': [1.4379e+03, -1.8309e+01], 'xshift':20, 'yerr':79}, '34.75_42':{ 'coeffs': [5.1413e+03,-3.6865e+02, 6.7301e+00],'xshift':20, 'yerr':79}},
                                           'x=j_2mass,y=j_mko': {'10_20': {'coeffs': [7.0584e-01, 9.3542e-01],'xshift': 0., 'yerr':0.17}},

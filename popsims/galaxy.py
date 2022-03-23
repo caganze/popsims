@@ -517,7 +517,7 @@ def avr_sharma(sigma,  direction='vertical',  z=0., verbose=False):
                 'gamma': {'vertical': (0.2, 0.01), 'radial': (0.12, 0.01)}
                 }
 
-    #limits_of_validity= {'v': {'vertical', 'radial'}, 'z': {'vertical', 'radial'}}
+    limits_of_validity= {'v': {'vertical': [10, 40], 'radial': [25, 60]}, 'z': [0, 2.1] }
 
     verboseprint("Assuming Sharma et al. 2021 Metal-Rich Fits and {} velocity valid for z= [] ".format(direction))
                             
@@ -527,12 +527,16 @@ def avr_sharma(sigma,  direction='vertical',  z=0., verbose=False):
 
    
     #case for floats
+    if sigma.size <1:
+        return np.array([[], []])
     if sigma.size==1:
         beta_norm= np.random.normal(*beta, 1000)
         sigma10_norm= np.random.normal(*sigma10, 1000)
         gamma_z_norm= np.random.normal(*gamma, 1000)
         fz= (1+gamma_z_norm*np.abs(z))
         result=((sigma/ (sigma10_norm*fz))**(1/ beta_norm))*(10+tau1)-tau1
+        #apply limits
+
         return np.nanmedian(result), np.nanstd(result)
     
     #case for arrays
@@ -540,6 +544,8 @@ def avr_sharma(sigma,  direction='vertical',  z=0., verbose=False):
         beta_norm= np.random.normal(*beta, (1000, len(sigma)))
         sigma10_norm= np.random.normal(*sigma10, (1000, len(sigma)))
         gamma_z_norm= np.random.normal(*gamma, (1000, len(sigma)))
+        #zmask= np.logical_and( z> limits_of_validity['z'][0], z<limits_of_validity['z'][1])
+        #sigma_mask= np.logical_and( z> limits_of_validity['z'][0], z<limits_of_validity['z'][1])
         fz= (1+gamma_z_norm*np.abs(z))
         result=((sigma/ (sigma10_norm*fz))**(1/ beta_norm))*(10+tau1)-tau1
         return np.nanmedian(result, axis=0), np.nanstd(result, axis=0) 

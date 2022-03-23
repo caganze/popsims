@@ -14,8 +14,12 @@ from .config import *
 DATA_FOLDER=os.environ['POPSIMS_DATA_FOLDER']
 
 
-def read_bintemplates():
-    df=pd.read_pickle(DATA_FOLDER+'/binary_lookup_table.pkl')
+def read_bintemplates(filename=None):
+    #must be a pickle file with columns prim, sec, sys all floats
+    if filename == None:
+        df=pd.read_csv(DATA_FOLDER+'/binary_lookup_table.csv.gz')
+    else:
+        file=pd.read_pickle(filename)
     return [df.prim.values, df.sec.values, df.sys.values]
 
 def get_system_type(pr, sc, interpolators):
