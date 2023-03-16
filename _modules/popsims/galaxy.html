@@ -1,0 +1,1244 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>popsims.galaxy &#8212; popsims 2023 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/popsims/galaxy';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">popsims 2023 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">popsims.galaxy</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for popsims.galaxy</h1><div class="highlight"><pre>
+<span></span><span class="c1">################################</span>
+<span class="c1">#population simulation routines for thin disk, </span>
+<span class="c1">#thick and halo populations </span>
+<span class="c1">##############################</span>
+
+<span class="kn">from</span> <span class="nn">.core_tools</span> <span class="kn">import</span> <span class="n">random_draw</span><span class="p">,</span> <span class="n">get_distance</span><span class="p">,</span>  <span class="n">trapzl</span>
+<span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">Rsun</span><span class="p">,</span> <span class="n">Zsun</span><span class="p">,</span> <span class="n">galcen_frame</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numba</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">scipy.integrate</span> <span class="k">as</span> <span class="nn">integrate</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">astropy.coordinates</span> <span class="k">as</span> <span class="nn">astro_coord</span>
+<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">u</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractproperty</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="c1">#import gala.coordinates as gc</span>
+<span class="c1">#import gala.dynamics as gd</span>
+
+
+<div class="viewcode-block" id="exponential_density"><a class="viewcode-back" href="../../index.html#popsims.galaxy.exponential_density">[docs]</a><span class="k">def</span> <span class="nf">exponential_density</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span><span class="n">L</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Exponential density profile</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    ----</span>
+<span class="sd">        r: galactocentric radius  (list or array)</span>
+<span class="sd">        z: galactocentric height  (list or array)</span>
+<span class="sd">        H: scaleheight (list or array)</span>
+<span class="sd">        L: scalelength (list or array)</span>
+<span class="sd">    Returns:</span>
+<span class="sd">    -------</span>
+<span class="sd">        density (float or array)</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt; x = exponential_density(8700, 100, 300,2600)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">zpart</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="o">-</span><span class="n">Zsun</span><span class="p">)</span><span class="o">/</span><span class="n">H</span><span class="p">)</span>
+    <span class="n">rpart</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">r</span><span class="o">-</span><span class="n">Rsun</span><span class="p">)</span><span class="o">/</span><span class="n">L</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">zpart</span><span class="o">*</span><span class="n">rpart</span></div>
+
+<div class="viewcode-block" id="spheroid_density"><a class="viewcode-back" href="../../index.html#popsims.galaxy.spheroid_density">[docs]</a><span class="k">def</span> <span class="nf">spheroid_density</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    sperhoid density profile</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    ----</span>
+<span class="sd">        r: galactocentric radius  (list or array)</span>
+<span class="sd">        z: galactocentric height  (list or array)</span>
+<span class="sd">        q: flattening parameter</span>
+<span class="sd">        n: power-law exponent</span>
+<span class="sd">    Returns:</span>
+<span class="sd">    -------</span>
+<span class="sd">        density (float or array)</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt; x = spheroid_density(8700, 100, 0.64, n=2.77)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span>  <span class="p">(</span><span class="n">Rsun</span><span class="o">/</span><span class="p">(((</span><span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">((</span><span class="n">z</span><span class="p">)</span><span class="o">/</span><span class="n">q</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">))</span><span class="o">**</span><span class="n">n</span></div>
+
+<div class="viewcode-block" id="transform_tocylindrical"><a class="viewcode-back" href="../../index.html#popsims.galaxy.transform_tocylindrical">[docs]</a><span class="k">def</span> <span class="nf">transform_tocylindrical</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">ds</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    sperhoid density profile</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    ----</span>
+<span class="sd">        r: galactocentric radius  (list or array)</span>
+<span class="sd">        z: galactocentric height  (list or array)</span>
+<span class="sd">        q: flattening parameter</span>
+<span class="sd">        n: power-law exponent</span>
+<span class="sd">    Returns:</span>
+<span class="sd">    -------</span>
+<span class="sd">        density (float or array)</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt; x = spheroid_density(8700, 100, 0.64, n=2.77)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rd</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="n">ds</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span> <span class="n">b</span> <span class="p">)</span> <span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Rsun</span> <span class="o">*</span> <span class="p">(</span><span class="n">Rsun</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">ds</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span> <span class="n">b</span> <span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span> <span class="n">l</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="n">zd</span><span class="o">=</span><span class="n">Zsun</span><span class="o">+</span> <span class="n">ds</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span> <span class="n">b</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span> <span class="n">Zsun</span> <span class="o">/</span> <span class="n">Rsun</span><span class="p">)</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">rd</span><span class="p">,</span> <span class="n">zd</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="cylindrical_to_cartesian"><a class="viewcode-back" href="../../index.html#popsims.galaxy.cylindrical_to_cartesian">[docs]</a><span class="k">def</span> <span class="nf">cylindrical_to_cartesian</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    sperhoid density profile</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    ----</span>
+<span class="sd">        r: galactocentric radius  (list or array)</span>
+<span class="sd">        z: galactocentric height  (list or array)</span>
+<span class="sd">        q: flattening parameter</span>
+<span class="sd">        n: power-law exponent</span>
+<span class="sd">    Returns:</span>
+<span class="sd">    -------</span>
+<span class="sd">        density (float or array)</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">    --------</span>
+<span class="sd">        &gt; x = cylindrical_to_cartesian(r, z, phi)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span><span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+    <span class="n">y</span><span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+    <span class="n">z</span><span class="o">=</span> <span class="n">z</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GalacticComponent"><a class="viewcode-back" href="../../index.html#popsims.galaxy.GalacticComponent">[docs]</a><span class="k">class</span> <span class="nc">GalacticComponent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A meta class for galactic components.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a GalacticComponent object with the given parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parameters (dict): A dictionary containing the parameters of the galactic component.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Initialize from dictionary</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add two GalacticComponent objects by combining their stellar densities.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (GalacticComponent): The other GalacticComponent object to add.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            GalacticComponent: A new GalacticComponent object with the combined stellar densities.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Defining method for addition by adding the stellar density</span>
+        <span class="n">old_dens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stellar_density</span>
+        <span class="n">new_dens</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">stellar_density</span>
+        <span class="n">all_parameters</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span> <span class="o">**</span><span class="n">other</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">}</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">GalacticComponent</span><span class="p">(</span><span class="n">all_parameters</span><span class="p">)</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">stellar_density</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_combine_densities</span><span class="p">(</span><span class="n">old_dens</span><span class="p">,</span> <span class="n">new_dens</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new</span>
+
+    <span class="k">def</span> <span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="c1"># Overload multiplication</span>
+    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Multiply the stellar density of the GalacticComponent object by a scalar.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            number (float): The scalar to multiply the stellar density by.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            GalacticComponent: A new GalacticComponent object with the scaled stellar density.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">GalacticComponent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">stellar_density</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">number</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">stellar_density</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new</span>
+
+    <span class="k">def</span> <span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__mul__</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GalacticComponent.stellar_density"><a class="viewcode-back" href="../../index.html#popsims.galaxy.GalacticComponent.stellar_density">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">stellar_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Abstract method for computing the stellar density of the GalacticComponent object at a given</span>
+<span class="sd">        position (r, z).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            r (float): The radial distance from the Galactic center, in units of distance (e.g., parsecs, meters).</span>
+<span class="sd">            z (float): The vertical distance from the Galactic plane, in units of distance (e.g., parsecs, meters).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The stellar density at the given position (r, z), in units of density (e.g., stars/pc^3).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_combine_densities</span><span class="p">(</span><span class="o">*</span><span class="n">fs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Combine the densities of multiple GalacticComponent objects.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *fs: A variable number of lambda functions representing the densities of the GalacticComponent objects.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            function: A lambda function representing the combined densities of the input GalacticComponent objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">compose</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+            <span class="k">return</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="o">+</span> <span class="n">g</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="n">compose</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="GalacticComponent.sample_distances"><a class="viewcode-back" href="../../index.html#popsims.galaxy.GalacticComponent.sample_distances">[docs]</a>    <span class="k">def</span> <span class="nf">sample_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="p">,</span> <span class="n">nsample</span><span class="p">,</span> <span class="n">dsteps</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw distances from a likelihood d^2\rho(r, z) by inverse-sampling</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">        ----</span>
+<span class="sd">            dmin: minium of the distance(astropy quantity)</span>
+<span class="sd">            dmax: maximum distance (astropy quantity)</span>
+<span class="sd">            nsample: number of draws</span>
+<span class="sd">            l, b: (optional), galactic latitudes (astropy quantities).</span>
+<span class="sd">                 if set to None, will randomly pick directions</span>
+<span class="sd">            dsteps: (optional): number of steps in trapezoidal integration (int)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">        -------</span>
+<span class="sd">            distances: array of distances (astropy quantity)</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt; d = GalacticComponent.sample_distances(10*u.pc, 1000*u.pc, 1000 )</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#if l and b are none sample from random direction using sphere-point picking </span>
+        <span class="k">if</span> <span class="n">dmin</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span> <span class="c1">#avoid weird issues</span>
+            <span class="n">dmin</span><span class="o">=</span><span class="mf">0.1</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">l</span><span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">b</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span>
+
+        <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">dmin</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">dmax</span><span class="p">),</span><span class="n">dsteps</span><span class="p">)</span>
+        <span class="c1">#compute r and z</span>
+        <span class="n">cdf</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">(</span> <span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dsteps</span><span class="o">=</span><span class="n">dsteps</span><span class="p">)</span> <span class="k">for</span> <span class="n">dx</span> <span class="ow">in</span> <span class="n">d</span><span class="p">])</span>
+        <span class="n">cdf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">cdf</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#avoid zero at the start of the array</span>
+        <span class="c1">#interpolate over cdf to get a smoother function</span>
+        <span class="n">f</span><span class="o">=</span><span class="n">interp1d</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">cdf</span><span class="p">)</span>
+        <span class="c1">#increase the resolution</span>
+        <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">dmin</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">dmax</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">nsample</span><span class="p">))</span>
+        <span class="n">cdfvals</span><span class="o">=</span><span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">random_draw</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">cdfvals</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">cdfvals</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">nsample</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="GalacticComponent.volume"><a class="viewcode-back" href="../../index.html#popsims.galaxy.GalacticComponent.volume">[docs]</a>    <span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="p">,</span> <span class="n">dsteps</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute volume by integrating d^2\rho(r, z) by inverse-sampling</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">        ----</span>
+<span class="sd">            dmin: minium of the distance(astropy quantity)</span>
+<span class="sd">            dmax: maximum distance (astropy quantity)</span>
+<span class="sd">            l, b: galactic latitude and longitude (astropy quantities).</span>
+<span class="sd">            dsteps: (optional): number of steps in trapezoidal integration (int)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">        -------</span>
+<span class="sd">            distances: array of distances (astropy quantity)</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt; d = GalacticComponent.sample_distances(10*u.pc, 1000*u.pc, 1000 )</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">dmin</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">dmax</span><span class="p">),</span><span class="n">dsteps</span><span class="p">)</span>
+        <span class="n">rd</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="n">ds</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span> <span class="n">b</span> <span class="p">)</span> <span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Rsun</span> <span class="o">*</span> <span class="p">(</span><span class="n">Rsun</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">ds</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span> <span class="n">b</span> <span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span> <span class="n">l</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+        <span class="n">zd</span><span class="o">=</span><span class="n">Zsun</span><span class="o">+</span> <span class="n">ds</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span> <span class="n">b</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span> <span class="n">Zsun</span> <span class="o">/</span> <span class="n">Rsun</span><span class="p">)</span> <span class="p">)</span>
+        <span class="n">rh0</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stellar_density</span><span class="p">(</span> <span class="n">rd</span><span class="p">,</span> <span class="n">zd</span><span class="p">)</span>
+        <span class="c1">#val=integrate.trapz(rh0*(ds**2), x=ds)</span>
+        <span class="n">val</span><span class="o">=</span> <span class="n">trapzl</span><span class="p">(</span><span class="n">rh0</span><span class="o">*</span><span class="p">(</span><span class="n">ds</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">ds</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">val</span></div>
+
+<div class="viewcode-block" id="GalacticComponent.density_gradient"><a class="viewcode-back" href="../../index.html#popsims.galaxy.GalacticComponent.density_gradient">[docs]</a>    <span class="k">def</span> <span class="nf">density_gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;&quot;</span>
+<span class="sd">        Uses jax autodiff to get the gradient of the density</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="GalacticComponent.plot_countours"><a class="viewcode-back" href="../../index.html#popsims.galaxy.GalacticComponent.plot_countours">[docs]</a>    <span class="k">def</span> <span class="nf">plot_countours</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rmin</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rmax</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">zmin</span><span class="o">=-</span><span class="mi">2000</span><span class="p">,</span> <span class="n">zmax</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">npoints</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;cividis&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        plot contours of density in cylindrical coordinates</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="kn">from</span> <span class="nn">.plot_style</span> <span class="kn">import</span>  <span class="n">plot_style</span>
+        <span class="n">plot_style</span><span class="p">()</span>
+
+        <span class="n">rs</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">rmin</span><span class="p">,</span><span class="n">rmax</span><span class="p">,</span> <span class="n">npoints</span><span class="p">)</span>
+        <span class="n">zs</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">zmin</span><span class="p">,</span><span class="n">zmax</span><span class="p">,</span> <span class="n">npoints</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">grid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">rs</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>
+
+        <span class="n">dens</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stellar_density</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">log</span><span class="p">:</span>
+            <span class="n">dens</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stellar_density</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+        <span class="n">h</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">rs</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">dens</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">rs</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">dens</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span> <span class="s1">&#39;cubehelix&#39;</span><span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;r (pc)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;z (pc)&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ax</span></div></div>
+
+<div class="viewcode-block" id="M31Halo"><a class="viewcode-back" href="../../index.html#popsims.galaxy.M31Halo">[docs]</a><span class="k">class</span> <span class="nc">M31Halo</span><span class="p">(</span><span class="n">GalacticComponent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    power-law stellar density for M31&#39;s halo by Ibata et al. 2014</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="mf">1.11</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=-</span><span class="mi">3</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">({</span><span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="n">q</span><span class="p">,</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="n">gamma</span><span class="p">})</span>
+
+<div class="viewcode-block" id="M31Halo.stellar_density"><a class="viewcode-back" href="../../index.html#popsims.galaxy.M31Halo.stellar_density">[docs]</a>    <span class="k">def</span> <span class="nf">stellar_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the stellar density at a particular position</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">        ----</span>
+<span class="sd">            x, y, z: galacto-centric x, y,z ( astropy.quantity )</span>
+<span class="sd">        Returns:</span>
+<span class="sd">        -------</span>
+<span class="sd">            unit-less stellar density</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt; d = Disk.stellar_density(100*u.pc, -100*u.pc)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#add a raise error if r &lt;0</span>
+        
+        <span class="n">s</span><span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">z</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+
+        <span class="k">return</span> <span class="n">s</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma</span></div></div>
+
+<div class="viewcode-block" id="Disk"><a class="viewcode-back" href="../../index.html#popsims.galaxy.Disk">[docs]</a><span class="k">class</span> <span class="nc">Disk</span><span class="p">(</span><span class="n">GalacticComponent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">H</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mi">2600</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">({</span><span class="s1">&#39;H&#39;</span><span class="p">:</span> <span class="n">H</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span> <span class="n">L</span><span class="p">})</span>
+
+<div class="viewcode-block" id="Disk.stellar_density"><a class="viewcode-back" href="../../index.html#popsims.galaxy.Disk.stellar_density">[docs]</a>    <span class="k">def</span> <span class="nf">stellar_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the stellar density at a particular position</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">        ----</span>
+<span class="sd">            r: galacto-centric radius ( astropy.quantity )</span>
+<span class="sd">            z: galacto-centric height (astropy.quantity )</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        -------</span>
+<span class="sd">            unit-less stellar density</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt; d = Disk.stellar_density(100*u.pc, -100*u.pc)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#add a raise error if r &lt;0</span>
+
+        <span class="k">return</span> <span class="n">exponential_density</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="Halo"><a class="viewcode-back" href="../../index.html#popsims.galaxy.Halo">[docs]</a><span class="k">class</span> <span class="nc">Halo</span><span class="p">(</span><span class="n">GalacticComponent</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span> <span class="mf">0.64</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mf">2.77</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">({</span><span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="n">q</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="n">n</span><span class="p">})</span>
+<div class="viewcode-block" id="Halo.stellar_density"><a class="viewcode-back" href="../../index.html#popsims.galaxy.Halo.stellar_density">[docs]</a>    <span class="k">def</span> <span class="nf">stellar_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the stellar density at a particular position</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">        ----</span>
+<span class="sd">            r: galacto-centric radius ( astropy.quantity )</span>
+<span class="sd">            z: galacto-centric height (astropy.quantity )</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        -------</span>
+<span class="sd">            unit-less stellar density</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt; d = Disk.stellar_density(100*u.pc, -100*u.pc)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">spheroid_density</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="get_velocities"><a class="viewcode-back" href="../../index.html#popsims.galaxy.get_velocities">[docs]</a><span class="k">def</span> <span class="nf">get_velocities</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">population</span><span class="o">=</span><span class="s1">&#39;thin_disk&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">       Draw velocities from a Gaussians assuming a velocity dispersion</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">        ----</span>
+<span class="sd">            ra, dec: right ascenscion and declination ( astropy.quantity )</span>
+<span class="sd">                     used to compute sky motions</span>
+
+<span class="sd">            age (optional): age distribution used for thin disk </span>
+
+<span class="sd">            d (optional): distance (astropy.quantity</span>
+<span class="sd">                            used for binning halo stars )</span>
+<span class="sd">            population: string</span>
+
+<span class="sd">                &quot;thin_disk&quot; Aumer &amp; Binney</span>
+<span class="sd">                &quot;thick_disk&quot;: Bensby et al. 2013</span>
+<span class="sd">                &quot;halo&quot;: carollo et al. 2007</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        -------</span>
+<span class="sd">           a dictionaries with galaxy kinematics (UVW, vr, vphi, vz) and sky motions</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">        --------</span>
+<span class="sd">            &gt; </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vels</span><span class="o">=</span><span class="p">{}</span>
+    <span class="c1">#CHECK THAT ALL RA, DEC, D, AGE ARE THE SAME SIZE</span>
+    <span class="n">s</span><span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="n">d</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">pc</span> <span class="p">)</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span> <span class="n">transform_tocylindrical</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">radian</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">radian</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+
+    <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">r</span>
+    <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">z</span>
+    <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">radian</span>
+    <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">radian</span>
+
+    <span class="k">if</span> <span class="n">population</span><span class="o">==</span><span class="s1">&#39;thin_disk&#39;</span><span class="p">:</span>
+        <span class="n">v10</span> <span class="o">=</span> <span class="mf">41.899</span>
+        <span class="n">tau1</span> <span class="o">=</span> <span class="mf">0.001</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.307</span>
+
+        <span class="n">v10_v</span> <span class="o">=</span> <span class="mf">28.823</span>
+        <span class="n">tau_v</span> <span class="o">=</span> <span class="mf">0.715</span>
+        <span class="n">beta_v</span> <span class="o">=</span> <span class="mf">0.430</span>
+
+        <span class="n">v10_w</span> <span class="o">=</span> <span class="mf">23.381</span>
+        <span class="n">tau_w</span> <span class="o">=</span> <span class="mf">0.001</span>
+        <span class="n">beta_w</span> <span class="o">=</span> <span class="mf">0.445</span>
+
+        <span class="n">k</span> <span class="o">=</span> <span class="mf">74.</span>
+        <span class="n">sigma_u</span> <span class="o">=</span> <span class="n">v10</span><span class="o">*</span><span class="p">((</span><span class="n">age</span><span class="o">+</span><span class="n">tau1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">10.</span><span class="o">+</span><span class="n">tau1</span><span class="p">))</span><span class="o">**</span><span class="n">beta</span>
+        <span class="n">sigma_v</span> <span class="o">=</span>  <span class="n">v10_v</span><span class="o">*</span><span class="p">((</span><span class="n">age</span><span class="o">+</span><span class="n">tau_v</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">10.</span><span class="o">+</span><span class="n">tau_v</span><span class="p">))</span><span class="o">**</span><span class="n">beta_v</span>
+        <span class="n">sigma_w</span> <span class="o">=</span>  <span class="n">v10_w</span><span class="o">*</span><span class="p">((</span><span class="n">age</span><span class="o">+</span><span class="n">tau_w</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">10.</span><span class="o">+</span><span class="n">tau_w</span><span class="p">))</span><span class="o">**</span><span class="n">beta_w</span>
+
+        <span class="n">voff</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span><span class="o">*</span><span class="p">(</span><span class="n">sigma_v</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">k</span>
+
+        <span class="n">us</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma_u</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">age</span><span class="p">))</span>
+        <span class="n">vs</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">voff</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma_v</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">age</span><span class="p">))</span>
+        <span class="n">ws</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma_w</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">age</span><span class="p">))</span>
+
+        <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;U&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">us</span>
+        <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;V&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">vs</span>
+        <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;W&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">ws</span>
+
+        <span class="c1">#compute sky coordinates</span>
+        <span class="c1">#compute_pm_from_uvw(ra_J2000, dec_J2000, parallax, us, vs, ws, correct_lsr=False):</span>
+        <span class="n">prop</span><span class="o">=</span><span class="n">get_proper_motion_from_uvw</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">us</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">ws</span><span class="p">)</span>          
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="n">vels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+        <span class="c1">#add vr, vphi, vz</span>
+        <span class="n">cylind</span><span class="o">=</span> <span class="n">get_vrphiz_from_radec_distance</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;mu_alpha_cosdec&#39;</span><span class="p">],</span>\
+         <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;mu_delta&#39;</span><span class="p">],</span> <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;RV&#39;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">cylind</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="n">vels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">=</span> <span class="n">cylind</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">population</span><span class="o">==</span><span class="s1">&#39;halo&#39;</span><span class="p">:</span>
+        <span class="c1">#values from carollo et al. </span>
+        <span class="n">abs_z</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+        <span class="n">us</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">ws</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">z</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+        <span class="c1">#I&#39;m also averaging over metallicities, future version should be different</span>
+        <span class="n">bool0</span><span class="o">=</span><span class="n">abs_z</span> <span class="o">&lt;=</span><span class="mi">1000</span>
+        <span class="n">us</span><span class="p">[</span><span class="n">bool0</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=-</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">58</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">bool0</span><span class="p">]))</span>
+        <span class="n">vs</span><span class="p">[</span><span class="n">bool0</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=-</span><span class="mi">31</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">52.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">bool0</span><span class="p">]))</span>
+        <span class="n">ws</span><span class="p">[</span><span class="n">bool0</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">38</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">bool0</span><span class="p">]))</span>
+
+        <span class="n">bool1</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">abs_z</span> <span class="o">&gt;=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">abs_z</span> <span class="o">&lt;=</span><span class="mi">2000</span><span class="p">)</span>
+        <span class="n">us</span><span class="p">[</span><span class="n">bool1</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">136</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">bool1</span><span class="p">]))</span>
+        <span class="n">vs</span><span class="p">[</span><span class="n">bool1</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=-</span><span class="mi">181</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">105</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">bool1</span><span class="p">]))</span>
+        <span class="n">ws</span><span class="p">[</span><span class="n">bool1</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=-</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">78</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">bool1</span><span class="p">]))</span>
+
+
+        <span class="n">bool2</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">abs_z</span> <span class="o">&gt;=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">abs_z</span> <span class="o">&lt;=</span><span class="mi">3000</span><span class="p">)</span>
+        <span class="n">us</span><span class="p">[</span><span class="n">bool2</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=-</span><span class="mi">29</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">163</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">bool2</span><span class="p">]))</span>
+        <span class="n">vs</span><span class="p">[</span><span class="n">bool2</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=-</span><span class="mi">209</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">121</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">bool2</span><span class="p">]))</span>
+        <span class="n">ws</span><span class="p">[</span><span class="n">bool2</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">95</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">bool2</span><span class="p">]))</span>
+
+        <span class="n">bool3</span><span class="o">=</span> <span class="n">abs_z</span> <span class="o">&gt;=</span><span class="mi">3000</span>
+        <span class="n">us</span><span class="p">[</span><span class="n">bool3</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=-</span><span class="mi">37</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">152</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">bool3</span><span class="p">]))</span>
+        <span class="n">vs</span><span class="p">[</span><span class="n">bool3</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=-</span><span class="mi">237</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">136</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">bool3</span><span class="p">]))</span>
+        <span class="n">ws</span><span class="p">[</span><span class="n">bool3</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">109</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">bool3</span><span class="p">]))</span>
+
+        <span class="c1">#vels={&#39;U&#39;: us, &#39;V&#39;:vs,  &#39;W&#39;:ws }</span>
+        <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;U&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">us</span>
+        <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;V&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">vs</span>
+        <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;W&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">ws</span>
+        <span class="c1">#compute sky coordinates</span>
+        <span class="n">prop</span><span class="o">=</span><span class="n">get_proper_motion_from_uvw</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">us</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">ws</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="n">vels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+        <span class="c1">#add vr, vphi, vz</span>
+        <span class="n">cylind</span><span class="o">=</span> <span class="n">get_vrphiz_from_radec_distance</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;mu_alpha_cosdec&#39;</span><span class="p">],</span>\
+         <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;mu_delta&#39;</span><span class="p">],</span> <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;RV&#39;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">cylind</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="n">vels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">=</span> <span class="n">cylind</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        
+    <span class="k">if</span> <span class="n">population</span><span class="o">==</span><span class="s1">&#39;thick_disk&#39;</span><span class="p">:</span>
+        <span class="c1">#use Bensby et al</span>
+        <span class="n">v_assym</span><span class="o">=</span><span class="mi">46</span>
+        <span class="n">uvw_lsr</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">us</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">uvw_lsr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="mi">67</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">age</span><span class="p">))</span>
+        <span class="n">vs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">uvw_lsr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">v_assym</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">38</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">age</span><span class="p">))</span>
+        <span class="n">ws</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">uvw_lsr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">age</span><span class="p">))</span>
+        <span class="c1">#vels={&#39;U&#39;: us, &#39;V&#39;:vs,  &#39;W&#39;:ws }</span>
+        <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;U&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">us</span>
+        <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;V&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">vs</span>
+        <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;W&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">ws</span>
+
+        <span class="c1">#compute sky coordinates</span>
+        <span class="n">prop</span><span class="o">=</span><span class="n">get_proper_motion_from_uvw</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">us</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">ws</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">prop</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="n">vels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+        <span class="c1">#add vr, vphi, vz</span>
+        <span class="n">cylind</span><span class="o">=</span> <span class="n">get_vrphiz_from_radec_distance</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;mu_alpha_cosdec&#39;</span><span class="p">],</span>\
+         <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;mu_delta&#39;</span><span class="p">],</span> <span class="n">vels</span><span class="p">[</span><span class="s1">&#39;RV&#39;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">cylind</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="n">vels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">=</span> <span class="n">cylind</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+    <span class="k">return</span>  <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">vels</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_proper_motion_from_uvw"><a class="viewcode-back" href="../../index.html#popsims.galaxy.get_proper_motion_from_uvw">[docs]</a><span class="k">def</span> <span class="nf">get_proper_motion_from_uvw</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine the proper motion of a star from its galactic velocity components.</span>
+
+<span class="sd">    This function takes the position, distance, and galactic velocity components of a star and uses</span>
+<span class="sd">    transformations to determine the proper motion of the star in the sky. The function takes the</span>
+<span class="sd">    right ascension, declination, and distance of the star in degrees and parsecs, respectively, and</span>
+<span class="sd">    the U, V, and W velocity components of the star in km/s. The function returns the radial velocity,</span>
+<span class="sd">    right ascension proper motion, and declination proper motion of the star in km/s and mas/yr,</span>
+<span class="sd">    respectively.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ra: The right ascension of the star, as a floating point value in degrees.</span>
+<span class="sd">        dec: The declination of the star, as a floating point value in degrees.</span>
+<span class="sd">        d: The distance of the star, as a floating point value in parsecs.</span>
+<span class="sd">        U: The U velocity component of the star, as a floating point value in km/s.</span>
+<span class="sd">        V: The V velocity component of the star, as a floating point value in km/s.</span>
+<span class="sd">        W: The W velocity component of the star, as a floating point value in km/s.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary containing the radial velocity, right ascension proper motion, and declination proper</span>
+<span class="sd">        motion of the star, as floating point values in km/s and mas/yr, respectively.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Function implementation goes here</span>
+    <span class="c1">#ra in degree</span>
+    <span class="c1">#dec in degree</span>
+    <span class="c1">#d in parsec</span>
+    <span class="c1">#UVW in km/s</span>
+    <span class="n">s</span><span class="o">=</span><span class="n">SkyCoord</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="n">d</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">pc</span><span class="p">)</span><span class="o">.</span><span class="n">transform_to</span><span class="p">(</span> <span class="n">astro_coord</span><span class="o">.</span><span class="n">Galactic</span><span class="p">)</span>
+    
+    
+    <span class="c1">#this is centered around the sun</span>
+    <span class="n">c</span><span class="o">=</span> <span class="n">astro_coord</span><span class="o">.</span><span class="n">Galactic</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">cartesian</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+                            <span class="n">v</span><span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">cartesian</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> 
+                            <span class="n">w</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">cartesian</span><span class="o">.</span><span class="n">z</span><span class="p">,</span>
+                            <span class="n">U</span><span class="o">=</span><span class="n">U</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">,</span>
+                            <span class="n">V</span><span class="o">=</span><span class="n">V</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">,</span>
+                            <span class="n">W</span><span class="o">=</span><span class="n">W</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="n">representation_type</span><span class="o">=</span> <span class="s1">&#39;cartesian&#39;</span><span class="p">)</span>
+    <span class="c1">#transform to sky </span>
+    <span class="n">cx</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">transform_to</span><span class="p">(</span><span class="n">astro_coord</span><span class="o">.</span><span class="n">ICRS</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;RV&#39;</span><span class="p">:</span> <span class="n">cx</span><span class="o">.</span><span class="n">radial_velocity</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="p">,</span>\
+            <span class="s1">&#39;mu_alpha_cosdec&#39;</span><span class="p">:(</span><span class="n">cx</span><span class="o">.</span><span class="n">pm_ra_cosdec</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">mas</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">yr</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>\
+            <span class="s1">&#39;mu_delta&#39;</span><span class="p">:</span> <span class="n">cx</span><span class="o">.</span><span class="n">pm_dec</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">mas</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">yr</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="get_proper_motion_cylindrical"><a class="viewcode-back" href="../../index.html#popsims.galaxy.get_proper_motion_cylindrical">[docs]</a><span class="k">def</span> <span class="nf">get_proper_motion_cylindrical</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span><span class="n">dec</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">vr</span><span class="p">,</span> <span class="n">vphi</span><span class="p">,</span> <span class="n">vz</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the proper motion in right ascension and declination given right ascension, declination, distance, vr, vphi, and vz velocities.</span>
+
+<span class="sd">    Copy code</span>
+<span class="sd">    Args:</span>
+<span class="sd">        ra (float): Right ascension in degrees.</span>
+<span class="sd">        dec (float): Declination in degrees.</span>
+<span class="sd">        d (float): Distance in pc.</span>
+<span class="sd">        vr (float): Vr velocity in km/s.</span>
+<span class="sd">        vphi (float): Vphi velocity in rad/s.</span>
+<span class="sd">        vz (float): Vz velocity in km/s.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Dictionary with keys &#39;RV&#39;, &#39;mu_alpha_cosdec&#39;, and &#39;mu_delta&#39; corresponding to the calculated radial velocity in km/s and proper motion in right ascension and declination in mas/yr.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">astro_coord</span><span class="o">.</span><span class="n">CylindricalDifferential</span><span class="p">(</span><span class="n">d_rho</span><span class="o">=</span><span class="n">vr</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">,</span>\
+                                      <span class="n">d_phi</span><span class="o">=</span><span class="p">(</span><span class="n">vphi</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">rad</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">deg</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">),</span>\
+                                      <span class="n">d_z</span><span class="o">=</span><span class="n">vz</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="n">co</span><span class="o">=</span><span class="n">astro_coord</span><span class="o">.</span><span class="n">SkyCoord</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span> \
+                       <span class="n">distance</span><span class="o">=</span><span class="n">d</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">pc</span><span class="p">)</span><span class="o">.</span><span class="n">transform_to</span><span class="p">(</span><span class="n">galcen_frame</span> <span class="p">)</span><span class="o">.</span><span class="n">cylindrical</span>
+    
+    <span class="n">c</span><span class="o">.</span><span class="n">to_cartesian</span><span class="p">(</span><span class="n">co</span><span class="p">)</span>
+    <span class="n">co</span><span class="o">.</span><span class="n">to_cartesian</span><span class="p">()</span>
+    <span class="n">xyz</span> <span class="o">=</span> <span class="n">astro_coord</span><span class="o">.</span><span class="n">SkyCoord</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">co</span><span class="o">.</span><span class="n">to_cartesian</span><span class="p">()</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> 
+                               <span class="n">y</span><span class="o">=</span><span class="n">co</span><span class="o">.</span><span class="n">to_cartesian</span><span class="p">()</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> \
+                               <span class="n">z</span><span class="o">=</span><span class="n">co</span><span class="o">.</span><span class="n">to_cartesian</span><span class="p">()</span><span class="o">.</span><span class="n">z</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="n">galcen_frame</span><span class="p">)</span>
+    <span class="n">vxyz</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">to_cartesian</span><span class="p">(</span><span class="n">co</span><span class="p">)</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>\
+     <span class="n">c</span><span class="o">.</span><span class="n">to_cartesian</span><span class="p">(</span><span class="n">co</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> \
+     <span class="n">c</span><span class="o">.</span><span class="n">to_cartesian</span><span class="p">(</span><span class="n">co</span><span class="p">)</span><span class="o">.</span><span class="n">z</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">]</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span>
+    
+    <span class="n">w</span> <span class="o">=</span> <span class="n">gd</span><span class="o">.</span><span class="n">PhaseSpacePosition</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="n">xyz</span><span class="o">.</span><span class="n">cartesian</span><span class="o">.</span><span class="n">xyz</span><span class="p">,</span> <span class="n">vel</span><span class="o">=</span><span class="n">vxyz</span><span class="p">)</span>
+    <span class="n">gal_c</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">to_coord_frame</span><span class="p">(</span><span class="n">astro_coord</span><span class="o">.</span><span class="n">ICRS</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;RV&#39;</span><span class="p">:</span> <span class="n">gal_c</span><span class="o">.</span><span class="n">radial_velocity</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="p">,</span>\
+                      <span class="s1">&#39;mu_alpha_cosdec&#39;</span><span class="p">:(</span><span class="n">gal_c</span><span class="o">.</span><span class="n">pm_ra_cosdec</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">mas</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">yr</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>\
+                      <span class="s1">&#39;mu_delta&#39;</span><span class="p">:</span> <span class="n">gal_c</span><span class="o">.</span><span class="n">pm_dec</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">mas</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">yr</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="get_vrphiz_from_radec_distance"><a class="viewcode-back" href="../../index.html#popsims.galaxy.get_vrphiz_from_radec_distance">[docs]</a><span class="k">def</span> <span class="nf">get_vrphiz_from_radec_distance</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">pmra_cosdec</span><span class="p">,</span> <span class="n">pmdec</span><span class="p">,</span> <span class="n">rv</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the vr, vphi, and vz velocities in km/s given right ascension, declination, distance, proper motion in right ascension and declination, and radial velocity in km/s.</span>
+
+<span class="sd">    Copy code</span>
+<span class="sd">    Args:</span>
+<span class="sd">        ra (float): Right ascension in degrees.</span>
+<span class="sd">        dec (float): Declination in degrees.</span>
+<span class="sd">        distance (float): Distance in pc.</span>
+<span class="sd">        pmra_cosdec (float): Proper motion in right ascension in mas/yr.</span>
+<span class="sd">        pmdec (float): Proper motion in declination in mas/yr.</span>
+<span class="sd">        rv (float): Radial velocity in km/s.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Dictionary with keys &#39;Vr&#39;, &#39;Vphi&#39;, and &#39;Vz&#39; corresponding to the calculated velocities in km/s.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span><span class="o">=</span> <span class="n">astro_coord</span><span class="o">.</span><span class="n">ICRS</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span><span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span>
+                  <span class="n">distance</span><span class="o">=</span><span class="n">distance</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">pc</span><span class="p">,</span>
+                  <span class="n">pm_ra_cosdec</span><span class="o">=</span><span class="n">pmra_cosdec</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">mas</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">yr</span><span class="p">,</span>
+                  <span class="n">pm_dec</span><span class="o">=</span><span class="n">pmdec</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">mas</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">yr</span><span class="p">,</span>
+                  <span class="n">radial_velocity</span><span class="o">=</span><span class="n">rv</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">cg</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">transform_to</span><span class="p">(</span><span class="n">galcen_frame</span><span class="p">)</span>
+    <span class="n">cg</span><span class="o">.</span><span class="n">representation_type</span><span class="o">=</span> <span class="s1">&#39;cylindrical&#39;</span>
+    
+    <span class="k">return</span>  <span class="p">{</span><span class="s1">&#39;Vr&#39;</span><span class="p">:</span> <span class="n">cg</span><span class="o">.</span><span class="n">d_rho</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> \
+     <span class="s1">&#39;Vphi&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">cg</span><span class="o">.</span><span class="n">d_phi</span><span class="o">*</span><span class="n">cg</span><span class="o">.</span><span class="n">rho</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="n">equivalencies</span><span class="o">=</span><span class="n">u</span><span class="o">.</span><span class="n">dimensionless_angles</span><span class="p">())</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>\
+     <span class="s1">&#39;Vz&#39;</span><span class="p">:</span><span class="n">cg</span><span class="o">.</span><span class="n">d_z</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">}</span></div>
+    
+<div class="viewcode-block" id="get_uvw_from_radec_distance"><a class="viewcode-back" href="../../index.html#popsims.galaxy.get_uvw_from_radec_distance">[docs]</a><span class="k">def</span> <span class="nf">get_uvw_from_radec_distance</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">pmra_cosdec</span><span class="p">,</span> <span class="n">pmdec</span><span class="p">,</span> <span class="n">rv</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the U, V, and W velocities in km/s given right ascension, declination, distance, proper motion in right ascension and declination, and radial velocity in km/s.</span>
+
+<span class="sd">    Copy code</span>
+<span class="sd">    Args:</span>
+<span class="sd">        ra (float): Right ascension in degrees.</span>
+<span class="sd">        dec (float): Declination in degrees.</span>
+<span class="sd">        distance (float): Distance in pc.</span>
+<span class="sd">        pmra_cosdec (float): Proper motion in right ascension in mas/yr.</span>
+<span class="sd">        pmdec (float): Proper motion in declination in mas/yr.</span>
+<span class="sd">        rv (float): Radial velocity in km/s.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Dictionary with keys &#39;U&#39;, &#39;V&#39;, and &#39;W&#39; corresponding to the calculated velocities in km/s.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span><span class="o">=</span> <span class="n">astro_coord</span><span class="o">.</span><span class="n">ICRS</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span><span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">degree</span><span class="p">,</span>
+                  <span class="n">distance</span><span class="o">=</span><span class="n">distance</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">pc</span><span class="p">,</span>
+                  <span class="n">pm_ra_cosdec</span><span class="o">=</span><span class="n">pmra_cosdec</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">mas</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">yr</span><span class="p">,</span>
+                  <span class="n">pm_dec</span><span class="o">=</span><span class="n">pmdec</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">mas</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">yr</span><span class="p">,</span>
+                  <span class="n">radial_velocity</span><span class="o">=</span><span class="n">rv</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+    
+    <span class="n">cg</span><span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">transform_to</span><span class="p">(</span><span class="n">galcen_frame</span><span class="p">)</span><span class="o">.</span><span class="n">transform_to</span><span class="p">(</span><span class="n">astro_coord</span><span class="o">.</span><span class="n">Galactic</span><span class="p">)</span>
+    <span class="n">cg</span><span class="o">.</span><span class="n">representation_type</span><span class="o">=</span> <span class="s1">&#39;cartesian&#39;</span>
+    
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;U&#39;</span><span class="p">:</span> <span class="n">cg</span><span class="o">.</span><span class="n">U</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">:</span><span class="n">cg</span><span class="o">.</span><span class="n">V</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> \
+            <span class="s1">&#39;W&#39;</span><span class="p">:</span><span class="n">cg</span><span class="o">.</span><span class="n">W</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="avr_aumer"><a class="viewcode-back" href="../../index.html#popsims.galaxy.avr_aumer">[docs]</a><span class="k">def</span> <span class="nf">avr_aumer</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the Aumer &amp; Binney 2009 metal-rich age-velocity relation.   </span>
+<span class="sd">    Args:</span>
+<span class="sd">        sigma (float): Sigma value to use in the calculation.</span>
+<span class="sd">        direction (str, optional): Direction to use in the calculation. Can be &#39;radial&#39;, &#39;total&#39;, &#39;azimuthal&#39;, or &#39;vertical&#39;. Defaults to &#39;vertical&#39;.</span>
+<span class="sd">        verbose (bool, optional): Set to True to print additional information about the calculation. Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Result of the calculation.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">verboseprint</span> <span class="o">=</span> <span class="nb">print</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">:</span> <span class="kc">None</span>
+    <span class="n">result</span><span class="o">=</span><span class="kc">None</span>
+    <span class="n">beta_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;radial&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.307</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">41.899</span><span class="p">],</span>
+                <span class="s1">&#39;total&#39;</span><span class="p">:</span> <span class="p">[</span> <span class="mf">0.385</span><span class="p">,</span> <span class="mf">0.261</span><span class="p">,</span> <span class="mf">57.15747</span><span class="p">],</span>
+                <span class="s1">&#39;azimuthal&#39;</span><span class="p">:[</span><span class="mf">0.430</span><span class="p">,</span> <span class="mf">0.715</span><span class="p">,</span> <span class="mf">28.823</span><span class="p">],</span>
+                <span class="s1">&#39;vertical&#39;</span><span class="p">:[</span><span class="mf">0.445</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">23.831</span><span class="p">],</span>
+                <span class="p">}</span>
+
+    <span class="n">verboseprint</span><span class="p">(</span><span class="s2">&quot;Assuming Aumer &amp; Binney 2009 Metal-Rich Fits and </span><span class="si">{}</span><span class="s2"> velocity &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">direction</span><span class="p">))</span>
+
+    <span class="n">beta</span><span class="p">,</span> <span class="n">tau1</span><span class="p">,</span> <span class="n">sigma10</span><span class="o">=</span><span class="n">beta_dict</span><span class="p">[</span><span class="n">direction</span><span class="p">]</span>
+       
+    <span class="n">result</span><span class="o">=</span><span class="p">((</span><span class="n">sigma</span><span class="o">/</span><span class="n">sigma10</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">beta</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="mi">10</span><span class="o">+</span><span class="n">tau1</span><span class="p">)</span><span class="o">-</span><span class="n">tau1</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="avr_yu"><a class="viewcode-back" href="../../index.html#popsims.galaxy.avr_yu">[docs]</a><span class="k">def</span> <span class="nf">avr_yu</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">disk</span><span class="o">=</span><span class="s1">&#39;thin&#39;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s1">&#39;above&#39;</span><span class="p">,</span> <span class="n">nsample</span><span class="o">=</span><span class="mf">1e4</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine the age of a population based on its velocity dispersion.</span>
+
+<span class="sd">    This function takes the velocity dispersion of a population and uses the power law relation from</span>
+<span class="sd">    Yu &amp; Liu (2018) to determine the age of the population. The function can also take a number of</span>
+<span class="sd">    optional parameters, such as a verbose flag to enable verbose output, a disk parameter to specify</span>
+<span class="sd">    whether the population belongs to the thin or thick disk, a direction parameter to specify the</span>
+<span class="sd">    direction of the velocity dispersion (radial, azimuthal, or vertical), and a height parameter to</span>
+<span class="sd">    specify whether the population is above or below a certain height.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sigma: The velocity dispersion of the population, as a floating point value or array of values.</span>
+<span class="sd">        verbose: An optional boolean flag that can be used to enable verbose output.</span>
+<span class="sd">        disk: An optional string that specifies whether the population belongs to the thin or thick disk.</span>
+<span class="sd">        direction: An optional string that specifies the direction of the velocity dispersion.</span>
+<span class="sd">        height: An optional string that specifies whether the population is above or below a certain height.</span>
+<span class="sd">        nsample: An optional integer that specifies the number of samples to use in the Monte Carlo simulation.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The age of the population, as a floating point value or a tuple of two floating point values</span>
+<span class="sd">        (mean and standard deviation) if the input sigma is an array of values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Function implementation goes here</span>
+    <span class="n">verboseprint</span> <span class="o">=</span> <span class="nb">print</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">:</span> <span class="kc">None</span>
+    <span class="c1">#the dictionary has thin disk and thick disk</span>
+    <span class="c1">#thin disk  AVR is for [Fe&lt;H] &lt;-0.2 and two different fits for </span>
+    <span class="c1">#|z| &gt; 270 pc and |z|&lt;270</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">tau1</span><span class="p">,</span> <span class="n">sigma10</span><span class="o">=</span> <span class="mf">0.385</span><span class="p">,</span> <span class="mf">0.261</span><span class="p">,</span> <span class="mf">57.15747</span>
+    
+    <span class="n">beta_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;thin&#39;</span><span class="p">:{</span><span class="s1">&#39;vertical&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.54</span><span class="p">,</span> <span class="mf">0.13</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.48</span><span class="p">,</span> <span class="mf">0.14</span><span class="p">]],</span>
+              <span class="s1">&#39;azimuthal&#39;</span><span class="p">:[[</span><span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.09</span><span class="p">],[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">]],</span>
+              <span class="s1">&#39;radial&#39;</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="mf">0.28</span><span class="p">,</span> <span class="mf">0.08</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.36</span><span class="p">,</span> <span class="mf">0.28</span><span class="p">]]},</span>
+               <span class="s1">&#39;thick&#39;</span><span class="p">:{</span><span class="s1">&#39;vertical&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.56</span><span class="p">,</span> <span class="mf">0.14</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.51</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">]],</span>
+              <span class="s1">&#39;azimuthal&#39;</span><span class="p">:[[</span><span class="mf">0.34</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">],[</span><span class="mf">0.42</span><span class="p">,</span> <span class="mf">0.14</span><span class="p">]],</span>
+              <span class="s1">&#39;radial&#39;</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="mf">0.34</span><span class="p">,</span> <span class="mf">0.17</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.39</span><span class="p">,</span> <span class="mf">0.13</span><span class="p">]]}}</span>
+    
+    <span class="n">beta</span><span class="o">=</span><span class="n">beta_dict</span><span class="p">[</span><span class="n">disk</span><span class="p">][</span><span class="n">direction</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span>  <span class="n">height</span><span class="o">==</span><span class="s1">&#39;below&#39;</span><span class="p">:</span>
+         <span class="n">beta</span><span class="o">=</span><span class="n">beta_dict</span><span class="p">[</span><span class="n">disk</span><span class="p">][</span><span class="n">direction</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">height</span><span class="o">==</span><span class="s1">&#39;median&#39;</span><span class="p">:</span>
+        <span class="n">vals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">beta_dict</span><span class="p">[</span><span class="n">disk</span><span class="p">][</span><span class="n">direction</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">beta_dict</span><span class="p">[</span><span class="n">disk</span><span class="p">][</span><span class="n">direction</span><span class="p">][</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="n">beta</span><span class="o">=</span><span class="p">[(</span><span class="n">vals</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="p">(</span><span class="n">vals</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">**</span><span class="mf">0.5</span><span class="p">]</span>
+    <span class="n">verboseprint</span><span class="p">(</span><span class="s2">&quot;Assuming Yu &amp; Liu 2018, </span><span class="si">{}</span><span class="s2"> disk </span><span class="si">{}</span><span class="s2"> velocities &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">disk</span><span class="p">,</span> <span class="n">direction</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">sigma</span><span class="p">):</span>
+        <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">beta</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">nsample</span><span class="p">)))</span>
+        <span class="c1">#sigmas= sigma**(np.random.normal(beta[0], beta[-1], 10000))</span>
+        <span class="c1">#sigmas=((sigma/sigma10)**(1/betas))*(10+tau1)-tau1</span>
+        <span class="n">sigmas</span><span class="o">=</span> <span class="n">sigma</span><span class="o">**</span><span class="p">(</span><span class="n">betas</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">sigmas</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">sigmas</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">beta</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">nsample</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sigma</span><span class="p">))))</span>
+        <span class="c1">#sigmas= sigma**(np.random.normal(beta[0], beta[-1], 10000))</span>
+        <span class="c1">#sigmas=((sigma/sigma10)**(1/betas))*(10+tau1)-tau1</span>
+        <span class="n">sigmas</span><span class="o">=</span> <span class="n">sigma</span><span class="o">**</span><span class="p">(</span><span class="n">betas</span><span class="p">)</span>
+        <span class="c1">#sigmas= sigma**(np.random.normal(beta[0], beta[-1], (10000, len(sigma))))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">sigmas</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">sigmas</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)])</span></div>
+
+<div class="viewcode-block" id="avr_sanders"><a class="viewcode-back" href="../../index.html#popsims.galaxy.avr_sanders">[docs]</a><span class="k">def</span> <span class="nf">avr_sanders</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine the age of a population based on its velocity dispersion.</span>
+
+<span class="sd">    This function takes the velocity dispersion of a population and uses the power law relation from</span>
+<span class="sd">    Sanders et al. (2018) to determine the age of the population. The function can also take an optional</span>
+<span class="sd">    verbose parameter that can be used to enable verbose output, and a direction parameter that</span>
+<span class="sd">    specifies the direction of the velocity dispersion (radial or vertical).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sigma: The velocity dispersion of the population, as a floating point value.</span>
+<span class="sd">        verbose: An optional boolean flag that can be used to enable verbose output.</span>
+<span class="sd">        direction: An optional string that specifies the direction of the velocity dispersion.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The age of the population, as a floating point value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Function implementation goes here</span>
+    <span class="c1">#return the age from an age-velocity dispersion </span>
+    <span class="n">verboseprint</span> <span class="o">=</span> <span class="nb">print</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">:</span> <span class="kc">None</span>
+    <span class="n">beta_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;radial&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="s1">&#39;vertical&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">}</span>
+    <span class="n">beta</span><span class="o">=</span><span class="n">beta_dict</span><span class="p">[</span><span class="n">direction</span><span class="p">]</span>
+    <span class="n">verboseprint</span><span class="p">(</span><span class="s2">&quot;Assuming Sanders et al. 2018 Power for  velocity </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">direction</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">sigma</span><span class="o">**</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="avr_sharma"><a class="viewcode-back" href="../../index.html#popsims.galaxy.avr_sharma">[docs]</a><span class="k">def</span> <span class="nf">avr_sharma</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">met</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">nsample</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine the age of a population based on its velocity dispersion, metallicity, and position.</span>
+
+<span class="sd">    This function takes the velocity dispersion, metallicity, and position of a population and uses the</span>
+<span class="sd">    power law relation from Sharma et al. (2021) to determine the age of the population. The function can</span>
+<span class="sd">    also take an optional verbose parameter that can be used to enable verbose output, and a direction</span>
+<span class="sd">    parameter that specifies the direction of the velocity dispersion (radial or vertical). The function</span>
+<span class="sd">    also supports Monte Carlo uncertainty propagation, which can be enabled by setting the nsample parameter.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sigma: The velocity dispersion of the population, as a floating point value or array of values.</span>
+<span class="sd">        direction: An optional string that specifies the direction of the velocity dispersion.</span>
+<span class="sd">        z: The position of the population in the z-direction, as a floating point value or array of values.</span>
+<span class="sd">        met: The metallicity of the population, as a floating point value or array of values.</span>
+<span class="sd">        verbose: An optional boolean flag that can be used to enable verbose output.</span>
+<span class="sd">        nsample: An optional integer that specifies the number of samples to use for Monte Carlo uncertainty</span>
+<span class="sd">            propagation.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple containing the median age and uncertainty of the population, as floating point values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Function implementation goes here</span>
+
+    <span class="c1">#compute age velocity dispersion relations based on sharma et al.</span>
+    <span class="n">verboseprint</span> <span class="o">=</span> <span class="nb">print</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">:</span> <span class="kc">None</span>
+    <span class="n">result</span><span class="o">=</span><span class="kc">None</span>
+    <span class="n">sigma</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    
+    <span class="n">beta_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;beta&#39;</span><span class="p">:{</span><span class="s1">&#39;radial&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="mf">0.251</span><span class="p">,</span> <span class="mf">0.006</span><span class="p">),</span> <span class="mf">0.1</span><span class="p">,</span>  <span class="p">(</span><span class="mf">39.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)],</span>
+                <span class="s1">&#39;vertical&#39;</span><span class="p">:[(</span><span class="mf">0.441</span><span class="p">,</span> <span class="mf">0.007</span><span class="p">),</span> <span class="mf">0.1</span><span class="p">,</span> <span class="p">(</span><span class="mf">21.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)]},</span>
+                <span class="s1">&#39;gamma_z&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;vertical&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span> <span class="s1">&#39;radial&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)},</span>
+                <span class="s1">&#39;gamma_met&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;vertical&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.52</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span> <span class="s1">&#39;radial&#39;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)}</span>
+                <span class="p">}</span>
+
+    <span class="n">limits_of_validity</span><span class="o">=</span> <span class="p">{</span><span class="s1">&#39;vertical&#39;</span><span class="p">:{</span><span class="s1">&#39;sigmav&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">22</span><span class="p">]</span> <span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">],</span> <span class="s1">&#39;met&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]},</span>
+                        <span class="s1">&#39;radial&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;sigmav&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">],</span> <span class="s1">&#39;met&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]}}</span>
+    
+    <span class="n">limits</span><span class="o">=</span><span class="n">limits_of_validity</span><span class="p">[</span><span class="n">direction</span><span class="p">]</span>
+    <span class="n">verboseprint</span><span class="p">(</span><span class="s2">&quot;Assuming Sharma et al. 2021 Metal-Rich Fits and </span><span class="si">{}</span><span class="s2"> velocity valid  </span><span class="si">{}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">limits</span> <span class="p">))</span>
+                            
+    <span class="c1">#propagate uncertainties via monte-carlo</span>
+    <span class="n">beta</span><span class="p">,</span> <span class="n">tau1</span><span class="p">,</span> <span class="n">sigma10</span><span class="o">=</span><span class="n">beta_dict</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">][</span><span class="n">direction</span><span class="p">]</span>
+    <span class="n">gamma_z</span><span class="o">=</span> <span class="n">beta_dict</span><span class="p">[</span><span class="s1">&#39;gamma_z&#39;</span><span class="p">][</span><span class="n">direction</span><span class="p">]</span>
+    <span class="n">gamma_met</span><span class="o">=</span> <span class="n">beta_dict</span><span class="p">[</span><span class="s1">&#39;gamma_met&#39;</span><span class="p">][</span><span class="n">direction</span><span class="p">]</span>
+   
+    
+    <span class="c1">#case for floats</span>
+    <span class="k">if</span> <span class="n">sigma</span><span class="o">.</span><span class="n">size</span> <span class="o">&lt;</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[],</span> <span class="p">[]])</span>
+    
+    <span class="k">if</span> <span class="n">sigma</span><span class="o">.</span><span class="n">size</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+        <span class="c1">#make it an array to avoid repeating stuff</span>
+        <span class="n">sigma</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">sigma</span><span class="p">,</span> <span class="n">sigma</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="n">z</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">z</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
+        <span class="n">met</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">met</span><span class="p">,</span> <span class="n">met</span><span class="p">])</span>
+
+    
+    <span class="c1">#case for arrays</span>
+    <span class="k">if</span> <span class="n">sigma</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">beta_norm</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="o">*</span><span class="n">beta</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">nsample</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sigma</span><span class="p">)))</span>
+        <span class="n">sigma10_norm</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="o">*</span><span class="n">sigma10</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">nsample</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sigma</span><span class="p">)))</span>
+        <span class="n">gamma_z_norm</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="o">*</span><span class="n">gamma_z</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">nsample</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sigma</span><span class="p">)))</span>
+        <span class="n">gamma_met_norm</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="o">*</span><span class="n">gamma_met</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">nsample</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sigma</span><span class="p">)))</span>
+        
+        <span class="c1">#truncate based on limits</span>
+        <span class="n">bools</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="o">.</span><span class="n">reduce</span><span class="p">([</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">sigma</span> <span class="o">&gt;=</span><span class="n">limits</span><span class="p">[</span><span class="s1">&#39;sigmav&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">sigma</span> <span class="o">&lt;=</span><span class="n">limits</span><span class="p">[</span><span class="s1">&#39;sigmav&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span> <span class="n">met</span> <span class="o">&gt;=</span><span class="n">limits</span><span class="p">[</span><span class="s1">&#39;met&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">met</span> <span class="o">&lt;=</span><span class="n">limits</span><span class="p">[</span><span class="s1">&#39;met&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;=</span><span class="n">limits</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">z</span> <span class="o">&lt;=</span><span class="n">limits</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        
+        <span class="c1">#replace false by nans</span>
+        <span class="n">bools</span><span class="p">[</span><span class="n">bools</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        
+        <span class="n">fz</span><span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">gamma_z_norm</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="o">*</span><span class="n">bools</span><span class="p">))</span>
+        <span class="n">fmet</span><span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">gamma_met_norm</span><span class="o">*</span><span class="n">met</span><span class="o">*</span><span class="n">bools</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">=</span><span class="p">((</span><span class="n">sigma</span><span class="o">*</span><span class="n">bools</span><span class="o">/</span> <span class="p">(</span><span class="n">sigma10_norm</span><span class="o">*</span><span class="n">fz</span><span class="o">*</span><span class="n">fmet</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span> <span class="n">beta_norm</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="mi">10</span><span class="o">+</span><span class="n">tau1</span><span class="p">)</span><span class="o">-</span><span class="n">tau1</span>
+        
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> </div>
+
+<div class="viewcode-block" id="avr_just"><a class="viewcode-back" href="../../index.html#popsims.galaxy.avr_just">[docs]</a><span class="k">def</span> <span class="nf">avr_just</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine the age of a population based on its velocity dispersion.</span>
+
+<span class="sd">    This function takes the velocity dispersion of a population and uses the power law relation from</span>
+<span class="sd">    Just et al. (2010) to determine the age of the population. The function can also take an optional</span>
+<span class="sd">    verbose parameter that can be used to enable verbose output, and a direction parameter that</span>
+<span class="sd">    specifies the direction of the velocity dispersion (radial, vertical, or azimuthal).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sigma: The velocity dispersion of the population, as a floating point value.</span>
+<span class="sd">        verbose: An optional boolean flag that can be used to enable verbose output.</span>
+<span class="sd">        direction: An optional string that specifies the direction of the velocity dispersion.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The age of the population, as a floating point value.</span>
+<span class="sd">    #generated with chatGPT</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Function implementation goes here</span>
+    <span class="c1">#return the age from an age-velocity dispersion </span>
+    <span class="n">verboseprint</span> <span class="o">=</span> <span class="nb">print</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">:</span> <span class="kc">None</span>
+    <span class="n">beta_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;radial&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;vertical&#39;</span><span class="p">:</span> <span class="mf">0.375</span><span class="p">,</span> <span class="s1">&#39;azimuthal&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+    <span class="n">beta</span><span class="o">=</span><span class="n">beta_dict</span><span class="p">[</span><span class="n">direction</span><span class="p">]</span>
+    <span class="n">verboseprint</span><span class="p">(</span><span class="s2">&quot;Just et al. 2010 power law for  velocity </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">direction</span><span class="p">))</span>
+    <span class="n">sigma0</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">tp</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mf">0.17</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mf">0.375</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">((</span><span class="n">sigma</span><span class="o">/</span><span class="n">sigma0</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">alpha</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">tp</span><span class="o">+</span><span class="n">t0</span><span class="p">)</span><span class="o">-</span><span class="n">t0</span></div>
+
+<div class="viewcode-block" id="scaleheight_to_vertical_disp"><a class="viewcode-back" href="../../index.html#popsims.galaxy.scaleheight_to_vertical_disp">[docs]</a><span class="k">def</span> <span class="nf">scaleheight_to_vertical_disp</span><span class="p">(</span><span class="n">hs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert the scale height of a population to its vertical velocity dispersion.</span>
+<span class="sd">    This function takes the scale height of a population and uses a conversion factor to determine the</span>
+<span class="sd">    corresponding vertical velocity dispersion. The conversion factor is based on the shape parameter</span>
+<span class="sd">    of the population and the assumption that the 68% dispersion of the population is 1.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        hs (float): The scale height of the population, in units of distance (e.g., parsecs, meters).</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        float: The vertical velocity dispersion of the population, in units of velocity (e.g., km/s, m/s).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Function implementation goes here</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="mi">277</span>  <span class="c1"># shape parameter</span>
+    <span class="n">sigma_68</span> <span class="o">=</span> <span class="mf">1.</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">hs</span><span class="p">))</span> <span class="o">/</span> <span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20</span></div>
+</pre></div>
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner"></div>
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023, caganze.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://sphinx-doc.org/">Sphinx</a> 5.3.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

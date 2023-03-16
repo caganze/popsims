@@ -1,377 +1,1484 @@
 
-<!doctype html>
-<html lang="en" class="no-js">
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
   <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-      
-      
-      
-      
-        <link rel="next" href="functions/">
-      
-      <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.3">
-    
-    
-      
-        <title>Popsims</title>
-      
-    
-    
-      <link rel="stylesheet" href="assets/stylesheets/main.c4a75a56.min.css">
-      
-        
-        <link rel="stylesheet" href="assets/stylesheets/palette.a0c5b2b5.min.css">
-      
-      
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    
-    
-    
-      
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-      
-    
-    
-      <link rel="stylesheet" href="stylesheets/extra.css">
-    
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-    
-      
+    <title>Welcome to popsims’s documentation! &#8212; popsims 2023 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
 
-    
-    
-    
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
   
   
-    
-    
-    
-    
-    
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
-  
-    
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#popsims" class="md-skip">
-          Skip to content
-        </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-    
-      
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
   
-
-<header class="md-header md-header--shadow" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Popsims" class="md-header__button md-logo" aria-label="Popsims" data-md-component="logo">
-      
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
-            Popsims
-          </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
-            
-              Home
-            
-          </span>
-        </div>
-      </div>
-    </div>
-    
-    
-    
-      <label class="md-header__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
   </div>
-</div>
-    
-    
-  </nav>
   
-</header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-          
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href="." title="Popsims" class="md-nav__button md-logo" aria-label="Popsims" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
-
-    </a>
-    Popsims
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
   </label>
   
-  <ul class="md-nav__list" data-md-scrollfix>
+  <div class="navbar-header-items__start">
     
-      
-      
-      
+      <div class="navbar-item">
+  
 
+<a class="navbar-brand logo" href="#">
   
   
+  
+  
+  
+    <p class="title logo__title">popsims 2023 documentation</p>
+  
+</a></div>
     
+  </div>
   
   
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Home
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
-        Home
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#popsims" class="md-nav__link">
-    Popsims
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
+  <div class="col-lg-9 navbar-header-items">
     
+    <div class="me-auto navbar-header-items__center">
       
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="functions/" class="md-nav__link">
-        Basic Functionalities
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="tutorials/" class="md-nav__link">
-        Tutorials
-      </a>
-    </li>
-  
-
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
     
   </ul>
-</nav>
-                  </div>
-                </div>
-              </div>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="welcome-to-popsims-s-documentation">
+<h1>Welcome to popsims’s documentation!<a class="headerlink" href="#welcome-to-popsims-s-documentation" title="Permalink to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<section id="module-popsims.core_tools">
+<span id="modules"></span><h2>Modules<a class="headerlink" href="#module-popsims.core_tools" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.core_tools.apply_polynomial_relation">
+<span class="sig-prename descclassname"><span class="pre">popsims.core_tools.</span></span><span class="sig-name descname"><span class="pre">apply_polynomial_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xerr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/core_tools.html#apply_polynomial_relation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.core_tools.apply_polynomial_relation" title="Permalink to this definition">#</a></dt>
+<dd><p>1D- Random draw by using numpy search on a grid
+Args:
+—-</p>
+<blockquote>
+<div><p>x_grid: grid of values ( array)
+cdf:  corresponding values from the CDF
+nsample: optional, number of samples</p>
+</div></blockquote>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>random draws</p>
+</div></blockquote>
+</section>
+<section id="examples">
+<h3>Examples:<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; x = np.arange(0, 10)
+&gt; cdf = x**3/(x[-1]**3)
+&gt; res= random_draw(x, cdf)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.core_tools.dropnans">
+<span class="sig-prename descclassname"><span class="pre">popsims.core_tools.</span></span><span class="sig-name descname"><span class="pre">dropnans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/core_tools.html#dropnans"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.core_tools.dropnans" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.core_tools.group_by">
+<span class="sig-prename descclassname"><span class="pre">popsims.core_tools.</span></span><span class="sig-name descname"><span class="pre">group_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xvalues</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yvalues</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0])</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/core_tools.html#group_by"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.core_tools.group_by" title="Permalink to this definition">#</a></dt>
+<dd><p>Group values on a 2D-grid by computing the median and standard deviation
+Works like an interpolation
+Args:
+—-</p>
+<blockquote>
+<div><p>xvalues: grid of x-values ( array, size N)
+yvalues:  grid of corresponding y-values ( array, size N)
+grid: optional, group of new values to group (array, any size)</p>
+</div></blockquote>
+<section id="id1">
+<h3>Returns:<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>dictionary of values and standard deviations</p>
+</div></blockquote>
+</section>
+<section id="id2">
+<h3>Examples:<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; x = np.random.uniform(0, 10, 1000)
+&gt; y = np.random.uniform(20, 100, 1000)
+&gt; z = np.linspace(0, 10)
+&gt; grouped =group_by(y, yvalues, grid= np.arange(0, 1, 1000))</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.core_tools.inverse_polynomial_relation">
+<span class="sig-prename descclassname"><span class="pre">popsims.core_tools.</span></span><span class="sig-name descname"><span class="pre">inverse_polynomial_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xgrid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'griddata'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/core_tools.html#inverse_polynomial_relation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.core_tools.inverse_polynomial_relation" title="Permalink to this definition">#</a></dt>
+<dd><p>1D- Random draw by using numpy search on a grid
+Args:
+—-</p>
+<blockquote>
+<div><p>x_grid: grid of values ( array)
+cdf:  corresponding values from the CDF
+nsample: optional, number of samples</p>
+</div></blockquote>
+<section id="id3">
+<h3>Returns:<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>random draws</p>
+</div></blockquote>
+</section>
+<section id="id4">
+<h3>Examples:<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; x = np.arange(0, 10)
+&gt; cdf = x**3/(x[-1]**3)
+&gt; res= random_draw(x, cdf)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.core_tools.k_clip_fit">
+<span class="sig-prename descclassname"><span class="pre">popsims.core_tools.</span></span><span class="sig-name descname"><span class="pre">k_clip_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/core_tools.html#k_clip_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.core_tools.k_clip_fit" title="Permalink to this definition">#</a></dt>
+<dd><p>Fit a polymomial by sigma clipping
+Args:
+—-</p>
+<blockquote>
+<div><p>x: grid of x-values ( array, N)
+y:  grid of y-values (array, N)
+sigma_y: uncertainties in y (arry, N)
+sigma: optional, number of sigmas to clip
+n: optional, order of the polynomial</p>
+</div></blockquote>
+<section id="id5">
+<h3>Returns:<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>returns a tuple of the list of retained y-values and polynomial object</p>
+</div></blockquote>
+</section>
+<section id="id6">
+<h3>Examples:<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; x =  np.random.uniform(0, 10, 1000)
+&gt; y = x**3
+&gt; yerr= x = np.random.uniform(0, 1, 1000)
+&gt; vals, pol= k_clip_fit(x, y, yerr, sigma = 5, n=6)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.core_tools.make_spt_number">
+<span class="sig-prename descclassname"><span class="pre">popsims.core_tools.</span></span><span class="sig-name descname"><span class="pre">make_spt_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/core_tools.html#make_spt_number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.core_tools.make_spt_number" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns a number from a spectral type
+Args:
+—-</p>
+<blockquote>
+<div><p>spt: spectral type (float or string)</p>
+</div></blockquote>
+<section id="id7">
+<h3>Returns:<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>spectral type in float</p>
+</div></blockquote>
+</section>
+<section id="id8">
+<h3>Examples:<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.core_tools.random_draw">
+<span class="sig-prename descclassname"><span class="pre">popsims.core_tools.</span></span><span class="sig-name descname"><span class="pre">random_draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_grid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/core_tools.html#random_draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.core_tools.random_draw" title="Permalink to this definition">#</a></dt>
+<dd><p>1D- Random draw by using numpy search on a grid
+Args:
+—-</p>
+<blockquote>
+<div><p>x_grid: grid of values ( array)
+cdf:  corresponding values from the CDF
+nsample: optional, number of samples</p>
+</div></blockquote>
+<section id="id9">
+<h3>Returns:<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>random draws</p>
+</div></blockquote>
+</section>
+<section id="id10">
+<h3>Examples:<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; x = np.arange(0, 10)
+&gt; cdf = x**3/(x[-1]**3)
+&gt; res= random_draw(x, cdf)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.core_tools.sample_from_powerlaw">
+<span class="sig-prename descclassname"><span class="pre">popsims.core_tools.</span></span><span class="sig-name descname"><span class="pre">sample_from_powerlaw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/core_tools.html#sample_from_powerlaw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.core_tools.sample_from_powerlaw" title="Permalink to this definition">#</a></dt>
+<dd><p>Sample values from power law $x ~ x^alpha$
+Args:
+—-</p>
+<blockquote>
+<div><p>alpha: power-law index (float)
+xmin, xmax:  optional, minium and maximu values (float)
+nsample: number of samples (integer)</p>
+</div></blockquote>
+<section id="id11">
+<h3>Returns:<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>random draws</p>
+</div></blockquote>
+</section>
+<section id="id12">
+<h3>Examples:<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; x = sample_from_powerlaw(alpha, xmin=0.1, xmax=1, nsample=int(1e3))</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.core_tools.trapzl">
+<span class="sig-prename descclassname"><span class="pre">popsims.core_tools.</span></span><span class="sig-name descname"><span class="pre">trapzl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/core_tools.html#trapzl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.core_tools.trapzl" title="Permalink to this definition">#</a></dt>
+<dd><p>Fast trapezoidal integration</p>
+<section id="args">
+<h3>Args:<a class="headerlink" href="#args" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>y: y values on a grid  (list or array)
+x: x values on a grid  (list or array)</p>
+</div></blockquote>
+</section>
+<section id="id13">
+<h3>Returns:<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>distance (float or array)</p>
+</div></blockquote>
+</section>
+<section id="id14">
+<h3>Examples:<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; x = np.arange(0, 10)
+&gt; y = np.ones_like(x)
+&gt; res= trapzl(y, x)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<span class="target" id="module-popsims.dynamics"></span><span class="target" id="module-popsims.galaxy"></span><dl class="py class">
+<dt class="sig sig-object py" id="popsims.galaxy.Disk">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">Disk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">H</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2600</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#Disk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.Disk" title="Permalink to this definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="popsims.galaxy.Disk.stellar_density">
+<span class="sig-name descname"><span class="pre">stellar_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#Disk.stellar_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.Disk.stellar_density" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the stellar density at a particular position</p>
+<section id="id15">
+<h3>Args:<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>r: galacto-centric radius ( astropy.quantity )
+z: galacto-centric height (astropy.quantity )</p>
+</div></blockquote>
+</section>
+<section id="id16">
+<h3>Returns:<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>unit-less stellar density</p>
+</div></blockquote>
+</section>
+<section id="id17">
+<h3>Examples:<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; d = Disk.stellar_density(100*u.pc, -100*u.pc)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="popsims.galaxy.GalacticComponent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">GalacticComponent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#GalacticComponent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.GalacticComponent" title="Permalink to this definition">#</a></dt>
+<dd><p>A meta class for galactic components.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="popsims.galaxy.GalacticComponent.density_gradient">
+<span class="sig-name descname"><span class="pre">density_gradient</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#GalacticComponent.density_gradient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.GalacticComponent.density_gradient" title="Permalink to this definition">#</a></dt>
+<dd><p>”
+Uses jax autodiff to get the gradient of the density</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popsims.galaxy.GalacticComponent.plot_countours">
+<span class="sig-name descname"><span class="pre">plot_countours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">npoints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cividis'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#GalacticComponent.plot_countours"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.GalacticComponent.plot_countours" title="Permalink to this definition">#</a></dt>
+<dd><p>plot contours of density in cylindrical coordinates</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popsims.galaxy.GalacticComponent.sample_distances">
+<span class="sig-name descname"><span class="pre">sample_distances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dsteps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#GalacticComponent.sample_distances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.GalacticComponent.sample_distances" title="Permalink to this definition">#</a></dt>
+<dd><blockquote>
+<div><p>Draw distances from a likelihood d^2</p>
+</div></blockquote>
+<p>ho(r, z) by inverse-sampling</p>
+<blockquote>
+<div><blockquote>
+<div><p>dmin: minium of the distance(astropy quantity)
+dmax: maximum distance (astropy quantity)
+nsample: number of draws
+l, b: (optional), galactic latitudes (astropy quantities).</p>
+<blockquote>
+<div><p>if set to None, will randomly pick directions</p>
+</div></blockquote>
+<p>dsteps: (optional): number of steps in trapezoidal integration (int)</p>
+</div></blockquote>
+<blockquote>
+<div><p>distances: array of distances (astropy quantity)</p>
+</div></blockquote>
+<blockquote>
+<div><p>&gt; d = GalacticComponent.sample_distances(10*u.pc, 1000*u.pc, 1000 )</p>
+</div></blockquote>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popsims.galaxy.GalacticComponent.stellar_density">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stellar_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#GalacticComponent.stellar_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.GalacticComponent.stellar_density" title="Permalink to this definition">#</a></dt>
+<dd><p>Abstract method for computing the stellar density of the GalacticComponent object at a given
+position (r, z).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<em>float</em>) – The radial distance from the Galactic center, in units of distance (e.g., parsecs, meters).</p></li>
+<li><p><strong>z</strong> (<em>float</em>) – The vertical distance from the Galactic plane, in units of distance (e.g., parsecs, meters).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The stellar density at the given position (r, z), in units of density (e.g., stars/pc^3).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popsims.galaxy.GalacticComponent.volume">
+<span class="sig-name descname"><span class="pre">volume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dsteps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#GalacticComponent.volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.GalacticComponent.volume" title="Permalink to this definition">#</a></dt>
+<dd><blockquote>
+<div><p>Compute volume by integrating d^2</p>
+</div></blockquote>
+<p>ho(r, z) by inverse-sampling</p>
+<blockquote>
+<div><blockquote>
+<div><p>dmin: minium of the distance(astropy quantity)
+dmax: maximum distance (astropy quantity)
+l, b: galactic latitude and longitude (astropy quantities).
+dsteps: (optional): number of steps in trapezoidal integration (int)</p>
+</div></blockquote>
+<blockquote>
+<div><p>distances: array of distances (astropy quantity)</p>
+</div></blockquote>
+<blockquote>
+<div><p>&gt; d = GalacticComponent.sample_distances(10*u.pc, 1000*u.pc, 1000 )</p>
+</div></blockquote>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="popsims.galaxy.Halo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">Halo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.64</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.77</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#Halo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.Halo" title="Permalink to this definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="popsims.galaxy.Halo.stellar_density">
+<span class="sig-name descname"><span class="pre">stellar_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#Halo.stellar_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.Halo.stellar_density" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the stellar density at a particular position</p>
+<section id="id18">
+<h3>Args:<a class="headerlink" href="#id18" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>r: galacto-centric radius ( astropy.quantity )
+z: galacto-centric height (astropy.quantity )</p>
+</div></blockquote>
+</section>
+<section id="id19">
+<h3>Returns:<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>unit-less stellar density</p>
+</div></blockquote>
+</section>
+<section id="id20">
+<h3>Examples:<a class="headerlink" href="#id20" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; d = Disk.stellar_density(100*u.pc, -100*u.pc)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="popsims.galaxy.M31Halo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">M31Halo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.11</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#M31Halo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.M31Halo" title="Permalink to this definition">#</a></dt>
+<dd><p>power-law stellar density for M31’s halo by Ibata et al. 2014</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="popsims.galaxy.M31Halo.stellar_density">
+<span class="sig-name descname"><span class="pre">stellar_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#M31Halo.stellar_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.M31Halo.stellar_density" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the stellar density at a particular position</p>
+<section id="id21">
+<h3>Args:<a class="headerlink" href="#id21" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>x, y, z: galacto-centric x, y,z ( astropy.quantity )</p>
+</div></blockquote>
+</section>
+<section id="id22">
+<h3>Returns:<a class="headerlink" href="#id22" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>unit-less stellar density</p>
+</div></blockquote>
+</section>
+<section id="id23">
+<h3>Examples:<a class="headerlink" href="#id23" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; d = Disk.stellar_density(100*u.pc, -100*u.pc)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.avr_aumer">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">avr_aumer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vertical'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#avr_aumer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.avr_aumer" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates the Aumer &amp; Binney 2009 metal-rich age-velocity relation.
+:param sigma: Sigma value to use in the calculation.
+:type sigma: float
+:param direction: Direction to use in the calculation. Can be ‘radial’, ‘total’, ‘azimuthal’, or ‘vertical’. Defaults to ‘vertical’.
+:type direction: str, optional
+:param verbose: Set to True to print additional information about the calculation. Defaults to False.
+:type verbose: bool, optional</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Result of the calculation.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.avr_just">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">avr_just</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vertical'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#avr_just"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.avr_just" title="Permalink to this definition">#</a></dt>
+<dd><p>Determine the age of a population based on its velocity dispersion.</p>
+<p>This function takes the velocity dispersion of a population and uses the power law relation from
+Just et al. (2010) to determine the age of the population. The function can also take an optional
+verbose parameter that can be used to enable verbose output, and a direction parameter that
+specifies the direction of the velocity dispersion (radial, vertical, or azimuthal).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sigma</strong> – The velocity dispersion of the population, as a floating point value.</p></li>
+<li><p><strong>verbose</strong> – An optional boolean flag that can be used to enable verbose output.</p></li>
+<li><p><strong>direction</strong> – An optional string that specifies the direction of the velocity dispersion.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The age of the population, as a floating point value.</p>
+</dd>
+</dl>
+<p>#generated with chatGPT</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.avr_sanders">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">avr_sanders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vertical'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#avr_sanders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.avr_sanders" title="Permalink to this definition">#</a></dt>
+<dd><p>Determine the age of a population based on its velocity dispersion.</p>
+<p>This function takes the velocity dispersion of a population and uses the power law relation from
+Sanders et al. (2018) to determine the age of the population. The function can also take an optional
+verbose parameter that can be used to enable verbose output, and a direction parameter that
+specifies the direction of the velocity dispersion (radial or vertical).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sigma</strong> – The velocity dispersion of the population, as a floating point value.</p></li>
+<li><p><strong>verbose</strong> – An optional boolean flag that can be used to enable verbose output.</p></li>
+<li><p><strong>direction</strong> – An optional string that specifies the direction of the velocity dispersion.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The age of the population, as a floating point value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.avr_sharma">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">avr_sharma</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vertical'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">met</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#avr_sharma"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.avr_sharma" title="Permalink to this definition">#</a></dt>
+<dd><p>Determine the age of a population based on its velocity dispersion, metallicity, and position.</p>
+<p>This function takes the velocity dispersion, metallicity, and position of a population and uses the
+power law relation from Sharma et al. (2021) to determine the age of the population. The function can
+also take an optional verbose parameter that can be used to enable verbose output, and a direction
+parameter that specifies the direction of the velocity dispersion (radial or vertical). The function
+also supports Monte Carlo uncertainty propagation, which can be enabled by setting the nsample parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sigma</strong> – The velocity dispersion of the population, as a floating point value or array of values.</p></li>
+<li><p><strong>direction</strong> – An optional string that specifies the direction of the velocity dispersion.</p></li>
+<li><p><strong>z</strong> – The position of the population in the z-direction, as a floating point value or array of values.</p></li>
+<li><p><strong>met</strong> – The metallicity of the population, as a floating point value or array of values.</p></li>
+<li><p><strong>verbose</strong> – An optional boolean flag that can be used to enable verbose output.</p></li>
+<li><p><strong>nsample</strong> – An optional integer that specifies the number of samples to use for Monte Carlo uncertainty
+propagation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the median age and uncertainty of the population, as floating point values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.avr_yu">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">avr_yu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'thin'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vertical'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'above'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#avr_yu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.avr_yu" title="Permalink to this definition">#</a></dt>
+<dd><p>Determine the age of a population based on its velocity dispersion.</p>
+<p>This function takes the velocity dispersion of a population and uses the power law relation from
+Yu &amp; Liu (2018) to determine the age of the population. The function can also take a number of
+optional parameters, such as a verbose flag to enable verbose output, a disk parameter to specify
+whether the population belongs to the thin or thick disk, a direction parameter to specify the
+direction of the velocity dispersion (radial, azimuthal, or vertical), and a height parameter to
+specify whether the population is above or below a certain height.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sigma</strong> – The velocity dispersion of the population, as a floating point value or array of values.</p></li>
+<li><p><strong>verbose</strong> – An optional boolean flag that can be used to enable verbose output.</p></li>
+<li><p><strong>disk</strong> – An optional string that specifies whether the population belongs to the thin or thick disk.</p></li>
+<li><p><strong>direction</strong> – An optional string that specifies the direction of the velocity dispersion.</p></li>
+<li><p><strong>height</strong> – An optional string that specifies whether the population is above or below a certain height.</p></li>
+<li><p><strong>nsample</strong> – An optional integer that specifies the number of samples to use in the Monte Carlo simulation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The age of the population, as a floating point value or a tuple of two floating point values
+(mean and standard deviation) if the input sigma is an array of values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.cylindrical_to_cartesian">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">cylindrical_to_cartesian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#cylindrical_to_cartesian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.cylindrical_to_cartesian" title="Permalink to this definition">#</a></dt>
+<dd><p>sperhoid density profile</p>
+<section id="id24">
+<h3>Args:<a class="headerlink" href="#id24" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>r: galactocentric radius  (list or array)
+z: galactocentric height  (list or array)
+q: flattening parameter
+n: power-law exponent</p>
+</div></blockquote>
+</section>
+<section id="id25">
+<h3>Returns:<a class="headerlink" href="#id25" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>density (float or array)</p>
+</div></blockquote>
+</section>
+<section id="id26">
+<h3>Examples:<a class="headerlink" href="#id26" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; x = cylindrical_to_cartesian(r, z, phi)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.exponential_density">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">exponential_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">H</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#exponential_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.exponential_density" title="Permalink to this definition">#</a></dt>
+<dd><p>Exponential density profile</p>
+<section id="id27">
+<h3>Args:<a class="headerlink" href="#id27" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>r: galactocentric radius  (list or array)
+z: galactocentric height  (list or array)
+H: scaleheight (list or array)
+L: scalelength (list or array)</p>
+</div></blockquote>
+</section>
+<section id="id28">
+<h3>Returns:<a class="headerlink" href="#id28" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>density (float or array)</p>
+</div></blockquote>
+</section>
+<section id="id29">
+<h3>Examples:<a class="headerlink" href="#id29" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; x = exponential_density(8700, 100, 300,2600)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.get_proper_motion_cylindrical">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">get_proper_motion_cylindrical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vphi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vz</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#get_proper_motion_cylindrical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.get_proper_motion_cylindrical" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates the proper motion in right ascension and declination given right ascension, declination, distance, vr, vphi, and vz velocities.</p>
+<p>Copy code
+:param ra: Right ascension in degrees.
+:type ra: float
+:param dec: Declination in degrees.
+:type dec: float
+:param d: Distance in pc.
+:type d: float
+:param vr: Vr velocity in km/s.
+:type vr: float
+:param vphi: Vphi velocity in rad/s.
+:type vphi: float
+:param vz: Vz velocity in km/s.
+:type vz: float</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary with keys ‘RV’, ‘mu_alpha_cosdec’, and ‘mu_delta’ corresponding to the calculated radial velocity in km/s and proper motion in right ascension and declination in mas/yr.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.get_proper_motion_from_uvw">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">get_proper_motion_from_uvw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">U</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">W</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#get_proper_motion_from_uvw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.get_proper_motion_from_uvw" title="Permalink to this definition">#</a></dt>
+<dd><p>Determine the proper motion of a star from its galactic velocity components.</p>
+<p>This function takes the position, distance, and galactic velocity components of a star and uses
+transformations to determine the proper motion of the star in the sky. The function takes the
+right ascension, declination, and distance of the star in degrees and parsecs, respectively, and
+the U, V, and W velocity components of the star in km/s. The function returns the radial velocity,
+right ascension proper motion, and declination proper motion of the star in km/s and mas/yr,
+respectively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ra</strong> – The right ascension of the star, as a floating point value in degrees.</p></li>
+<li><p><strong>dec</strong> – The declination of the star, as a floating point value in degrees.</p></li>
+<li><p><strong>d</strong> – The distance of the star, as a floating point value in parsecs.</p></li>
+<li><p><strong>U</strong> – The U velocity component of the star, as a floating point value in km/s.</p></li>
+<li><p><strong>V</strong> – The V velocity component of the star, as a floating point value in km/s.</p></li>
+<li><p><strong>W</strong> – The W velocity component of the star, as a floating point value in km/s.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the radial velocity, right ascension proper motion, and declination proper
+motion of the star, as floating point values in km/s and mas/yr, respectively.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.get_uvw_from_radec_distance">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">get_uvw_from_radec_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmra_cosdec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmdec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rv</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#get_uvw_from_radec_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.get_uvw_from_radec_distance" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates the U, V, and W velocities in km/s given right ascension, declination, distance, proper motion in right ascension and declination, and radial velocity in km/s.</p>
+<p>Copy code
+:param ra: Right ascension in degrees.
+:type ra: float
+:param dec: Declination in degrees.
+:type dec: float
+:param distance: Distance in pc.
+:type distance: float
+:param pmra_cosdec: Proper motion in right ascension in mas/yr.
+:type pmra_cosdec: float
+:param pmdec: Proper motion in declination in mas/yr.
+:type pmdec: float
+:param rv: Radial velocity in km/s.
+:type rv: float</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary with keys ‘U’, ‘V’, and ‘W’ corresponding to the calculated velocities in km/s.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.get_velocities">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">get_velocities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">population</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'thin_disk'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">age</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#get_velocities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.get_velocities" title="Permalink to this definition">#</a></dt>
+<dd><p>Draw velocities from a Gaussians assuming a velocity dispersion</p>
+<blockquote>
+<div><blockquote>
+<div><dl class="simple">
+<dt>ra, dec: right ascenscion and declination ( astropy.quantity )</dt><dd><p>used to compute sky motions</p>
+</dd>
+</dl>
+<p>age (optional): age distribution used for thin disk</p>
+<dl class="simple">
+<dt>d (optional): distance (astropy.quantity</dt><dd><p>used for binning halo stars )</p>
+</dd>
+</dl>
+<p>population: string</p>
+<blockquote>
+<div><p>“thin_disk” Aumer &amp; Binney
+“thick_disk”: Bensby et al. 2013
+“halo”: carollo et al. 2007</p>
+</div></blockquote>
+</div></blockquote>
+<blockquote>
+<div><p>a dictionaries with galaxy kinematics (UVW, vr, vphi, vz) and sky motions</p>
+</div></blockquote>
+<blockquote>
+<div><p>&gt;</p>
+</div></blockquote>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.get_vrphiz_from_radec_distance">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">get_vrphiz_from_radec_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmra_cosdec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmdec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rv</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#get_vrphiz_from_radec_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.get_vrphiz_from_radec_distance" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates the vr, vphi, and vz velocities in km/s given right ascension, declination, distance, proper motion in right ascension and declination, and radial velocity in km/s.</p>
+<p>Copy code
+:param ra: Right ascension in degrees.
+:type ra: float
+:param dec: Declination in degrees.
+:type dec: float
+:param distance: Distance in pc.
+:type distance: float
+:param pmra_cosdec: Proper motion in right ascension in mas/yr.
+:type pmra_cosdec: float
+:param pmdec: Proper motion in declination in mas/yr.
+:type pmdec: float
+:param rv: Radial velocity in km/s.
+:type rv: float</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary with keys ‘Vr’, ‘Vphi’, and ‘Vz’ corresponding to the calculated velocities in km/s.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.scaleheight_to_vertical_disp">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">scaleheight_to_vertical_disp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#scaleheight_to_vertical_disp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.scaleheight_to_vertical_disp" title="Permalink to this definition">#</a></dt>
+<dd><p>Convert the scale height of a population to its vertical velocity dispersion.
+This function takes the scale height of a population and uses a conversion factor to determine the
+corresponding vertical velocity dispersion. The conversion factor is based on the shape parameter
+of the population and the assumption that the 68% dispersion of the population is 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>hs</strong> (<em>float</em>) – The scale height of the population, in units of distance (e.g., parsecs, meters).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The vertical velocity dispersion of the population, in units of velocity (e.g., km/s, m/s).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.spheroid_density">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">spheroid_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#spheroid_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.spheroid_density" title="Permalink to this definition">#</a></dt>
+<dd><p>sperhoid density profile</p>
+<section id="id30">
+<h3>Args:<a class="headerlink" href="#id30" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>r: galactocentric radius  (list or array)
+z: galactocentric height  (list or array)
+q: flattening parameter
+n: power-law exponent</p>
+</div></blockquote>
+</section>
+<section id="id31">
+<h3>Returns:<a class="headerlink" href="#id31" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>density (float or array)</p>
+</div></blockquote>
+</section>
+<section id="id32">
+<h3>Examples:<a class="headerlink" href="#id32" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; x = spheroid_density(8700, 100, 0.64, n=2.77)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.galaxy.transform_tocylindrical">
+<span class="sig-prename descclassname"><span class="pre">popsims.galaxy.</span></span><span class="sig-name descname"><span class="pre">transform_tocylindrical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/galaxy.html#transform_tocylindrical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.galaxy.transform_tocylindrical" title="Permalink to this definition">#</a></dt>
+<dd><p>sperhoid density profile</p>
+<section id="id33">
+<h3>Args:<a class="headerlink" href="#id33" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>r: galactocentric radius  (list or array)
+z: galactocentric height  (list or array)
+q: flattening parameter
+n: power-law exponent</p>
+</div></blockquote>
+</section>
+<section id="id34">
+<h3>Returns:<a class="headerlink" href="#id34" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>density (float or array)</p>
+</div></blockquote>
+</section>
+<section id="id35">
+<h3>Examples:<a class="headerlink" href="#id35" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; x = spheroid_density(8700, 100, 0.64, n=2.77)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<span class="target" id="module-popsims.simulator"></span><dl class="py class">
+<dt class="sig sig-object py" id="popsims.simulator.Population">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">popsims.simulator.</span></span><span class="sig-name descname"><span class="pre">Population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/simulator.html#Population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.simulator.Population" title="Permalink to this definition">#</a></dt>
+<dd><p>Class for a poulation</p>
+<section id="attributes">
+<h3>Attributes:<a class="headerlink" href="#attributes" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>x_grid: grid of values ( array)
+cdf:  corresponding values from the CDF
+nsample: optional, number of samples</p>
+</div></blockquote>
+</section>
+<section id="properties">
+<h3>Properties:<a class="headerlink" href="#properties" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>random draws</p>
+</div></blockquote>
+</section>
+<section id="methods">
+<h3>Methods:<a class="headerlink" href="#methods" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="example">
+<h3>Example:<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p>&gt; x = np.arange(0, 10)
+&gt; cdf = x**3/(x[-1]**3)
+&gt; res= random_draw(x, cdf)</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="popsims.simulator.Population.add_distances">
+<span class="sig-name descname"><span class="pre">add_distances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gmodel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dsteps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/simulator.html#Population.add_distances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.simulator.Population.add_distances" title="Permalink to this definition">#</a></dt>
+<dd><p>Class for a poulation</p>
+<section id="id36">
+<h4>Attributes:<a class="headerlink" href="#id36" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p>x_grid: grid of values ( array)
+cdf:  corresponding values from the CDF
+nsample: optional, number of samples</p>
+</div></blockquote>
+</section>
+<section id="id37">
+<h4>Properties:<a class="headerlink" href="#id37" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p>random draws</p>
+</div></blockquote>
+</section>
+<section id="id38">
+<h4>Methods:<a class="headerlink" href="#id38" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="id39">
+<h4>Example:<a class="headerlink" href="#id39" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p>&gt; x = np.arange(0, 10)
+&gt; cdf = x**3/(x[-1]**3)
+&gt; res= random_draw(x, cdf)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popsims.simulator.Population.add_magnitudes">
+<span class="sig-name descname"><span class="pre">add_magnitudes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_from</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spt'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/simulator.html#Population.add_magnitudes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.simulator.Population.add_magnitudes" title="Permalink to this definition">#</a></dt>
+<dd><p>Class for a poulation</p>
+<section id="id40">
+<h4>Attributes:<a class="headerlink" href="#id40" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p>x_grid: grid of values ( array)
+cdf:  corresponding values from the CDF
+nsample: optional, number of samples</p>
+</div></blockquote>
+</section>
+<section id="id41">
+<h4>Properties:<a class="headerlink" href="#id41" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p>random draws</p>
+</div></blockquote>
+</section>
+<section id="id42">
+<h4>Methods:<a class="headerlink" href="#id42" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="id43">
+<h4>Example:<a class="headerlink" href="#id43" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p>&gt; x = np.arange(0, 10)
+&gt; cdf = x**3/(x[-1]**3)
+&gt; res= random_draw(x, cdf)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popsims.simulator.Population.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/simulator.html#Population.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.simulator.Population.simulate" title="Permalink to this definition">#</a></dt>
+<dd><p>Class for a poulation</p>
+<section id="id44">
+<h4>Attributes:<a class="headerlink" href="#id44" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p>x_grid: grid of values ( array)
+cdf:  corresponding values from the CDF
+nsample: optional, number of samples</p>
+</div></blockquote>
+</section>
+<section id="id45">
+<h4>Properties:<a class="headerlink" href="#id45" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p>random draws</p>
+</div></blockquote>
+</section>
+<section id="id46">
+<h4>Methods:<a class="headerlink" href="#id46" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="id47">
+<h4>Example:<a class="headerlink" href="#id47" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p>&gt; x = np.arange(0, 10)
+&gt; cdf = x**3/(x[-1]**3)
+&gt; res= random_draw(x, cdf)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="popsims.simulator.Population.visualize">
+<span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['mass',</span> <span class="pre">'age',</span> <span class="pre">'spt']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/simulator.html#Population.visualize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.simulator.Population.visualize" title="Permalink to this definition">#</a></dt>
+<dd><p>Class for a poulation</p>
+<section id="id48">
+<h4>Attributes:<a class="headerlink" href="#id48" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p>x_grid: grid of values ( array)
+cdf:  corresponding values from the CDF
+nsample: optional, number of samples</p>
+</div></blockquote>
+</section>
+<section id="id49">
+<h4>Properties:<a class="headerlink" href="#id49" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p>random draws</p>
+</div></blockquote>
+</section>
+<section id="id50">
+<h4>Methods:<a class="headerlink" href="#id50" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="id51">
+<h4>Example:<a class="headerlink" href="#id51" title="Permalink to this heading">#</a></h4>
+<blockquote>
+<div><p>&gt; x = np.arange(0, 10)
+&gt; cdf = x**3/(x[-1]**3)
+&gt; res= random_draw(x, cdf)</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.simulator.pop_colors">
+<span class="sig-prename descclassname"><span class="pre">popsims.simulator.</span></span><span class="sig-name descname"><span class="pre">pop_colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dwarfs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_from</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/simulator.html#pop_colors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.simulator.pop_colors" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute colors from pre-computed absolute mag relations</p>
+<blockquote>
+<div><p>Class for a poulation</p>
+<blockquote>
+<div><p>x_grid: grid of values ( array)
+cdf:  corresponding values from the CDF
+nsample: optional, number of samples</p>
+</div></blockquote>
+<blockquote>
+<div><p>random draws</p>
+</div></blockquote>
+<blockquote>
+<div><p>&gt; x = np.arange(0, 10)
+&gt; cdf = x**3/(x[-1]**3)
+&gt; res= random_draw(x, cdf)</p>
+</div></blockquote>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.simulator.pop_mags">
+<span class="sig-prename descclassname"><span class="pre">popsims.simulator.</span></span><span class="sig-name descname"><span class="pre">pop_mags</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dwarfs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_from</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/simulator.html#pop_mags"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.simulator.pop_mags" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute magnitudes from pre-computed absolute mag relations</p>
+<blockquote>
+<div><p>Class for a poulation</p>
+<blockquote>
+<div><p>x_grid: grid of values ( array)
+cdf:  corresponding values from the CDF
+nsample: optional, number of samples</p>
+</div></blockquote>
+<blockquote>
+<div><p>random draws</p>
+</div></blockquote>
+<blockquote>
+<div><p>&gt; x = np.arange(0, 10)
+&gt; cdf = x**3/(x[-1]**3)
+&gt; res= random_draw(x, cdf)</p>
+</div></blockquote>
+</div></blockquote>
+</dd></dl>
+
+<span class="target" id="module-popsims.abs_mag_relations"></span><span class="target" id="module-popsims.evol_models"></span><span class="target" id="module-popsims.plot_style"></span><span class="target" id="module-popsims.plot_tools"></span><dl class="py function">
+<dt class="sig sig-object py" id="popsims.plot_tools.plot_annotated_heatmap">
+<span class="sig-prename descclassname"><span class="pre">popsims.plot_tools.</span></span><span class="sig-name descname"><span class="pre">plot_annotated_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gridpoints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap='viridis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotate=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">textsize=14</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha=0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm=&lt;matplotlib.colors.LogNorm</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/plot_tools.html#plot_annotated_heatmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.plot_tools.plot_annotated_heatmap" title="Permalink to this definition">#</a></dt>
+<dd><p>Plots an annotated heatmap.
+:param ax: Axis to plot on.
+:type ax: matplotlib.axis
+:param data: Data to plot.
+:type data: pandas.DataFrame
+:param gridpoints: Number of grid points to use.
+:type gridpoints: int
+:param columns: List of length 3 containing the names of the columns to use as the x, y, and z values of the heatmap.
+:type columns: list
+:param cmap: Colormap to use (default ‘viridis’).
+:type cmap: str
+:param annotate: Whether to annotate the heatmap with the median or count of z values (default False).
+:type annotate: bool
+:param vmin: Minimum value of the color range (default 0.0).
+:type vmin: float
+:param vmax: Maximum value of the color range (default 1.0).
+:type vmax: float
+:param textsize: Font size for annotations (default 14).
+:type textsize: int
+:param alpha: Transparency of the heatmap (default 0.1).
+:type alpha: float</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The axis with the plotted heatmap.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>matplotlib.axis</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-popsims.binaries"></span><span class="target" id="module-popsims.filterinitialize"></span><span class="target" id="module-popsims.popsims"></span><dl class="py function">
+<dt class="sig sig-object py" id="popsims.popsims.evolutionary_model_interpolator">
+<span class="sig-prename descclassname"><span class="pre">popsims.popsims.</span></span><span class="sig-name descname"><span class="pre">evolutionary_model_interpolator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">age</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/popsims.html#evolutionary_model_interpolator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.popsims.evolutionary_model_interpolator" title="Permalink to this definition">#</a></dt>
+<dd><p>Interpolate evolutionary model data to determine the temperature and luminosity of a star.</p>
+<p>This function takes the mass, age, and model type of a star, and uses interpolation to determine the
+temperature and luminosity of the star based on these values. The function can also take an optional
+subset parameter, which can be used to specify a subset of the evolutionary model data to use for the
+interpolation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mass</strong> – The mass of the star, as a floating point value in solar masses.</p></li>
+<li><p><strong>age</strong> – The age of the star, as a floating point value in years.</p></li>
+<li><p><strong>model</strong> – The type of evolutionary model to use for the interpolation, as a string.</p></li>
+<li><p><strong>subset</strong> – An optional subset of the evolutionary model data to use for the interpolation, as a tuple of
+(column name, value) pairs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the mass, age, temperature, and luminosity of the star, as floating point values
+in the appropriate units.</p>
+</dd>
+</dl>
+<p>#generated by chatGPT</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="popsims.popsims.get_system_type">
+<span class="sig-prename descclassname"><span class="pre">popsims.popsims.</span></span><span class="sig-name descname"><span class="pre">get_system_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/popsims.html#get_system_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.popsims.get_system_type" title="Permalink to this definition">#</a></dt>
+<dd><p>Determine the type of a system based on its primary and secondary attributes.</p>
+<p>This function takes the primary and secondary attributes of a system and
+uses interpolation to determine the type of the system based on these
+attributes. The system type is returned as a floating point value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pr</strong> – The primary attribute of the system, as a floating point value.</p></li>
+<li><p><strong>sc</strong> – The secondary attribute of the system, as a floating point value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The type of the system, as a floating point value.</p>
+</dd>
+</dl>
+<p>#generated by chatGPT</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#popsims" class="md-nav__link">
-    Popsims
-  </a>
-  
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Welcome to popsims’s documentation!</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-popsims.core_tools">Modules</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.apply_polynomial_relation"><code class="docutils literal notranslate"><span class="pre">apply_polynomial_relation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.dropnans"><code class="docutils literal notranslate"><span class="pre">dropnans()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.group_by"><code class="docutils literal notranslate"><span class="pre">group_by()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.inverse_polynomial_relation"><code class="docutils literal notranslate"><span class="pre">inverse_polynomial_relation()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.k_clip_fit"><code class="docutils literal notranslate"><span class="pre">k_clip_fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.make_spt_number"><code class="docutils literal notranslate"><span class="pre">make_spt_number()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.random_draw"><code class="docutils literal notranslate"><span class="pre">random_draw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.sample_from_powerlaw"><code class="docutils literal notranslate"><span class="pre">sample_from_powerlaw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.trapzl"><code class="docutils literal notranslate"><span class="pre">trapzl()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.Disk"><code class="docutils literal notranslate"><span class="pre">Disk</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.Disk.stellar_density"><code class="docutils literal notranslate"><span class="pre">Disk.stellar_density()</span></code></a></li>
+</ul>
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
-  </a>
-  
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.GalacticComponent"><code class="docutils literal notranslate"><span class="pre">GalacticComponent</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.GalacticComponent.density_gradient"><code class="docutils literal notranslate"><span class="pre">GalacticComponent.density_gradient()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.GalacticComponent.plot_countours"><code class="docutils literal notranslate"><span class="pre">GalacticComponent.plot_countours()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.GalacticComponent.sample_distances"><code class="docutils literal notranslate"><span class="pre">GalacticComponent.sample_distances()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.GalacticComponent.stellar_density"><code class="docutils literal notranslate"><span class="pre">GalacticComponent.stellar_density()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.GalacticComponent.volume"><code class="docutils literal notranslate"><span class="pre">GalacticComponent.volume()</span></code></a></li>
+</ul>
 </li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.Halo"><code class="docutils literal notranslate"><span class="pre">Halo</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.Halo.stellar_density"><code class="docutils literal notranslate"><span class="pre">Halo.stellar_density()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.M31Halo"><code class="docutils literal notranslate"><span class="pre">M31Halo</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.M31Halo.stellar_density"><code class="docutils literal notranslate"><span class="pre">M31Halo.stellar_density()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.avr_aumer"><code class="docutils literal notranslate"><span class="pre">avr_aumer()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.avr_just"><code class="docutils literal notranslate"><span class="pre">avr_just()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.avr_sanders"><code class="docutils literal notranslate"><span class="pre">avr_sanders()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.avr_sharma"><code class="docutils literal notranslate"><span class="pre">avr_sharma()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.avr_yu"><code class="docutils literal notranslate"><span class="pre">avr_yu()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.cylindrical_to_cartesian"><code class="docutils literal notranslate"><span class="pre">cylindrical_to_cartesian()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.exponential_density"><code class="docutils literal notranslate"><span class="pre">exponential_density()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.get_proper_motion_cylindrical"><code class="docutils literal notranslate"><span class="pre">get_proper_motion_cylindrical()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.get_proper_motion_from_uvw"><code class="docutils literal notranslate"><span class="pre">get_proper_motion_from_uvw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.get_uvw_from_radec_distance"><code class="docutils literal notranslate"><span class="pre">get_uvw_from_radec_distance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.get_velocities"><code class="docutils literal notranslate"><span class="pre">get_velocities()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.get_vrphiz_from_radec_distance"><code class="docutils literal notranslate"><span class="pre">get_vrphiz_from_radec_distance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.scaleheight_to_vertical_disp"><code class="docutils literal notranslate"><span class="pre">scaleheight_to_vertical_disp()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.spheroid_density"><code class="docutils literal notranslate"><span class="pre">spheroid_density()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.galaxy.transform_tocylindrical"><code class="docutils literal notranslate"><span class="pre">transform_tocylindrical()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.simulator.Population"><code class="docutils literal notranslate"><span class="pre">Population</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.simulator.Population.add_distances"><code class="docutils literal notranslate"><span class="pre">Population.add_distances()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.simulator.Population.add_magnitudes"><code class="docutils literal notranslate"><span class="pre">Population.add_magnitudes()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.simulator.Population.simulate"><code class="docutils literal notranslate"><span class="pre">Population.simulate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.simulator.Population.visualize"><code class="docutils literal notranslate"><span class="pre">Population.visualize()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.simulator.pop_colors"><code class="docutils literal notranslate"><span class="pre">pop_colors()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.simulator.pop_mags"><code class="docutils literal notranslate"><span class="pre">pop_mags()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.plot_tools.plot_annotated_heatmap"><code class="docutils literal notranslate"><span class="pre">plot_annotated_heatmap()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.popsims.evolutionary_model_interpolator"><code class="docutils literal notranslate"><span class="pre">evolutionary_model_interpolator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.popsims.get_system_type"><code class="docutils literal notranslate"><span class="pre">get_system_type()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="_sources/index.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
             
-          
-          
-            <div class="md-content" data-md-component="content">
-              <article class="md-content__inner md-typeset">
-                
-                  
-
-
-  <h1>Home</h1>
-
-<h2 id="popsims">Popsims</h2>
-<p>Ultracool dwarf population simulation routines</p>
-<h2 id="installation">Installation</h2>
-<p><code>pip install popsims</code></p>
-<p>Notebook example: https://github.com/caganze/popsims/blob/main/examples/ExampleNotebook.ipynb</p>
-<p>Documentation (in progress): </p>
-
-
-
-
-
-                
-              </article>
-            </div>
-          
-          
-        </div>
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner"></div>
+          </footer>
         
       </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
       
-        <footer class="md-footer">
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
-  
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
-  
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023, caganze.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://sphinx-doc.org/">Sphinx</a> 5.3.0.
+    <br/>
+  </p>
 </div>
       
     </div>
-  </div>
-</footer>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.1.
+</p></div>
       
     </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
-    
-    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
-    
-    
-      <script src="assets/javascripts/bundle.efa0ade1.min.js"></script>
-      
-    
+  
+</div>
+
+  </footer>
   </body>
 </html>

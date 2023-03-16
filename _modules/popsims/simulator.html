@@ -1,0 +1,788 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>popsims.simulator &#8212; popsims 2023 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/popsims/simulator';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">popsims 2023 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">popsims.simulator</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for popsims.simulator</h1><div class="highlight"><pre>
+<span></span><span class="c1">##purpose: simulate a brown dwarf population</span>
+<span class="c1">###</span>
+<span class="c1">#imports</span>
+<span class="kn">from</span> <span class="nn">.galaxy</span> <span class="kn">import</span> <span class="o">*</span> 
+<span class="kn">from</span> <span class="nn">.popsims</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.core_tools</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.relations</span> <span class="kn">import</span> <span class="n">teff_to_spt_subdwarf</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="c1">#from tqdm import tqdm</span>
+<span class="c1">#tqdm.pandas()</span>
+
+
+<div class="viewcode-block" id="Population"><a class="viewcode-back" href="../../index.html#popsims.simulator.Population">[docs]</a><span class="k">class</span> <span class="nc">Population</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for a poulation</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">    ----</span>
+<span class="sd">        x_grid: grid of values ( array)</span>
+<span class="sd">        cdf:  corresponding values from the CDF</span>
+<span class="sd">        nsample: optional, number of samples</span>
+
+<span class="sd">    Properties:</span>
+<span class="sd">    -------</span>
+<span class="sd">        random draws</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">    -------</span>
+<span class="sd">        &gt; x = np.arange(0, 10)</span>
+<span class="sd">        &gt; cdf = x**3/(x[-1]**3)</span>
+<span class="sd">        &gt; res= random_draw(x, cdf)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">imfpower</span><span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;imf_power&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">binaryfraction</span><span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;binary_fraction&#39;</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">binaryq</span><span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;binary_q&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">evolmodel</span><span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;evolmodel&#39;</span><span class="p">,</span> <span class="s1">&#39;burrows1997&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metallicity</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;metallicity&#39;</span><span class="p">,</span> <span class="s1">&#39;dwarfs&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agerange</span><span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;age_range&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">14.</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">massrange</span><span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mass_range&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nsample</span><span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nsample&#39;</span><span class="p">,</span><span class="mf">1e4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_distance</span><span class="o">=</span><span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_sample_ages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">agerange</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nsample</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_sample_masses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#add specific IMFS</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">imfpower</span><span class="o">==</span><span class="s1">&#39;kroupa&#39;</span><span class="p">:</span>
+            <span class="n">m0</span><span class="o">=</span><span class="n">sample_from_powerlaw</span><span class="p">(</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span> <span class="mf">0.08</span><span class="p">,</span> <span class="n">nsample</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nsample</span><span class="p">))</span>
+            <span class="n">m1</span><span class="o">=</span><span class="n">sample_from_powerlaw</span><span class="p">(</span><span class="o">-</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="mf">0.08</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">nsample</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nsample</span><span class="p">))</span>
+            <span class="n">m2</span><span class="o">=</span><span class="n">sample_from_powerlaw</span><span class="p">(</span><span class="o">-</span><span class="mf">2.3</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span> <span class="mi">100</span> <span class="p">,</span> <span class="n">nsample</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nsample</span><span class="p">))</span>
+            <span class="n">m</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">m0</span><span class="p">,</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="n">mask</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">m</span><span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">massrange</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">m</span><span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">massrange</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">masses</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">nsample</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">masses</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sample_from_powerlaw</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imfpower</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">massrange</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xmax</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">massrange</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">nsample</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nsample</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_interpolate_evolutionary_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mass</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">evolutionary_model_interpolator</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">evolmodel</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Population.simulate"><a class="viewcode-back" href="../../index.html#popsims.simulator.Population.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class for a poulation</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">        ----</span>
+<span class="sd">            x_grid: grid of values ( array)</span>
+<span class="sd">            cdf:  corresponding values from the CDF</span>
+<span class="sd">            nsample: optional, number of samples</span>
+
+<span class="sd">        Properties:</span>
+<span class="sd">        -------</span>
+<span class="sd">            random draws</span>
+
+<span class="sd">        Methods:</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">        -------</span>
+<span class="sd">            &gt; x = np.arange(0, 10)</span>
+<span class="sd">            &gt; cdf = x**3/(x[-1]**3)</span>
+<span class="sd">            &gt; res= random_draw(x, cdf)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#single stars</span>
+        <span class="n">m_singles</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sample_masses</span><span class="p">()</span>
+        <span class="n">ages_singles</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_ages</span><span class="p">()</span>
+
+        <span class="c1">#binaries</span>
+        <span class="n">qs</span><span class="o">=</span><span class="n">sample_from_powerlaw</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">binaryq</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">nsample</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nsample</span><span class="p">)</span>
+        <span class="n">m_prims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_masses</span><span class="p">()</span>
+        <span class="n">m_sec</span><span class="o">=</span><span class="n">m_prims</span><span class="o">*</span><span class="n">qs</span>
+        <span class="n">ages_bin</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sample_ages</span><span class="p">()</span>
+
+        <span class="c1">#interpolate evolurionary models</span>
+        <span class="n">single_evol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_evolutionary_model</span><span class="p">(</span><span class="n">m_singles</span><span class="p">,</span> <span class="n">ages_singles</span><span class="p">)</span>
+        <span class="n">primary_evol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_evolutionary_model</span><span class="p">(</span><span class="n">m_prims</span><span class="p">,</span><span class="n">ages_bin</span><span class="p">)</span>
+        <span class="n">secondary_evol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_evolutionary_model</span><span class="p">(</span><span class="n">m_sec</span><span class="p">,</span><span class="n">ages_bin</span><span class="p">)</span>
+
+        <span class="c1">#temperatures</span>
+        <span class="n">teffs_singl</span> <span class="o">=</span><span class="n">single_evol</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">teffs_primar</span><span class="o">=</span><span class="n">primary_evol</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">teffs_second</span><span class="o">=</span><span class="n">secondary_evol</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="c1">#spectraltypes</span>
+        <span class="n">spts_singl</span><span class="o">=</span><span class="n">teff_to_spt_kirkpatrick</span><span class="p">(</span><span class="n">teffs_singl</span><span class="p">)</span>
+        <span class="n">spt_primar</span><span class="o">=</span><span class="n">teff_to_spt_kirkpatrick</span><span class="p">(</span><span class="n">teffs_primar</span><span class="p">)</span>
+        <span class="n">spt_second</span><span class="o">=</span><span class="n">teff_to_spt_kirkpatrick</span><span class="p">(</span><span class="n">teffs_second</span><span class="p">)</span>
+
+        <span class="c1">#use pecaut for teff &lt;2000 k</span>
+        <span class="n">spts_singl</span><span class="p">[</span><span class="n">teffs_singl</span> <span class="o">&gt;</span><span class="mi">2000</span><span class="p">]</span><span class="o">=</span> <span class="n">teff_to_spt_pecaut</span><span class="p">(</span><span class="n">teffs_singl</span><span class="p">[</span><span class="n">teffs_singl</span><span class="o">&gt;</span><span class="mi">2000</span><span class="p">])</span>
+        <span class="n">spt_primar</span><span class="p">[</span><span class="n">teffs_primar</span> <span class="o">&gt;</span><span class="mi">2000</span><span class="p">]</span><span class="o">=</span> <span class="n">teff_to_spt_pecaut</span><span class="p">(</span><span class="n">teffs_primar</span><span class="p">[</span><span class="n">teffs_primar</span><span class="o">&gt;</span><span class="mi">2000</span><span class="p">])</span>
+        <span class="n">spt_second</span><span class="p">[</span><span class="n">teffs_second</span><span class="o">&gt;</span><span class="mi">2000</span><span class="p">]</span><span class="o">=</span> <span class="n">teff_to_spt_pecaut</span><span class="p">(</span><span class="n">teffs_second</span><span class="p">[</span><span class="n">teffs_second</span><span class="o">&gt;</span><span class="mi">2000</span><span class="p">])</span>
+
+
+        <span class="c1">#compute combined binary spectral types</span>
+        <span class="n">xy</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">spt_primar</span><span class="p">),</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">spt_second</span><span class="p">),</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">0</span><span class="p">)])</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">spt_binr</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">get_system_type</span><span class="p">(</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xy</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="c1">#Remember to assign &lt;15 or &gt;39 primary to primary and </span>
+        <span class="n">out_range</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">15</span><span class="p">,</span> <span class="n">xy</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">39</span><span class="p">)</span>
+        <span class="c1">#print (spt_binr[out_range])</span>
+        <span class="n">spt_binr</span><span class="p">[</span><span class="n">out_range</span><span class="p">]</span><span class="o">=</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">0</span><span class="p">][</span><span class="n">out_range</span><span class="p">]</span>
+
+
+        <span class="n">values</span><span class="o">=</span><span class="p">{</span> <span class="s1">&#39;sing_evol&#39;</span><span class="p">:</span> <span class="n">single_evol</span><span class="p">,</span> <span class="s1">&#39;sing_spt&#39;</span><span class="p">:</span><span class="n">spts_singl</span><span class="p">,</span>
+                     <span class="s1">&#39;prim_evol&#39;</span><span class="p">:</span> <span class="n">primary_evol</span><span class="p">,</span> <span class="s1">&#39;prim_spt&#39;</span><span class="p">:</span><span class="n">spt_primar</span><span class="p">,</span>
+                     <span class="s1">&#39;sec_evol&#39;</span><span class="p">:</span> <span class="n">secondary_evol</span><span class="p">,</span> <span class="s1">&#39;sec_spt&#39;</span><span class="p">:</span> <span class="n">spt_second</span><span class="p">,</span>
+                    <span class="s1">&#39;binary_spt&#39;</span><span class="p">:</span> <span class="n">spt_binr</span> <span class="p">}</span>
+
+        <span class="c1">#make systems</span>
+        <span class="c1"># these dict values should be properties of the population object --&gt; can be bad for mem, avoid duplicating data</span>
+        <span class="n">vals</span><span class="o">=</span> <span class="n">_make_systems</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">binaryfraction</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nsample</span><span class="p">))</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">)</span>
+        <span class="c1">#add these values as attributes of the object</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Population.add_distances"><a class="viewcode-back" href="../../index.html#popsims.simulator.Population.add_distances">[docs]</a>    <span class="k">def</span> <span class="nf">add_distances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmodel</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="p">,</span> <span class="n">dsteps</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class for a poulation</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">        ----</span>
+<span class="sd">            x_grid: grid of values ( array)</span>
+<span class="sd">            cdf:  corresponding values from the CDF</span>
+<span class="sd">            nsample: optional, number of samples</span>
+
+<span class="sd">        Properties:</span>
+<span class="sd">        -------</span>
+<span class="sd">            random draws</span>
+
+<span class="sd">        Methods:</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">        -------</span>
+<span class="sd">            &gt; x = np.arange(0, 10)</span>
+<span class="sd">            &gt; cdf = x**3/(x[-1]**3)</span>
+<span class="sd">            &gt; res= random_draw(x, cdf)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#gmodel = galactic component o</span>
+        <span class="c1">#pick distances from 0.1pc to 10kpc at l=45 deg and b=0</span>
+        <span class="c1">#case where l and b are floats</span>
+        <span class="n">l</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">l</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">b</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">dists</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">gmodel</span><span class="o">.</span><span class="n">sample_distances</span><span class="p">(</span><span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="p">,</span> \
+        <span class="nb">int</span><span class="p">(</span><span class="mf">1.5</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">nsample</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)),</span><span class="n">l</span><span class="o">=</span><span class="n">l</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>  <span class="n">dsteps</span><span class="o">=</span><span class="n">dsteps</span> <span class="p">)</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">))])</span>
+
+        <span class="n">vals</span><span class="o">=</span> <span class="p">{</span><span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="n">l</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span> <span class="s1">&#39;distance&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nsample</span><span class="p">))}</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_distance</span><span class="o">=</span><span class="n">dists</span></div>
+
+<div class="viewcode-block" id="Population.add_magnitudes"><a class="viewcode-back" href="../../index.html#popsims.simulator.Population.add_magnitudes">[docs]</a>    <span class="k">def</span> <span class="nf">add_magnitudes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">get_from</span><span class="o">=</span><span class="s1">&#39;spt&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class for a poulation</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">        ----</span>
+<span class="sd">            x_grid: grid of values ( array)</span>
+<span class="sd">            cdf:  corresponding values from the CDF</span>
+<span class="sd">            nsample: optional, number of samples</span>
+
+<span class="sd">        Properties:</span>
+<span class="sd">        -------</span>
+<span class="sd">            random draws</span>
+
+<span class="sd">        Methods:</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">        -------</span>
+<span class="sd">            &gt; x = np.arange(0, 10)</span>
+<span class="sd">            &gt; cdf = x**3/(x[-1]**3)</span>
+<span class="sd">            &gt; res= random_draw(x, cdf)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">get_from</span><span class="o">==</span><span class="s1">&#39;spt&#39;</span><span class="p">:</span>
+            <span class="n">mags</span><span class="o">=</span><span class="n">pop_mags</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spt</span><span class="p">),</span> <span class="n">keys</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span> <span class="n">get_from</span><span class="o">=</span><span class="s1">&#39;spt&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">get_from</span><span class="o">==</span><span class="s1">&#39;teff&#39;</span><span class="p">:</span>
+            <span class="n">mags</span><span class="o">=</span><span class="n">pop_mags</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="p">),</span> <span class="n">keys</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span>  <span class="n">get_from</span><span class="o">=</span><span class="s1">&#39;teff&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">if</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_distance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filters</span><span class="p">:</span> <span class="n">mags</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="n">mags</span><span class="p">[</span><span class="s1">&#39;abs_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span><span class="o">+</span><span class="mi">5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distance</span><span class="o">/</span><span class="mf">10.0</span><span class="p">)</span>
+
+        <span class="n">vals</span><span class="o">=</span><span class="n">mags</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">)</span>
+        <span class="c1">#add these values as attributes of the object</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
+        <span class="n">df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span>  <span class="n">columns</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">=</span><span class="n">columns</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+<div class="viewcode-block" id="Population.visualize"><a class="viewcode-back" href="../../index.html#popsims.simulator.Population.visualize">[docs]</a>    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mass&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;spt&#39;</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class for a poulation</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">        ----</span>
+<span class="sd">            x_grid: grid of values ( array)</span>
+<span class="sd">            cdf:  corresponding values from the CDF</span>
+<span class="sd">            nsample: optional, number of samples</span>
+
+<span class="sd">        Properties:</span>
+<span class="sd">        -------</span>
+<span class="sd">            random draws</span>
+
+<span class="sd">        Methods:</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">        -------</span>
+<span class="sd">            &gt; x = np.arange(0, 10)</span>
+<span class="sd">            &gt; cdf = x**3/(x[-1]**3)</span>
+<span class="sd">            &gt; res= random_draw(x, cdf)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span>  <span class="n">keys</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">=</span><span class="n">keys</span>
+
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">PairGrid</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">keys</span><span class="p">]</span> <span class="p">,</span> <span class="n">diag_sharey</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">corner</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">map_diag</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">map_offdiag</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">add_kinematics</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">apply_selection</span><span class="p">():</span>
+        <span class="c1">#should delete previous entries to save space</span>
+        <span class="c1">#selection should be a complex string --&gt; sql to pass into series</span>
+        <span class="c1"># must think about color-cuts</span>
+        <span class="c1">#there must be a way to resample to nsample after making selection to not risk losing too many stars</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_make_systems</span><span class="p">(</span><span class="n">mods</span><span class="p">,</span> <span class="n">bfraction</span><span class="p">):</span>
+    
+    <span class="c1">#singles</span>
+    <span class="n">singles</span><span class="o">=</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;sing_evol&#39;</span><span class="p">]</span>
+    <span class="n">singles</span><span class="p">[</span><span class="s1">&#39;is_binary&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;sing_spt&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">singles</span><span class="p">[</span><span class="s1">&#39;spt&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;sing_spt&#39;</span><span class="p">]</span>
+    <span class="n">singles</span><span class="p">[</span><span class="s1">&#39;prim_spt&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;sing_spt&#39;</span><span class="p">]</span>
+    <span class="n">singles</span><span class="p">[</span><span class="s1">&#39;sec_spt&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;sing_spt&#39;</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+    <span class="c1">#print (np.isnan(singles[&#39;temperature&#39;]).all())</span>
+    
+    <span class="c1">#binary</span>
+    <span class="n">binaries</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;prim_evol&#39;</span><span class="p">][</span><span class="s1">&#39;age&#39;</span><span class="p">]</span>
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;mass&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;prim_evol&#39;</span><span class="p">][</span><span class="s1">&#39;mass&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;sec_evol&#39;</span><span class="p">][</span><span class="s1">&#39;mass&#39;</span><span class="p">]</span>
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;pri_mass&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;prim_evol&#39;</span><span class="p">][</span><span class="s1">&#39;mass&#39;</span><span class="p">]</span>
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;sec_mass&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;sec_evol&#39;</span><span class="p">][</span><span class="s1">&#39;mass&#39;</span><span class="p">]</span>
+    
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;luminosity&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;prim_evol&#39;</span><span class="p">][</span><span class="s1">&#39;luminosity&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">value</span><span class="o">+</span>\
+    <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;sec_evol&#39;</span><span class="p">][</span><span class="s1">&#39;luminosity&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="c1">#binaries[&#39;temperature&#39;]=mods[&#39;prim_evol&#39;][&#39;temperature&#39;]</span>
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;spt&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;binary_spt&#39;</span><span class="p">],</span> <span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;prim_spt&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;prim_spt&#39;</span><span class="p">]</span>
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;sec_spt&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;sec_spt&#39;</span><span class="p">]</span>
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;prim_luminosity&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;prim_evol&#39;</span><span class="p">][</span><span class="s1">&#39;luminosity&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">value</span>
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;sec_luminosity&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;sec_evol&#39;</span><span class="p">][</span><span class="s1">&#39;luminosity&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;is_binary&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;sec_spt&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+
+    <span class="c1">#assign teff from absolute mag</span>
+    <span class="c1">#binaries[&#39;temperature&#39;]=get_teff_from_mag_ignore_unc(binaries[&#39;abs_2MASS_H&#39;])</span>
+    <span class="n">mask</span><span class="o">=</span> <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;spt&#39;</span><span class="p">]</span> <span class="o">&gt;</span><span class="mf">20.</span>
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span> <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;spt&#39;</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span><span class="o">=</span><span class="n">spt_to_teff_kirkpatrick</span><span class="p">(</span><span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;spt&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">][</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span><span class="o">=</span><span class="n">spt_to_teff_pecaut</span><span class="p">(</span><span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;spt&#39;</span><span class="p">])[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span>
+
+    <span class="c1">#compute numbers to choose based on binary fraction</span>
+    <span class="n">ndraw</span><span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;sing_spt&#39;</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">bfraction</span><span class="p">))</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mods</span><span class="p">[</span><span class="s1">&#39;sing_spt&#39;</span><span class="p">]))</span>
+    <span class="c1">#ndraw=int(len(mods[&#39;sing_spt&#39;])* bfraction)</span>
+
+    
+    <span class="c1">#random list of binaries to choose</span>
+    <span class="n">random_int</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">binaries</span><span class="p">[</span><span class="s1">&#39;spt&#39;</span><span class="p">])),</span> <span class="n">ndraw</span><span class="p">)</span>
+    
+    <span class="n">chosen_binaries</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">binaries</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">chosen_binaries</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">=</span><span class="n">binaries</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">random_int</span><span class="p">]</span>
+
+    <span class="c1">#add scale to the local lf</span>
+    <span class="n">res</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">singles</span><span class="p">),</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">chosen_binaries</span><span class="p">)])</span>
+    <span class="n">scl</span><span class="o">=</span><span class="n">scale_to_local_lf</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">temperature</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="c1">#print (scl</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;scale&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">scl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;scale_unc&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">scl</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">res</span><span class="p">[</span><span class="s1">&#39;scale_times_model&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">scl</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1">#combine the to dictionaries </span>
+    <span class="c1">#print (np.isnan(res[&#39;temperature&#39;]).all())</span>
+
+    <span class="k">return</span> <span class="n">res</span>
+
+<div class="viewcode-block" id="pop_mags"><a class="viewcode-back" href="../../index.html#popsims.simulator.pop_mags">[docs]</a><span class="k">def</span> <span class="nf">pop_mags</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[],</span> <span class="n">object_type</span><span class="o">=</span><span class="s1">&#39;dwarfs&#39;</span><span class="p">,</span> <span class="n">get_from</span><span class="o">=</span><span class="s1">&#39;spt&#39;</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pol</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute magnitudes from pre-computed absolute mag relations</span>
+
+<span class="sd">        Class for a poulation</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">        ----</span>
+<span class="sd">            x_grid: grid of values ( array)</span>
+<span class="sd">            cdf:  corresponding values from the CDF</span>
+<span class="sd">            nsample: optional, number of samples</span>
+
+<span class="sd">        Properties:</span>
+<span class="sd">        -------</span>
+<span class="sd">            random draws</span>
+
+<span class="sd">        Methods:</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">        -------</span>
+<span class="sd">            &gt; x = np.arange(0, 10)</span>
+<span class="sd">            &gt; cdf = x**3/(x[-1]**3)</span>
+<span class="sd">            &gt; res= random_draw(x, cdf)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.abs_mag_relations</span> <span class="kn">import</span> <span class="n">POLYNOMIALS</span>
+    <span class="n">res</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">if</span> <span class="n">pol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">pol</span><span class="o">=</span><span class="n">POLYNOMIALS</span><span class="p">[</span><span class="s1">&#39;absmags_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">get_from</span><span class="p">)][</span><span class="n">object_type</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">reference</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">pol</span><span class="o">=</span><span class="n">POLYNOMIALS</span><span class="p">[</span><span class="s1">&#39;references&#39;</span><span class="p">][</span><span class="n">reference</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="c1">#print (keys)</span>
+        <span class="c1">#sometimes sds don&#39;t have absolute magnitudes defined </span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pol</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> relation not available for </span><span class="si">{}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">object_type</span><span class="p">))</span>
+
+        <span class="n">fit</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">pol</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;fit&#39;</span><span class="p">])</span>
+        <span class="c1">#scat=pol[k][&#39;scatter&#39;] #ignore scatter for now</span>
+        <span class="n">scat</span><span class="o">=</span><span class="mf">0.1</span>
+
+        <span class="c1">#print (k, &#39;scatter&#39;, scat)</span>
+        <span class="n">rng</span><span class="o">=</span><span class="n">pol</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;range&#39;</span><span class="p">]</span>
+        <span class="n">mag_key</span><span class="o">=</span><span class="n">pol</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+        <span class="n">offset</span><span class="o">=</span><span class="n">pol</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;x0&#39;</span><span class="p">]</span>
+        <span class="c1">#put constraints on spt range</span>
+        <span class="n">mask</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span><span class="n">rng</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span> <span class="o">&lt;=</span><span class="n">rng</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">absmag</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">offset</span><span class="p">),</span><span class="n">scat</span><span class="p">)</span>
+        <span class="c1">#forget about scatter for now</span>
+        <span class="c1">#absmag= fit(x-offset)</span>
+
+        <span class="n">masked_abs_mag</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">absmag</span><span class="p">,</span> <span class="n">mask</span><span class="o">=~</span><span class="n">mask</span><span class="p">)</span>
+        <span class="c1">#make it nans outside the range</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> 
+            <span class="n">res</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">k</span><span class="p">:</span> <span class="n">masked_abs_mag</span><span class="o">.</span><span class="n">filled</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span><span class="o">+</span><span class="mi">5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">d</span><span class="o">/</span><span class="mf">10.0</span><span class="p">)</span> <span class="p">})</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;abs_&#39;</span><span class="o">+</span> <span class="n">k</span><span class="p">:</span> <span class="n">masked_abs_mag</span><span class="o">.</span><span class="n">filled</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)})</span>
+
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="pop_colors"><a class="viewcode-back" href="../../index.html#popsims.simulator.pop_colors">[docs]</a><span class="k">def</span> <span class="nf">pop_colors</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[],</span> <span class="n">object_type</span><span class="o">=</span><span class="s1">&#39;dwarfs&#39;</span><span class="p">,</span> <span class="n">get_from</span><span class="o">=</span><span class="s1">&#39;spt&#39;</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pol</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute colors from pre-computed absolute mag relations</span>
+
+<span class="sd">        Class for a poulation</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">        ----</span>
+<span class="sd">            x_grid: grid of values ( array)</span>
+<span class="sd">            cdf:  corresponding values from the CDF</span>
+<span class="sd">            nsample: optional, number of samples</span>
+
+<span class="sd">        Properties:</span>
+<span class="sd">        -------</span>
+<span class="sd">            random draws</span>
+
+<span class="sd">        Methods:</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">        -------</span>
+<span class="sd">            &gt; x = np.arange(0, 10)</span>
+<span class="sd">            &gt; cdf = x**3/(x[-1]**3)</span>
+<span class="sd">            &gt; res= random_draw(x, cdf)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.abs_mag_relations</span> <span class="kn">import</span> <span class="n">POLYNOMIALS</span>
+    <span class="n">res</span><span class="o">=</span><span class="p">{}</span>
+    <span class="k">if</span> <span class="n">pol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">pol</span><span class="o">=</span><span class="n">POLYNOMIALS</span><span class="p">[</span><span class="s1">&#39;colors_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">get_from</span><span class="p">)][</span><span class="n">object_type</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">reference</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">pol</span><span class="o">=</span><span class="n">POLYNOMIALS</span><span class="p">[</span><span class="s1">&#39;references&#39;</span><span class="p">][</span><span class="n">reference</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="c1">#sometimes sds don&#39;t have absolute magnitudes defined </span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pol</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> relation not available for </span><span class="si">{}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">object_type</span><span class="p">))</span>
+
+        <span class="c1">#if pol[k][&#39;method&#39;]==&#39;polynmial&#39;:</span>
+        <span class="n">fit</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">pol</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;fit&#39;</span><span class="p">])</span>
+        <span class="c1">#if pol[k][&#39;method&#39;]==&#39;spline&#39;:</span>
+        <span class="c1">#     fit=pol[k][&#39;fit&#39;]</span>
+
+        <span class="n">scat</span><span class="o">=</span><span class="n">pol</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;scatter&#39;</span><span class="p">]</span>
+        
+        <span class="n">rng</span><span class="o">=</span><span class="n">pol</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;range&#39;</span><span class="p">]</span>
+        <span class="n">mag_key</span><span class="o">=</span><span class="n">pol</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+        <span class="n">offset</span><span class="o">=</span><span class="n">pol</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;x0&#39;</span><span class="p">]</span>
+        <span class="c1">#put constraints on spt range</span>
+        <span class="n">mask</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span><span class="n">rng</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span> <span class="o">&lt;=</span><span class="n">rng</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">absmag</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">offset</span><span class="p">),</span><span class="n">scat</span><span class="p">)</span>
+
+        <span class="n">masked_abs_mag</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_array</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">absmag</span><span class="p">,</span> <span class="n">mask</span><span class="o">=~</span><span class="n">mask</span><span class="p">)</span>
+
+        <span class="n">res</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">mag_key</span><span class="p">:</span><span class="n">masked_abs_mag</span><span class="o">.</span><span class="n">filled</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)})</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
+</pre></div>
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner"></div>
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023, caganze.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://sphinx-doc.org/">Sphinx</a> 5.3.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
