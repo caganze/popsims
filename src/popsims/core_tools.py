@@ -26,7 +26,9 @@ def sample_from_powerlaw(alpha, xmin=0.1, xmax=1, nsample=int(1e4)):
     x= np.linspace(xmin, xmax, int(1e6))
     pdf=x**alpha
     cdf=np.cumsum(pdf)
+    cdf=cdf/np.nanmax(cdf)
     return random_draw(x, cdf, nsample=int(nsample))
+
 
 @numba.njit
 def random_draw(x_grid, cdf, nsample=10):
@@ -46,13 +48,12 @@ def random_draw(x_grid, cdf, nsample=10):
         > x = np.arange(0, 10)
         > cdf = x**3/(x[-1]**3)
         > res= random_draw(x, cdf)
-
     """
-    cdf = cdf / cdf[-1]
     values = np.random.rand(nsample)
     value_bins = np.searchsorted(cdf, values)
     random_from_cdf = x_grid[value_bins]
     return random_from_cdf
+
 
 def make_spt_number(spt):
     """
@@ -100,6 +101,7 @@ def get_distance(absmag, appmag):
 
 
 @numba.jit(nopython=True)
+#@numba.jit(nopython=True, parallel=True) --> fails due to numba issues
 def trapzl(y, x):
     """
     Fast trapezoidal integration
@@ -120,7 +122,7 @@ def trapzl(y, x):
 
     """
     s = 0
-    for i in range(1, len(x)):
+    for i in numba.prange(1, len(x)):
         s += (x[i]-x[i-1])*(y[i]+y[i-1])
     return s/2
 
@@ -198,8 +200,68 @@ def k_clip_fit(x, y, sigma_y, sigma = 5, n=6):
         not_clipped[remove] = 0   
     return  not_clipped, best_fit
 
-
 def apply_polynomial_relation(pol, x, xerr=0.0, nsample=100):
+    x = np.array(x)
+    size = 0
+
+    if x.size == 1:
+        size = -1
+
+    x = np.random.normal(x, xerr, (int(nsample), len(np.atleast_1d(x))))
+    
+    results = [
+        (coeffs * (x - xshift)[:, None] ** np.arange(len(coeffs))) 
+        for k in pol.keys()
+        for xshift, coeffs, scatter in [
+            (pol[k]['xshift'], pol[k]['coeffs'], pol[k]['yerr'])
+        ]
+        for lowlim, uplim in [
+            (float(k.split('_')[0]) - xshift, float(k.split('_')[-1]) - xshift)
+        ]
+        if np.logical_and(x - xshift >= lowlim, x - xshift <= uplim).any()
+    ]
+
+    ans = np.nansum(results, axis=1)
+    res = np.nanmedian(
+        [
+            np.random.normal(a, scatter)
+            for a, scatter in zip(ans, [pol[k]['yerr'] for k in pol.keys()])
+        ],
+        axis=0,
+    )
+
+    if size == -1:
+        return np.nanmedian(res.flatten()), np.nanstd(res.flatten())
+
+    return np.nanmedian(res, axis=0), np.nanstd(res, axis=0)
+
+def inverse_polynomial_relation(pol, y, xgrid, nsample=1000, interpolation='griddata'):
+    ygrid, yunc = apply_polynomial_relation(pol, xgrid, xerr=0.0, nsample=nsample)
+
+    # Remove nans
+    nans = np.logical_or(np.isnan(ygrid), np.isnan(yunc))
+
+    # Reshape
+    rand_y = np.random.normal(ygrid[~nans], yunc[~nans], size=(int(nsample), len(yunc[~nans]))).flatten()
+    rand_x = np.broadcast_to(xgrid[~nans], (int(nsample), len(yunc[~nans]))).flatten()
+
+    # Interpolation methods
+    interpolation_methods = {
+        'griddata': lambda y: griddata(rand_y, rand_x, y, fill_value=np.nan, method='linear', rescale=True),
+        'spline': lambda y: (
+            lambda f: f(y)
+        )(
+            InterpolatedUnivariateSpline(
+                *zip(*sorted(zip(rand_y[~np.isnan(rand_y)], rand_x[~np.isnan(rand_y)]))),
+                ext='const', k=1
+            )
+        )
+    }
+
+    return interpolation_methods[interpolation](y)
+
+
+def apply_polynomial_relation_old(pol, x, xerr=0.0, nsample=100):
     """
     1D- Random draw by using numpy search on a grid
     Args:
@@ -267,7 +329,7 @@ def apply_polynomial_relation(pol, x, xerr=0.0, nsample=100):
         return np.nanmean(res, axis=0), np.nanstd(res, axis=0)
 
 
-def inverse_polynomial_relation(pol, y, xgrid, nsample=1000, interpolation='griddata'):
+def inverse_polynomial_relation_old(pol, y, xgrid, nsample=1000, interpolation='griddata'):
     """
     1D- Random draw by using numpy search on a grid
     Args:
