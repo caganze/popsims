@@ -286,6 +286,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">.relations</span> <span class="kn">import</span>  <span class="n">scale_to_local_lf</span><span class="p">,</span> <span class="n">teff_to_spt_kirkpatrick</span><span class="p">,</span> \
 <span class="n">spt_to_teff_kirkpatrick</span><span class="p">,</span> <span class="n">teff_to_spt_pecaut</span><span class="p">,</span> <span class="n">spt_to_teff_pecaut</span>
 <span class="kn">from</span> <span class="nn">.core_tools</span> <span class="kn">import</span> <span class="n">sample_from_powerlaw</span>
+<span class="kn">from</span> <span class="nn">.evol_models</span> <span class="kn">import</span> <span class="n">EVOL_MODELS</span>
 
 <span class="c1">#DATA_FOLDER=os.environ[&#39;POPSIMS_DATA_FOLDER&#39;]</span>
 
@@ -328,50 +329,33 @@ document.write(`
     <span class="c1">#rember to assign &lt;15 =primary and &gt; 39= primary</span>
     <span class="k">return</span> <span class="n">comb</span></div>
 
-<div class="viewcode-block" id="evolutionary_model_interpolator"><a class="viewcode-back" href="../../index.html#popsims.popsims.evolutionary_model_interpolator">[docs]</a><span class="k">def</span> <span class="nf">evolutionary_model_interpolator</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Interpolate evolutionary model data to determine the temperature and luminosity of a star.</span>
+<span class="c1"># Cache for DataFrames</span>
+<span class="n">EVOL_MODEL_CACHE</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="sd">    This function takes the mass, age, and model type of a star, and uses interpolation to determine the</span>
-<span class="sd">    temperature and luminosity of the star based on these values. The function can also take an optional</span>
-<span class="sd">    subset parameter, which can be used to specify a subset of the evolutionary model data to use for the</span>
-<span class="sd">    interpolation.</span>
+<span class="k">def</span> <span class="nf">evolutionary_model_interpolator</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Check if DataFrame is in the cache, create it otherwise</span>
+    <span class="k">if</span> <span class="n">model</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">EVOL_MODEL_CACHE</span><span class="p">:</span>
+        <span class="n">evol_model_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">EVOL_MODELS</span><span class="p">[</span><span class="n">model</span><span class="p">])</span>
+        <span class="n">EVOL_MODEL_CACHE</span><span class="p">[</span><span class="n">model</span><span class="p">]</span> <span class="o">=</span> <span class="n">evol_model_data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">evol_model_data</span> <span class="o">=</span> <span class="n">EVOL_MODEL_CACHE</span><span class="p">[</span><span class="n">model</span><span class="p">]</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        mass: The mass of the star, as a floating point value in solar masses.</span>
-<span class="sd">        age: The age of the star, as a floating point value in years.</span>
-<span class="sd">        model: The type of evolutionary model to use for the interpolation, as a string.</span>
-<span class="sd">        subset: An optional subset of the evolutionary model data to use for the interpolation, as a tuple of</span>
-<span class="sd">            (column name, value) pairs.</span>
+    <span class="c1"># Filter data if subset is provided</span>
+    <span class="k">if</span> <span class="n">subset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">column_index</span> <span class="o">=</span> <span class="n">EVOL_MODELS</span><span class="p">[</span><span class="n">model</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">evol_model_data</span> <span class="o">=</span> <span class="n">evol_model_data</span><span class="p">[</span><span class="n">evol_model_data</span><span class="p">[:,</span> <span class="n">column_index</span><span class="p">]</span> <span class="o">==</span> <span class="n">subset</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        A dictionary containing the mass, age, temperature, and luminosity of the star, as floating point values</span>
-<span class="sd">        in the appropriate units.</span>
-<span class="sd">    #generated by chatGPT</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Function implementation goes here</span>
-    <span class="kn">from</span> <span class="nn">.evol_models</span> <span class="kn">import</span> <span class="n">EVOL_MODELS</span>
-    <span class="n">evolutiomodel</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">EVOL_MODELS</span><span class="p">[</span><span class="n">model</span><span class="p">])</span>
+    <span class="n">values_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">evol_model_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>  <span class="c1"># Temperature values</span>
+    <span class="n">values_lumn</span> <span class="o">=</span> <span class="n">evol_model_data</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span>         <span class="c1"># Luminosity values</span>
+    <span class="n">values_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">evol_model_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># Mass values</span>
+    <span class="n">values_ag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">evol_model_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="c1"># Age values</span>
 
-    <span class="c1">#use the full cloud treatment for saumon models</span>
-    <span class="k">if</span> <span class="n">subset</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-         <span class="n">evolutiomodel</span><span class="o">=</span><span class="p">(</span><span class="n">evolutiomodel</span><span class="p">[</span><span class="n">evolutiomodel</span><span class="p">[</span><span class="n">subset</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">==</span><span class="n">subset</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
- 
-    <span class="c1">#make age, teff, mass logarithm scale</span>
-    <span class="n">valuest</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">evolutiomodel</span><span class="o">.</span><span class="n">temperature</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-    <span class="c1">#valueslogg=evolutiomodel.gravity.values</span>
-    <span class="n">valueslumn</span><span class="o">=</span><span class="n">evolutiomodel</span><span class="o">.</span><span class="n">luminosity</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">evol_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">values_m</span><span class="p">,</span> <span class="n">values_ag</span><span class="p">))</span>
 
-    <span class="n">valuesm</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">evolutiomodel</span><span class="o">.</span><span class="n">mass</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-    <span class="n">valuesag</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">evolutiomodel</span><span class="o">.</span><span class="n">age</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">teffs</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">(</span><span class="n">evol_points</span><span class="p">,</span> <span class="n">values_t</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">mass</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">age</span><span class="p">)),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+    <span class="n">lumn</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">(</span><span class="n">evol_points</span><span class="p">,</span> <span class="n">values_lumn</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">mass</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">age</span><span class="p">)),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
 
-    <span class="n">evolpoints</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">valuesm</span><span class="p">,</span> <span class="n">valuesag</span> <span class="p">])</span><span class="o">.</span><span class="n">T</span>
-
-    <span class="n">teffs</span><span class="o">=</span><span class="n">griddata</span><span class="p">(</span><span class="n">evolpoints</span><span class="p">,</span> <span class="n">valuest</span> <span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">mass</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">age</span><span class="p">)),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
-    <span class="n">lumn</span><span class="o">=</span><span class="n">griddata</span><span class="p">(</span><span class="n">evolpoints</span><span class="p">,</span> <span class="n">valueslumn</span> <span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">mass</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">age</span><span class="p">)),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">mass</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Msun</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="n">age</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Gyr</span><span class="p">,</span> <span class="s1">&#39;temperature&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="o">**</span><span class="n">teffs</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Kelvin</span><span class="p">,</span> 
-    <span class="s1">&#39;luminosity&#39;</span><span class="p">:</span> <span class="n">lumn</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Lsun</span><span class="p">}</span></div>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">mass</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">Msun</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="n">age</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">Gyr</span><span class="p">,</span> <span class="s1">&#39;temperature&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="o">**</span><span class="n">teffs</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">Kelvin</span><span class="p">,</span> <span class="s1">&#39;luminosity&#39;</span><span class="p">:</span> <span class="n">lumn</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">Lsun</span><span class="p">}</span>
 </pre></div>
 
                 </article>
