@@ -21,4 +21,4 @@ svo-filters==0.4.1
 tqdm
 sphinx
 sphinx_rtd_theme
- 
+pydata_sphinx_theme
