@@ -55,24 +55,25 @@ def get_system_type(pr, sc):
 
 # Cache for DataFrames
 EVOL_MODEL_CACHE = {}
-
+#print (EVOL_MODEL_CACHE)
 def evolutionary_model_interpolator(mass, age, model, subset=None):
     # Check if DataFrame is in the cache, create it otherwise
-    if model not in EVOL_MODEL_CACHE:
-        evol_model_data = np.array(EVOL_MODELS[model])
+    if model not in EVOL_MODEL_CACHE.keys():
+        evol_model_data = EVOL_MODELS[model]
         EVOL_MODEL_CACHE[model] = evol_model_data
     else:
         evol_model_data = EVOL_MODEL_CACHE[model]
 
-    # Filter data if subset is provided
-    if subset is not None:
-        column_index = EVOL_MODELS[model].index(subset[0])
-        evol_model_data = evol_model_data[evol_model_data[:, column_index] == subset[1]]
-
-    values_t = np.log10(evol_model_data[:, 2])  # Temperature values
-    values_lumn = evol_model_data[:, 4]         # Luminosity values
-    values_m = np.log10(evol_model_data[:, 0])  # Mass values
-    values_ag = np.log10(evol_model_data[:, 1]) # Age values
+    # Filter data if subset is provided --> pending issue (hybrid cloud not working)
+    #if subset is not None:
+    #    column_index = EVOL_MODELS[model].index(subset[0])
+    #    evol_model_data = evol_model_data[evol_model_data[:, column_index] == subset[1]]
+    print (model)
+    print (evol_model_data.keys())
+    values_t = np.log10(evol_model_data['temperature'])  # Temperature values 'age', 'mass', 'luminosity', 'temperature', 'gravity', 'radius'
+    values_lumn = evol_model_data['luminosity']         # Luminosity values
+    values_m = np.log10(evol_model_data['mass'])  # Mass values
+    values_ag = np.log10(evol_model_data['age']) # Age values
 
     evol_points = np.column_stack((values_m, values_ag))
 
@@ -80,3 +81,6 @@ def evolutionary_model_interpolator(mass, age, model, subset=None):
     lumn = griddata(evol_points, values_lumn, (np.log10(mass), np.log10(age)), method='linear')
 
     return {'mass': mass * u.Msun, 'age': age * u.Gyr, 'temperature': 10**teffs * u.Kelvin, 'luminosity': lumn * u.Lsun}
+
+#need an evolutionary model class that automatically does the interpolations across mass, age and metallicity upon intialization
+#

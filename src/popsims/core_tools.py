@@ -200,7 +200,7 @@ def k_clip_fit(x, y, sigma_y, sigma = 5, n=6):
         not_clipped[remove] = 0   
     return  not_clipped, best_fit
 
-def apply_polynomial_relation(pol, x, xerr=0.0, nsample=100):
+def apply_polynomial_relation_gpt(pol, x, xerr=0.0, nsample=100):
     x = np.array(x)
     size = 0
 
@@ -235,7 +235,7 @@ def apply_polynomial_relation(pol, x, xerr=0.0, nsample=100):
 
     return np.nanmedian(res, axis=0), np.nanstd(res, axis=0)
 
-def inverse_polynomial_relation(pol, y, xgrid, nsample=1000, interpolation='griddata'):
+def inverse_polynomial_relation_gpt(pol, y, xgrid, nsample=1000, interpolation='griddata'):
     ygrid, yunc = apply_polynomial_relation(pol, xgrid, xerr=0.0, nsample=nsample)
 
     # Remove nans
@@ -261,7 +261,7 @@ def inverse_polynomial_relation(pol, y, xgrid, nsample=1000, interpolation='grid
     return interpolation_methods[interpolation](y)
 
 
-def apply_polynomial_relation_old(pol, x, xerr=0.0, nsample=100):
+def apply_polynomial_relation(pol, x, xerr=0.0, nsample=100):
     """
     1D- Random draw by using numpy search on a grid
     Args:
@@ -329,7 +329,7 @@ def apply_polynomial_relation_old(pol, x, xerr=0.0, nsample=100):
         return np.nanmean(res, axis=0), np.nanstd(res, axis=0)
 
 
-def inverse_polynomial_relation_old(pol, y, xgrid, nsample=1000, interpolation='griddata'):
+def inverse_polynomial_relation(pol, y, xgrid, nsample=1000, interpolation='griddata'):
     """
     1D- Random draw by using numpy search on a grid
     Args:

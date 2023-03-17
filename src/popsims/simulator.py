@@ -2,7 +2,7 @@
 ###
 #imports
 from .galaxy import * 
-from .popsims import *
+from .core import *
 from .core_tools import *
 from .relations import teff_to_spt_subdwarf
 import seaborn as sns
@@ -485,3 +485,77 @@ def pop_colors(x, d=None, keys=[], object_type='dwarfs', get_from='spt', referen
         res.update({ mag_key:masked_abs_mag.filled(np.nan)})
 
     return pd.DataFrame(res)
+
+def compute_vols_and_numbers(df, gmodel, sptgrid, footprint, maglimits):
+    from .abs_mag_relations import POLYNOMIALS
+    counts={}
+    vols={}
+    dists={}
+
+    for spt in sptgrid:
+        
+        dmins=[]
+        dmaxs=[]
+        
+        dmins_sd=[]
+        dmaxs_sd=[]
+        
+        for k in maglimits.keys():
+            mag_cut= maglimits[k]
+            absmag= np.poly1d(POLYNOMIALS['absmags_spt']['dwarfs'][k]['fit'])(spt)
+            
+            #absmag_sd= np.poly1d(POLYNOMIALS['absmags_spt']['subdwarfs'][k]['fit'])(spt)
+        
+            mag_cut= maglimits[k]
+            
+            dmin=10.**(-(absmag-mag_cut[0])/5. + 1.)
+            dmax=10.**(-(absmag-mag_cut[1])/5. + 1.)
+            
+            #dmin_sd=10.**(-(absmag_sd-14)/5. + 1.)
+            #dmax_sd=10.**(-(absmag_sd-mag_cut)/5. + 1.)
+        
+            
+            dmins.append(dmin)
+            dmaxs.append(dmax)
+            
+            #dmins_sd.append(dmin)
+            #dmaxs_sd.append(dmax)
+            
+        dmin=np.nanmedian(dmins)
+        dmax=np.nanmedian(dmaxs)
+        
+        #dmin_sd=np.nanmedian(dmins_sd)
+        #dmax_sd=np.nanmedian(dmaxs_sd)
+        
+        #print (spt, dmin, dmax)
+        
+        scale=[df.scale.mean(), df.scale_unc.mean(), df.scale_times_model.mean()]
+        
+        sn= len(df)
+        #sn= len(df.query('population == "thin disk"'))
+        #snt= len(df.query('population == "thick disk"'))
+        #snh= len(df.query('population == "halo"'))
+      
+        sn_c= len(df.query('spt < {}'.format(spt, spt+0.9)))
+        #snt_c= len(df.query('population == "thick disk" and spt >= {} and spt < {}'.format(spt, spt+0.9)))
+        #snh_c= len(df.query('population == "halo" and spt >= {} and spt < {}'.format(spt, spt+0.9)))
+        
+        
+        volumes={'volume': 0.0}
+        
+        cnts={'number':  sn_c*np.divide(scale[-1], sn)}
+        for s in  footprint:
+            l=s.galactic.l.radian
+            b=s.galactic.b.radian
+            volumes['volume'] += gmodel.volume(l, b, dmin, dmax)/len(footprint)
+            #volumes['thick'] += tdisk.volume(l, b, dmin, dmax)/len(footprint)
+            #volumes['halo'] += halo.volume(l, b, dmin, dmax)/len(footprint)
+            
+        vols.update({spt: volumes})
+        counts.update({spt: cnts})
+        dists.update({spt: dmax})
+        
+        
+    return pd.DataFrame.from_records(vols).T.replace(np.inf, np.nan),\
+    pd.DataFrame.from_records(counts).T.replace(np.inf, np.nan),\
+    dists

@@ -24,7 +24,7 @@ from functools import reduce
 #import gala.coordinates as gc
 #import gala.dynamics as gd
 
-
+@numba.jit(nopython=True)
 def exponential_density(r, z, H,L):
     """
     Exponential density profile
@@ -48,6 +48,7 @@ def exponential_density(r, z, H,L):
     rpart=np.exp(-(r-Rsun)/L)
     return zpart*rpart
 
+@numba.jit(nopython=True)
 def spheroid_density(r, z, q, n):
     """
     sperhoid density profile
@@ -69,6 +70,7 @@ def spheroid_density(r, z, q, n):
     """
     return  (Rsun/(((r)**2+((z)/q)**2)**0.5))**n
 
+@numba.jit(nopython=True)
 def transform_tocylindrical(l, b, ds):
     """
     sperhoid density profile
@@ -92,7 +94,7 @@ def transform_tocylindrical(l, b, ds):
     zd=Zsun+ ds * np.sin( b - np.arctan( Zsun / Rsun) )
     return (rd, zd)
 
-
+@numba.jit(nopython=True)
 def cylindrical_to_cartesian(r, z, phi):
     """
     sperhoid density profile
