@@ -528,7 +528,8 @@ def compute_vols_and_numbers(df, gmodel, sptgrid, footprint, maglimits):
         #dmax_sd=np.nanmedian(dmaxs_sd)
         
         #print (spt, dmin, dmax)
-        
+        #print (df)
+        #print (df.scale)
         scale=[df.scale.mean(), df.scale_unc.mean(), df.scale_times_model.mean()]
         
         sn= len(df)

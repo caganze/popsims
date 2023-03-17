@@ -15,4 +15,7 @@ def test_population():
                   mass_range=[0.01, 1],
                   nsample=1000)
     p.simulate()
+    df=p.to_dataframe(['mass', 'age', 'temperature'])
     assert len(p.mass) ==1000
+    assert len(df)==1000
+    print (df)

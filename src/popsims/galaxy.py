@@ -24,7 +24,7 @@ from functools import reduce
 #import gala.coordinates as gc
 #import gala.dynamics as gd
 
-@numba.jit(nopython=True)
+#@numba.jit(nopython=True)
 def exponential_density(r, z, H,L):
     """
     Exponential density profile
