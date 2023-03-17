@@ -68,8 +68,8 @@ def evolutionary_model_interpolator(mass, age, model, subset=None):
     #if subset is not None:
     #    column_index = EVOL_MODELS[model].index(subset[0])
     #    evol_model_data = evol_model_data[evol_model_data[:, column_index] == subset[1]]
-    print (model)
-    print (evol_model_data.keys())
+    #print (model)
+    #print (evol_model_data.keys())
     values_t = np.log10(evol_model_data['temperature'])  # Temperature values 'age', 'mass', 'luminosity', 'temperature', 'gravity', 'radius'
     values_lumn = evol_model_data['luminosity']         # Luminosity values
     values_m = np.log10(evol_model_data['mass'])  # Mass values
