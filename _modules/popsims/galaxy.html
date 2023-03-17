@@ -300,8 +300,8 @@ document.write(`
 <span class="c1">#import gala.coordinates as gc</span>
 <span class="c1">#import gala.dynamics as gd</span>
 
-<div class="viewcode-block" id="exponential_density"><a class="viewcode-back" href="../../index.html#popsims.galaxy.exponential_density">[docs]</a><span class="nd">@numba</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">exponential_density</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span><span class="n">L</span><span class="p">):</span>
+<span class="c1">#@numba.jit(nopython=True)</span>
+<div class="viewcode-block" id="exponential_density"><a class="viewcode-back" href="../../index.html#popsims.galaxy.exponential_density">[docs]</a><span class="k">def</span> <span class="nf">exponential_density</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span><span class="n">L</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exponential density profile</span>
 
