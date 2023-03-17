@@ -278,7 +278,7 @@ document.write(`
 <span class="c1">###</span>
 <span class="c1">#imports</span>
 <span class="kn">from</span> <span class="nn">.galaxy</span> <span class="kn">import</span> <span class="o">*</span> 
-<span class="kn">from</span> <span class="nn">.popsims</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">.core_tools</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">.relations</span> <span class="kn">import</span> <span class="n">teff_to_spt_subdwarf</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
@@ -761,6 +761,80 @@ document.write(`
         <span class="n">res</span><span class="o">.</span><span class="n">update</span><span class="p">({</span> <span class="n">mag_key</span><span class="p">:</span><span class="n">masked_abs_mag</span><span class="o">.</span><span class="n">filled</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)})</span>
 
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
+
+<span class="k">def</span> <span class="nf">compute_vols_and_numbers</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">gmodel</span><span class="p">,</span> <span class="n">sptgrid</span><span class="p">,</span> <span class="n">footprint</span><span class="p">,</span> <span class="n">maglimits</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">.abs_mag_relations</span> <span class="kn">import</span> <span class="n">POLYNOMIALS</span>
+    <span class="n">counts</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">vols</span><span class="o">=</span><span class="p">{}</span>
+    <span class="n">dists</span><span class="o">=</span><span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">spt</span> <span class="ow">in</span> <span class="n">sptgrid</span><span class="p">:</span>
+        
+        <span class="n">dmins</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">dmaxs</span><span class="o">=</span><span class="p">[]</span>
+        
+        <span class="n">dmins_sd</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">dmaxs_sd</span><span class="o">=</span><span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">maglimits</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">mag_cut</span><span class="o">=</span> <span class="n">maglimits</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">absmag</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">POLYNOMIALS</span><span class="p">[</span><span class="s1">&#39;absmags_spt&#39;</span><span class="p">][</span><span class="s1">&#39;dwarfs&#39;</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;fit&#39;</span><span class="p">])(</span><span class="n">spt</span><span class="p">)</span>
+            
+            <span class="c1">#absmag_sd= np.poly1d(POLYNOMIALS[&#39;absmags_spt&#39;][&#39;subdwarfs&#39;][k][&#39;fit&#39;])(spt)</span>
+        
+            <span class="n">mag_cut</span><span class="o">=</span> <span class="n">maglimits</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            
+            <span class="n">dmin</span><span class="o">=</span><span class="mf">10.</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">absmag</span><span class="o">-</span><span class="n">mag_cut</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="mf">5.</span> <span class="o">+</span> <span class="mf">1.</span><span class="p">)</span>
+            <span class="n">dmax</span><span class="o">=</span><span class="mf">10.</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">absmag</span><span class="o">-</span><span class="n">mag_cut</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mf">5.</span> <span class="o">+</span> <span class="mf">1.</span><span class="p">)</span>
+            
+            <span class="c1">#dmin_sd=10.**(-(absmag_sd-14)/5. + 1.)</span>
+            <span class="c1">#dmax_sd=10.**(-(absmag_sd-mag_cut)/5. + 1.)</span>
+        
+            
+            <span class="n">dmins</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dmin</span><span class="p">)</span>
+            <span class="n">dmaxs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dmax</span><span class="p">)</span>
+            
+            <span class="c1">#dmins_sd.append(dmin)</span>
+            <span class="c1">#dmaxs_sd.append(dmax)</span>
+            
+        <span class="n">dmin</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">dmins</span><span class="p">)</span>
+        <span class="n">dmax</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">dmaxs</span><span class="p">)</span>
+        
+        <span class="c1">#dmin_sd=np.nanmedian(dmins_sd)</span>
+        <span class="c1">#dmax_sd=np.nanmedian(dmaxs_sd)</span>
+        
+        <span class="c1">#print (spt, dmin, dmax)</span>
+        
+        <span class="n">scale</span><span class="o">=</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">df</span><span class="o">.</span><span class="n">scale_unc</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">df</span><span class="o">.</span><span class="n">scale_times_model</span><span class="o">.</span><span class="n">mean</span><span class="p">()]</span>
+        
+        <span class="n">sn</span><span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="c1">#sn= len(df.query(&#39;population == &quot;thin disk&quot;&#39;))</span>
+        <span class="c1">#snt= len(df.query(&#39;population == &quot;thick disk&quot;&#39;))</span>
+        <span class="c1">#snh= len(df.query(&#39;population == &quot;halo&quot;&#39;))</span>
+      
+        <span class="n">sn_c</span><span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;spt &lt; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spt</span><span class="p">,</span> <span class="n">spt</span><span class="o">+</span><span class="mf">0.9</span><span class="p">)))</span>
+        <span class="c1">#snt_c= len(df.query(&#39;population == &quot;thick disk&quot; and spt &gt;= {} and spt &lt; {}&#39;.format(spt, spt+0.9)))</span>
+        <span class="c1">#snh_c= len(df.query(&#39;population == &quot;halo&quot; and spt &gt;= {} and spt &lt; {}&#39;.format(spt, spt+0.9)))</span>
+        
+        
+        <span class="n">volumes</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;volume&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
+        
+        <span class="n">cnts</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;number&#39;</span><span class="p">:</span>  <span class="n">sn_c</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">scale</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">sn</span><span class="p">)}</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span>  <span class="n">footprint</span><span class="p">:</span>
+            <span class="n">l</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">radian</span>
+            <span class="n">b</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">radian</span>
+            <span class="n">volumes</span><span class="p">[</span><span class="s1">&#39;volume&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">gmodel</span><span class="o">.</span><span class="n">volume</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">footprint</span><span class="p">)</span>
+            <span class="c1">#volumes[&#39;thick&#39;] += tdisk.volume(l, b, dmin, dmax)/len(footprint)</span>
+            <span class="c1">#volumes[&#39;halo&#39;] += halo.volume(l, b, dmin, dmax)/len(footprint)</span>
+            
+        <span class="n">vols</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">spt</span><span class="p">:</span> <span class="n">volumes</span><span class="p">})</span>
+        <span class="n">counts</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">spt</span><span class="p">:</span> <span class="n">cnts</span><span class="p">})</span>
+        <span class="n">dists</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">spt</span><span class="p">:</span> <span class="n">dmax</span><span class="p">})</span>
+        
+        
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">vols</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>\
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span>\
+    <span class="n">dists</span>
 </pre></div>
 
                 </article>

@@ -256,8 +256,8 @@ document.write(`
 <section id="module-popsims.core_tools">
 <span id="modules"></span><h2>Modules<a class="headerlink" href="#module-popsims.core_tools" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="popsims.core_tools.apply_polynomial_relation_old">
-<span class="sig-prename descclassname"><span class="pre">popsims.core_tools.</span></span><span class="sig-name descname"><span class="pre">apply_polynomial_relation_old</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xerr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/core_tools.html#apply_polynomial_relation_old"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.core_tools.apply_polynomial_relation_old" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="popsims.core_tools.apply_polynomial_relation">
+<span class="sig-prename descclassname"><span class="pre">popsims.core_tools.</span></span><span class="sig-name descname"><span class="pre">apply_polynomial_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xerr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/core_tools.html#apply_polynomial_relation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.core_tools.apply_polynomial_relation" title="Permalink to this definition">#</a></dt>
 <dd><p>1D- Random draw by using numpy search on a grid
 Args:
 —-</p>
@@ -317,8 +317,8 @@ grid: optional, group of new values to group (array, any size)</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="popsims.core_tools.inverse_polynomial_relation_old">
-<span class="sig-prename descclassname"><span class="pre">popsims.core_tools.</span></span><span class="sig-name descname"><span class="pre">inverse_polynomial_relation_old</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xgrid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'griddata'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/core_tools.html#inverse_polynomial_relation_old"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.core_tools.inverse_polynomial_relation_old" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="popsims.core_tools.inverse_polynomial_relation">
+<span class="sig-prename descclassname"><span class="pre">popsims.core_tools.</span></span><span class="sig-name descname"><span class="pre">inverse_polynomial_relation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xgrid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'griddata'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/core_tools.html#inverse_polynomial_relation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.core_tools.inverse_polynomial_relation" title="Permalink to this definition">#</a></dt>
 <dd><p>1D- Random draw by using numpy search on a grid
 Args:
 —-</p>
@@ -1273,28 +1273,7 @@ nsample: optional, number of samples</p>
 </dl>
 </dd></dl>
 
-<span class="target" id="module-popsims.binaries"></span><span class="target" id="module-popsims.filterinitialize"></span><span class="target" id="module-popsims.popsims"></span><dl class="py function">
-<dt class="sig sig-object py" id="popsims.popsims.get_system_type">
-<span class="sig-prename descclassname"><span class="pre">popsims.popsims.</span></span><span class="sig-name descname"><span class="pre">get_system_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/popsims/popsims.html#get_system_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#popsims.popsims.get_system_type" title="Permalink to this definition">#</a></dt>
-<dd><p>Determine the type of a system based on its primary and secondary attributes.</p>
-<p>This function takes the primary and secondary attributes of a system and
-uses interpolation to determine the type of the system based on these
-attributes. The system type is returned as a floating point value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>pr</strong> – The primary attribute of the system, as a floating point value.</p></li>
-<li><p><strong>sc</strong> – The secondary attribute of the system, as a floating point value.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The type of the system, as a floating point value.</p>
-</dd>
-</dl>
-<p>#generated by chatGPT</p>
-</dd></dl>
-
-</section>
+<span class="target" id="module-popsims.binaries"></span><span class="target" id="module-popsims.filterinitialize"></span></section>
 </section>
 <section id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">#</a></h1>
@@ -1330,10 +1309,10 @@ attributes. The system type is returned as a floating point value.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Welcome to popsims’s documentation!</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-popsims.core_tools">Modules</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.apply_polynomial_relation_old"><code class="docutils literal notranslate"><span class="pre">apply_polynomial_relation_old()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.apply_polynomial_relation"><code class="docutils literal notranslate"><span class="pre">apply_polynomial_relation()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.dropnans"><code class="docutils literal notranslate"><span class="pre">dropnans()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.group_by"><code class="docutils literal notranslate"><span class="pre">group_by()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.inverse_polynomial_relation_old"><code class="docutils literal notranslate"><span class="pre">inverse_polynomial_relation_old()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.inverse_polynomial_relation"><code class="docutils literal notranslate"><span class="pre">inverse_polynomial_relation()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.k_clip_fit"><code class="docutils literal notranslate"><span class="pre">k_clip_fit()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.make_spt_number"><code class="docutils literal notranslate"><span class="pre">make_spt_number()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.core_tools.random_draw"><code class="docutils literal notranslate"><span class="pre">random_draw()</span></code></a></li>
@@ -1384,7 +1363,6 @@ attributes. The system type is returned as a floating point value.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.simulator.pop_colors"><code class="docutils literal notranslate"><span class="pre">pop_colors()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.simulator.pop_mags"><code class="docutils literal notranslate"><span class="pre">pop_mags()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.plot_tools.plot_annotated_heatmap"><code class="docutils literal notranslate"><span class="pre">plot_annotated_heatmap()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#popsims.popsims.get_system_type"><code class="docutils literal notranslate"><span class="pre">get_system_type()</span></code></a></li>
 </ul>
 </li>
 </ul>
