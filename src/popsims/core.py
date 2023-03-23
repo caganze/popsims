@@ -83,4 +83,5 @@ def evolutionary_model_interpolator(mass, age, model, subset=None):
     return {'mass': mass * u.Msun, 'age': age * u.Gyr, 'temperature': 10**teffs * u.Kelvin, 'luminosity': lumn * u.Lsun}
 
 #need an evolutionary model class that automatically does the interpolations across mass, age and metallicity upon intialization
-#
+
+#play with interpolators here

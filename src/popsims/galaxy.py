@@ -306,10 +306,19 @@ class GalacticComponent(object):
         ax.set(xlabel='r (pc)', ylabel='z (pc)')
         return ax
 
+class Uniform(GalacticComponent):
+    """
+    Uniform stellar density
+    """
+    def __init__(self, rho=1):
+        super().__init__({'rho': rho})
+
+    def stellar_density(self, r, z):
+        return self.rho
+    
 class M31Halo(GalacticComponent):
     """
     power-law stellar density for M31's halo by Ibata et al. 2014
-    
     """
     def __init__(self, q=1.11, gamma=-3):
         super().__init__({'q': q, 'gamma': gamma})
