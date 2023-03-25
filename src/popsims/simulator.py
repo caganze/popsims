@@ -39,12 +39,13 @@ class Population(object):
         self.imfpower= kwargs.get('imf_power', -0.6)
         self.binaryfraction= kwargs.get('binary_fraction', 0.2)
         self.binaryq= kwargs.get('binary_q', 4)
-        self.evolmodel= kwargs.get('evolmodel', 'burrows1997')
+        self.evolmodel_name= kwargs.get('evolmodel', 'burrows1997')
         self.metallicity=kwargs.get('metallicity', 'dwarfs')
         self.agerange= kwargs.get('age_range', [0.01, 14.])
         self.massrange= kwargs.get('mass_range', [0.01, 1.])
         self.nsample= kwargs.get('nsample',1e4)
         self._distance=None
+        self.evol_model= None
 
     #def _sample_ages(self):
     #    return np.random.uniform(*self.agerange, int(self.nsample))
@@ -84,8 +85,20 @@ class Population(object):
                 nsample=int(self.nsample),
             )
 
-    def _interpolate_evolutionary_model(self, mass, age):
-        return evolutionary_model_interpolator(mass, age, self.evolmodel)
+    def _interpolate_evolutionary_model(self, mass, age, additional_columns=[]):
+        #columns that I need are mass, age, teff, luminosity,
+        required_columns=np.concatenate([['mass', 'age', 'temperature', 'luminosity'],  additional_columns])
+        df=pd.DataFrame(EVOL_MODELS[self.evolmodel_name])
+
+        #reinitialize evolmodel object if necessary
+        if  self.evol_model is None:
+            m= EvolutionaryModel(df,  columns=required_columns )
+            self.evol_model= m
+            self.evol_model.to_logscale('mass')
+        res=self.evol_model.interpolate('mass','age', mass, age)
+        #return evolutionary_model_interpolator(mass, age, self.evolmodel)
+        res.mass=10**res.mass
+        return res
 
     def simulate(self):
         """
@@ -128,9 +141,9 @@ class Population(object):
 
         # Vectorize the following operations for better performance
         teffs_singl, teffs_primar, teffs_second = (
-            single_evol["temperature"].value,
-            primary_evol["temperature"].value,
-            secondary_evol["temperature"].value,
+            single_evol["temperature"], #.value,
+            primary_evol["temperature"], #.value,
+            secondary_evol["temperature"], #.value,
         )
         
         spts_singl, spt_primar, spt_second = (
@@ -230,10 +243,12 @@ class Population(object):
         #int(1.5*self.nsample/len(l)),l=l[idx], b=b[idx],  dsteps=dsteps ) for idx in range(len(l))])
 
         vals= {'l': l, 'b': b, 'distance': np.random.choice(dists, int(self.nsample))}
-
+        #compute r and z in cylindrical coordinates
+        #r, z= transform_tocylindrical(l, b, vals['distance'])
+        #vals['r']=r
+        #vals['z']=z
         for k, v in vals.items():
             setattr(self, k, v)
-
         self._distance=dists
 
     def add_magnitudes(self, filters, get_from='spt', **kwargs):
@@ -342,13 +357,13 @@ def _make_systems(mods, bfraction):
     binaries['pri_mass'] = mods['prim_evol']['mass']
     binaries['sec_mass'] = mods['sec_evol']['mass']
 
-    binaries['luminosity'] = np.log10(10 ** (mods['prim_evol']['luminosity']).value +
-                                       10 ** (mods['sec_evol']['luminosity']).value)
+    binaries['luminosity'] = np.log10(10 ** (mods['prim_evol']['luminosity'])  +
+                                       10 ** (mods['sec_evol']['luminosity']))
     binaries['spt'] = np.random.normal(mods['binary_spt'], 0.3)
     binaries['prim_spt'] = mods['prim_spt']
     binaries['sec_spt'] = mods['sec_spt']
-    binaries['prim_luminosity'] = 10 ** (mods['prim_evol']['luminosity']).value
-    binaries['sec_luminosity'] = 10 ** (mods['sec_evol']['luminosity']).value
+    binaries['prim_luminosity'] = 10 ** (mods['prim_evol']['luminosity'])
+    binaries['sec_luminosity'] = 10 ** (mods['sec_evol']['luminosity'])
 
     binaries['is_binary'] = np.ones_like(mods['sec_spt'], dtype=bool)
 
@@ -364,7 +379,7 @@ def _make_systems(mods, bfraction):
     chosen_binaries = {k: binaries[k][random_int] for k in binaries.keys()}
 
     res = pd.concat([pd.DataFrame(singles), pd.DataFrame(chosen_binaries)])
-    scl = scale_to_local_lf(res.temperature.values)
+    scl = scale_to_local_lf(res.temperature)#.values)
 
     res['scale'] = scl[0]
     res['scale_unc'] = scl[1]

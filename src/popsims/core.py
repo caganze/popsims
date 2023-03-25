@@ -9,7 +9,7 @@ import sys
 
 from .relations import  scale_to_local_lf, teff_to_spt_kirkpatrick, \
 spt_to_teff_kirkpatrick, teff_to_spt_pecaut, spt_to_teff_pecaut
-from .core_tools import sample_from_powerlaw
+from .core_tools import sample_from_powerlaw, fast_2d_interpolation
 from .evol_models import EVOL_MODELS
 
 #DATA_FOLDER=os.environ['POPSIMS_DATA_FOLDER']
@@ -84,4 +84,37 @@ def evolutionary_model_interpolator(mass, age, model, subset=None):
 
 #need an evolutionary model class that automatically does the interpolations across mass, age and metallicity upon intialization
 
-#play with interpolators here
+class EvolutionaryModel:
+    def __init__(self,  dataframe, columns=['mass', 'age', 'metallicity', 'temperature']):
+        #initialize model 
+        assert all(column in dataframe.columns for column in columns), "DataFrame is missing required columns"
+        self.columns=np.array(dataframe.columns)
+        self.data = dataframe[self.columns].values
+        self.required_columns=columns
+    
+    def to_logscale(self, c):
+        #put specific column on log scale
+        col_idx = np.where(self.columns == c)[0][0]
+        self.data[:, col_idx] =np.log10(np.array(self.data[:, col_idx]).astype(float))
+
+    def interpolate(self, x_axis, y_axis, x_values, y_values):
+        assert x_axis in self.columns, f"x_axis '{x_axis}' not found in DataFrame columns"
+        assert y_axis in self.columns, f"y_axis '{y_axis}' not found in DataFrame columns"
+
+        points = self.data[:, [np.where(self.columns == x_axis)[0][0], np.where(self.columns == y_axis)[0][0]]]
+        remaining_columns = [col for col in self.required_columns if col not in [x_axis, y_axis]]
+        results = {}
+        
+        for col in remaining_columns:
+            col_idx = np.where(self.columns == col)[0][0]
+            values =self.data[:, col_idx]
+            #result = np.empty_like(y_values)
+            #interp_values= interpolate_2d(points, values, x_values, y_values, result)
+            results[col] = fast_2d_interpolation(points, values, x_values, y_values)
+            
+        interp_df= pd.DataFrame(results)
+        interp_df[x_axis]=x_values
+        interp_df[y_axis]=y_values
+        return interp_df
+
+

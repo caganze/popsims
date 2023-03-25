@@ -4,6 +4,7 @@ import bisect
 from .constants import *
 import functools
 import numba
+from numba import njit
 from scipy.interpolate import interp1d, griddata, InterpolatedUnivariateSpline
 
 
@@ -79,7 +80,22 @@ def make_spt_number(spt):
             return 40+float(spt[1:])
     else:
         return spt
+    
+def random_normal_angles(num_samples):
+    # Generate random points on the surface of a sphere
+    points = np.random.normal(size=(num_samples, 3))
+    points /= np.linalg.norm(points, axis=1)[:, np.newaxis]
+    # Convert points to polar coordinates
+    theta = np.arccos(points[:, 2])
+    phi = np.arctan2(points[:, 1], points[:, 0])
+    return theta, phi
 
+def random_angles(num_samples):
+    np.random.seed(0)
+    theta = np.arccos(2 * np.random.rand(num_samples) - 1) - np.pi/2
+    phi = np.random.rand(num_samples) * 2 * np.pi
+    return theta, phi
+    
 @numba.vectorize("float64(float64, float64)", target='cpu')
 def get_distance(absmag, appmag):
     """
@@ -259,6 +275,43 @@ def inverse_polynomial_relation_gpt(pol, y, xgrid, nsample=1000, interpolation='
     }
 
     return interpolation_methods[interpolation](y)
+
+#play with interpolators here
+def fast_2d_interpolation(points, values, x_values, y_values):
+    return griddata(points, values, (x_values, y_values), method='linear').flatten()
+
+EPSILON = 1e-10
+@njit
+def barycentric_weights(points, x_values, y_values):
+    n = points.shape[0]
+    m = x_values.shape[0]
+    l = y_values.shape[0]
+    weights = np.empty((n, m, l), dtype=np.float64)
+
+    for i in range(n):
+        for j in range(m):
+            for k in range(l):
+                weight = 1.0
+                for p in range(n):
+                    if i != p:
+                        weight *= (x_values[j] - points[p, 0]) / (points[i, 0] - points[p, 0] + EPSILON) * (y_values[k] - points[p, 1]) / (points[i, 1] - points[p, 1] + EPSILON)
+                weights[i, j, k] = weight
+
+    return weights
+
+@njit
+def interpolate_2d(points, values, x_values, y_values, result):
+    weights = barycentric_weights(points, x_values, y_values)
+    n, m, l = weights.shape
+    
+    for k in range(l):
+        interpolated_value = 0.0
+        for i in range(n):
+            for j in range(m):
+                interpolated_value += weights[i, j, k] * values[i]
+        result[k] = interpolated_value
+
+    return result
 
 
 def apply_polynomial_relation(pol, x, xerr=0.0, nsample=100):
