@@ -91,23 +91,26 @@ class EvolutionaryModel:
         self.columns=np.array(dataframe.columns)
         self.data = dataframe[self.columns].values
         self.required_columns=columns
-    
-    def to_logscale(self, c):
-        #put specific column on log scale
-        col_idx = np.where(self.columns == c)[0][0]
-        self.data[:, col_idx] =np.log10(np.array(self.data[:, col_idx]).astype(float))
 
-    def interpolate(self, x_axis, y_axis, x_values, y_values):
+    def interpolate(self, x_axis, y_axis, x_values, y_values, logscale=['mass', 'age', 'temperature']):
         assert x_axis in self.columns, f"x_axis '{x_axis}' not found in DataFrame columns"
         assert y_axis in self.columns, f"y_axis '{y_axis}' not found in DataFrame columns"
-
-        points = self.data[:, [np.where(self.columns == x_axis)[0][0], np.where(self.columns == y_axis)[0][0]]]
+        
+        #make a copy of data 
+        #put stuff on logscale if need to
+        dt= self.data.copy()
+        for c in logscale:
+            col_idx = np.where(self.columns == c)[0][0]
+            dt[:, col_idx] =np.log10(np.array(dt[:, col_idx]).astype(float))
+            
+        points = dt[:, [np.where(self.columns == x_axis)[0][0], np.where(self.columns == y_axis)[0][0]]]
         remaining_columns = [col for col in self.required_columns if col not in [x_axis, y_axis]]
         results = {}
         
+        #interpolate over the remaining columns that are NOT the x or y axes
         for col in remaining_columns:
             col_idx = np.where(self.columns == col)[0][0]
-            values =self.data[:, col_idx]
+            values =dt[:, col_idx]
             #result = np.empty_like(y_values)
             #interp_values= interpolate_2d(points, values, x_values, y_values, result)
             results[col] = fast_2d_interpolation(points, values, x_values, y_values)
@@ -116,5 +119,3 @@ class EvolutionaryModel:
         interp_df[x_axis]=x_values
         interp_df[y_axis]=y_values
         return interp_df
-
-

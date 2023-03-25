@@ -47,6 +47,7 @@ class Population(object):
         self._distance=None
         self.evol_model= None
 
+
     #def _sample_ages(self):
     #    return np.random.uniform(*self.agerange, int(self.nsample))
 
@@ -87,17 +88,23 @@ class Population(object):
 
     def _interpolate_evolutionary_model(self, mass, age, additional_columns=[]):
         #columns that I need are mass, age, teff, luminosity,
-        required_columns=np.concatenate([['mass', 'age', 'temperature', 'luminosity'],  additional_columns])
-        df=pd.DataFrame(EVOL_MODELS[self.evolmodel_name])
-
+       
         #reinitialize evolmodel object if necessary
         if  self.evol_model is None:
-            m= EvolutionaryModel(df,  columns=required_columns )
-            self.evol_model= m
-            self.evol_model.to_logscale('mass')
-        res=self.evol_model.interpolate('mass','age', mass, age)
+            required_columns=np.concatenate([['mass', 'age', 'temperature', 'luminosity'], additional_columns])
+            df=pd.DataFrame(EVOL_MODELS[self.evolmodel_name])
+            self.evol_model=EvolutionaryModel(df,columns=required_columns )
+        
+        #first remove nans
+        lmass=np.log10(mass)
+        lage= np.log10(age)
+
+        res=self.evol_model.interpolate('mass','age', lmass, lage, logscale=['mass', 'age'])
         #return evolutionary_model_interpolator(mass, age, self.evolmodel)
-        res.mass=10**res.mass
+        res['mass']=10**lmass
+        res['age']=10**lage
+        #res['temperature']=10**res.temperature.values
+        #res['luminosity']= 10**res.luminosity.values
         return res
 
     def simulate(self):
@@ -128,7 +135,7 @@ class Population(object):
         m_singles=self._sample_masses()
         ages_singles= self._sample_ages()
         #binaries
-        qs=sample_from_powerlaw(self.binaryq, xmin= 0., xmax=1., nsample=self.nsample)
+        qs=sample_from_powerlaw(self.binaryq, xmin= 1e-10, xmax=1., nsample=self.nsample)
         m_prims = self._sample_masses()
         m_sec=m_prims*qs
         ages_bin=self._sample_ages()
