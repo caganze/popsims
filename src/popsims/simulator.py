@@ -99,11 +99,11 @@ class Population(object):
         lmass=np.log10(mass)
         lage= np.log10(age)
 
-        res=self.evol_model.interpolate('mass','age', lmass, lage, logscale=['mass', 'age'])
+        res=self.evol_model.interpolate('mass','age', lmass, lage, logscale=['mass', 'age', 'temperature'])
         #return evolutionary_model_interpolator(mass, age, self.evolmodel)
         res['mass']=10**lmass
         res['age']=10**lage
-        #res['temperature']=10**res.temperature.values
+        res['temperature']=10**res.temperature.values
         #res['luminosity']= 10**res.luminosity.values
         return res
 
