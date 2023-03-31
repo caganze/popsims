@@ -286,7 +286,7 @@ class Population(object):
         df = pd.DataFrame(data)
         return df
 
-    def visualize(self, keys=['mass', 'age', 'spt']):
+    def visualize(self, keys=['mass', 'age', 'spt'], ms=0.1):
         """
         Class for a poulation
 
@@ -316,17 +316,18 @@ class Population(object):
         import matplotlib.pyplot as plt
         g = sns.PairGrid(df[keys] , diag_sharey=False, corner=True)
         g.map_diag(plt.hist, log=True, bins=32)
-        g.map_offdiag(sns.scatterplot, size=0.1, color='k', alpha=0.1)
+        g.map_offdiag(sns.scatterplot, size=ms, color='k', alpha=0.1)
 
     def add_kinematics(self, ra, dec, kind='thin_disk', red_prop_motions_keys=[]):
-
-        vs=get_velocities(np.array(ra), np.array(dec), np.array(self.distance), population=kind, age=np.array(self.age))
+        #transform whatever footprint to have the same shape as the distance array
+        idxs=np.random.choice(range(len(ra)), len(self.distance), replace=True) #temporary solution
+        vs=get_velocities(np.array(ra)[idxs], np.array(dec)[idxs], np.array(self.distance), population=kind, age=np.array(self.age))
 
         for k in red_prop_motions_keys:
             #compute red 
             mu= (vs.mu_alpha_cosdec**2+vs.mu_delta**2)**0.5
             mag=np.array( getattr(self, k))
-            vs['red'+k]= mag+5*np.log10(mu)-10 #
+            vs['redH_'+k]= mag+5*np.log10(mu)-10 #
 
         #add these values as attributes of the object
         vals=vs.to_dict(orient='list')

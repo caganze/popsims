@@ -94,7 +94,7 @@ def random_angles(num_samples):
     np.random.seed(0)
     theta = np.arccos(2 * np.random.rand(num_samples) - 1) - np.pi/2
     phi = np.random.rand(num_samples) * 2 * np.pi
-    return phi, theta
+    return phi-np.pi, theta
     
 @numba.vectorize("float64(float64, float64)", target='cpu')
 def get_distance(absmag, appmag):
