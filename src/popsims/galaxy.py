@@ -5,6 +5,7 @@
 
 from .core_tools import random_draw, get_distance,  trapzl
 from .constants import Rsun, Zsun, galcen_frame
+from astropy.coordinates import SkyCoord
 
 
 import numpy as np
@@ -48,7 +49,7 @@ def exponential_density(r, z, H,L):
     rpart=np.exp(-(r-Rsun)/L)
     return zpart*rpart
 
-@numba.jit(nopython=True)
+#@numba.jit(nopython=True)
 def spheroid_density(r, z, q, n):
     """
     sperhoid density profile
@@ -70,7 +71,7 @@ def spheroid_density(r, z, q, n):
     """
     return  (Rsun/(((r)**2+((z)/q)**2)**0.5))**n
 
-@numba.jit(nopython=True)
+#@numba.jit(nopython=True)
 def transform_tocylindrical(l, b, ds):
     """
     sperhoid density profile
@@ -94,7 +95,7 @@ def transform_tocylindrical(l, b, ds):
     zd=Zsun+ ds * np.sin( b - np.arctan( Zsun / Rsun) )
     return (rd, zd)
 
-@numba.jit(nopython=True)
+#@numba.jit(nopython=True)
 def cylindrical_to_cartesian(r, z, phi):
     """
     sperhoid density profile
@@ -421,7 +422,10 @@ def get_velocities(ra, dec, d, population='thin_disk', age=None):
     """
     vels={}
     #CHECK THAT ALL RA, DEC, D, AGE ARE THE SAME SIZE
-    s= SkyCoord(ra=ra*u.degree, dec=dec*u.degree, distance=d*u.pc )
+    #s= SkyCoord(ra=ra*u.degree, dec=dec*u.degree, distance=d*u.pc )
+    assert len(ra)==len(d)
+    s= SkyCoord([SkyCoord(ra=ra[idx]*u.degree, dec=dec[idx]*u.degree,\
+                      distance=d[idx]*u.pc ) for idx in range(len(ra))] )
     r, z= transform_tocylindrical(s.galactic.l.radian, s.galactic.b.radian, d)
 
     vels['r']=r

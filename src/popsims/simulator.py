@@ -44,26 +44,8 @@ class Population(object):
         self.agerange= kwargs.get('age_range', [0.01, 14.])
         self.massrange= kwargs.get('mass_range', [0.01, 1.])
         self.nsample= kwargs.get('nsample',1e4)
-        self._distance=None
-        self.evol_model= None
+        self.evol_model=kwargs.get('evol_model', None) #evolutionary model object
 
-
-    #def _sample_ages(self):
-    #    return np.random.uniform(*self.agerange, int(self.nsample))
-
-    #def _sample_masses(self):
-    #    #add specific IMFS
-    #    if self.imfpower=='kroupa':
-    #        m0=sample_from_powerlaw(-0.3, xmin=0.03, xmax= 0.08, nsample=int(self.nsample))
-    #        m1=sample_from_powerlaw(-1.3, xmin=0.08, xmax= 0.5, nsample=int(self.nsample))
-    #        m2=sample_from_powerlaw(-2.3, xmin=0.5, xmax= 100 , nsample=int(self.nsample))
-    #        m= np.concatenate([m0, m1, m2]).flatten()
-    #        mask= np.logical_and(m> self.massrange[0], m< self.massrange[1])
-    #        masses= np.random.choice(m[mask], int(nsample))
-    #        return masses
-    #
-    #    else:
-    #        return sample_from_powerlaw(self.imfpower, xmin=  self.massrange[0], xmax= self.massrange[1], nsample=int(self.nsample))
     def _sample_ages(self):
         return np.random.uniform(*self.agerange, int(self.nsample))
     
@@ -90,24 +72,35 @@ class Population(object):
         #columns that I need are mass, age, teff, luminosity,
        
         #reinitialize evolmodel object if necessary
+        required_columns=np.concatenate([['mass', 'age', 'temperature', 'luminosity'], additional_columns])
+        if self.evol_model is None and self.evolmodel_name is None:
+            raise ValueError('Please specify evolutionay model grid')
+        
         if  self.evol_model is None:
-            required_columns=np.concatenate([['mass', 'age', 'temperature', 'luminosity'], additional_columns])
             df=pd.DataFrame(EVOL_MODELS[self.evolmodel_name])
-            self.evol_model=EvolutionaryModel(df,columns=required_columns )
+            self.evol_model=EvolutionaryModel(df)
         
         #first remove nans
         lmass=np.log10(mass)
         lage= np.log10(age)
 
-        res=self.evol_model.interpolate('mass','age', lmass, lage, logscale=['mass', 'age', 'temperature'])
+        res=self.evol_model.interpolate('mass','age', lmass, lage, \
+                                        logscale=['mass', 'age', 'temperature'], \
+                                            interp_columns=required_columns)
         #return evolutionary_model_interpolator(mass, age, self.evolmodel)
         res['mass']=10**lmass
         res['age']=10**lage
         res['temperature']=10**res.temperature.values
         #res['luminosity']= 10**res.luminosity.values
         return res
+    
+    def scale_to_local_lf(self):
+        scale, scale_unc, scale_times_model = scale_to_local_lf(self.temperature)
+        self.scale= scale
+        self.scale_unc= scale_unc
+        self.scale_times_model= scale_times_model
 
-    def simulate(self):
+    def simulate(self, additional_columns=[]):
         """
         Class for a poulation
 
@@ -141,9 +134,9 @@ class Population(object):
         ages_bin=self._sample_ages()
 
         #interpolate evolurionary models
-        single_evol=self._interpolate_evolutionary_model(m_singles, ages_singles)
-        primary_evol=self._interpolate_evolutionary_model(m_prims,ages_bin)
-        secondary_evol=self._interpolate_evolutionary_model(m_sec,ages_bin)
+        single_evol=self._interpolate_evolutionary_model(m_singles, ages_singles, additional_columns=additional_columns)
+        primary_evol=self._interpolate_evolutionary_model(m_prims,ages_bin, additional_columns=additional_columns)
+        secondary_evol=self._interpolate_evolutionary_model(m_sec,ages_bin, additional_columns=additional_columns)
 
 
         # Vectorize the following operations for better performance
@@ -158,28 +151,11 @@ class Population(object):
             teff_to_spt_kirkpatrick(teffs_primar),
             teff_to_spt_kirkpatrick(teffs_second),
         )
-        
+        #use pecaut 
         high_teff_mask = teffs_singl > 2000
         spts_singl[high_teff_mask] = teff_to_spt_pecaut(teffs_singl[high_teff_mask])
         spt_primar[high_teff_mask] = teff_to_spt_pecaut(teffs_primar[high_teff_mask])
         spt_second[high_teff_mask] = teff_to_spt_pecaut(teffs_second[high_teff_mask])
-
-        
-
-        #temperatures
-        #teffs_singl =single_evol['temperature'].value
-        #teffs_primar=primary_evol['temperature'].value
-        #teffs_second=secondary_evol['temperature'].value
-
-        #spectraltypes
-        #spts_singl=teff_to_spt_kirkpatrick(teffs_singl)
-        #spt_primar=teff_to_spt_kirkpatrick(teffs_primar)
-        #spt_second=teff_to_spt_kirkpatrick(teffs_second)
-
-        #use pecaut for teff <2000 k
-        #spts_singl[teffs_singl >2000]= teff_to_spt_pecaut(teffs_singl[teffs_singl>2000])
-        #spt_primar[teffs_primar >2000]= teff_to_spt_pecaut(teffs_primar[teffs_primar>2000])
-        #spt_second[teffs_second>2000]= teff_to_spt_pecaut(teffs_second[teffs_second>2000])
 
         #compute combined binary spectral types
         xy=np.vstack([np.round(np.array(spt_primar), decimals=0), np.round(np.array(spt_second), decimals=0)]).T
@@ -197,11 +173,14 @@ class Population(object):
 
         #make systems
         # these dict values should be properties of the population object --> can be bad for mem, avoid duplicating data
-        vals= _make_systems(values, self.binaryfraction).sample(n=int(self.nsample)).to_dict(orient='list')
+        vals= make_systems(values, self.binaryfraction).sample(n=int(self.nsample)).to_dict(orient='list')
         #add these values as attributes of the object
         for k, v in vals.items():
             setattr(self, k, v)
 
+        assert(len(self.temperature) == len(vals['temperature']))
+        #return values
+    
     def add_distances(self, gmodel, l, b, dmin, dmax, dsteps=1000):
         """
         Class for a poulation
@@ -249,14 +228,14 @@ class Population(object):
         #dists= np.concatenate([gmodel.sample_distances(dmin, dmax, \
         #int(1.5*self.nsample/len(l)),l=l[idx], b=b[idx],  dsteps=dsteps ) for idx in range(len(l))])
 
-        vals= {'l': l, 'b': b, 'distance': np.random.choice(dists, int(self.nsample))}
+        #vals= {'l': l, 'b': b, 'distance': np.random.choice(dists, int(self.nsample))}
         #compute r and z in cylindrical coordinates
         #r, z= transform_tocylindrical(l, b, vals['distance'])
         #vals['r']=r
         #vals['z']=z
-        for k, v in vals.items():
-            setattr(self, k, v)
-        self._distance=dists
+        #for k, v in vals.items():
+        #   setattr(self, k, v)
+        self.distance=np.random.choice(dists, len(self.temperature))
 
     def add_magnitudes(self, filters, get_from='spt', **kwargs):
         """
@@ -288,13 +267,15 @@ class Population(object):
         if get_from=='teff':
             mags=pop_mags(np.array(self.temperature), keys=filters,  get_from='teff', **kwargs)
 
-        if  self._distance is not None:
+        if  self.distance is not None:
             for f in filters: mags[f] = mags['abs_{}'.format(f)].values+5*np.log10(self.distance/10.0)
 
         vals=mags.to_dict(orient='list')
         #add these values as attributes of the object
         for k, v in vals.items():
             setattr(self, k, v)
+
+        
 
     #def to_dataframe(self, columns):
     #    df=pd.DataFrame.from_records([self.__dict__[x] for x in  columns]).T
@@ -337,8 +318,21 @@ class Population(object):
         g.map_diag(plt.hist, log=True, bins=32)
         g.map_offdiag(sns.scatterplot, size=0.1, color='k', alpha=0.1)
 
-    def add_kinematics():
-        raise NotImplementedError
+    def add_kinematics(self, ra, dec, kind='thin_disk', red_prop_motions_keys=[]):
+
+        vs=get_velocities(np.array(ra), np.array(dec), np.array(self.distance), population=kind, age=np.array(self.age))
+
+        for k in red_prop_motions_keys:
+            #compute red 
+            mu= (vs.mu_alpha_cosdec**2+vs.mu_delta**2)**0.5
+            mag=np.array( getattr(self, k))
+            vs['red'+k]= mag+5*np.log10(mu)-10 #
+
+        #add these values as attributes of the object
+        vals=vs.to_dict(orient='list')
+        for k, v in vals.items():
+            setattr(self, k, v)
+
 
     def apply_selection():
         #should delete previous entries to save space
@@ -348,51 +342,50 @@ class Population(object):
         raise NotImplementedError
 
 
+#need to rewrite to account for when magnitudes are passed as well
+def make_systems(mods, bfraction):
+    
+    def create_singles(mods):
+        singles = mods['sing_evol'].copy()
+        singles['is_binary'] = np.zeros_like(mods['sing_spt'], dtype=bool)
+        singles['spt'] = mods['sing_spt']
+        singles['prim_spt'] = mods['sing_spt']
+        singles['sec_spt'] = np.full(mods['sing_spt'].shape, np.nan)
+        
+        return singles
+    
+    def create_binaries(mods):
+        binaries = {
+            'age': mods['prim_evol']['age'],
+            'mass': mods['prim_evol']['mass'] + mods['sec_evol']['mass'],
+            'pri_mass': mods['prim_evol']['mass'],
+            'sec_mass': mods['sec_evol']['mass'],
+            'luminosity': np.log10(10 ** mods['prim_evol']['luminosity'] + 10 ** mods['sec_evol']['luminosity']),
+            'spt': np.random.normal(mods['binary_spt'], 0.3),
+            'prim_spt': mods['prim_spt'],
+            'sec_spt': mods['sec_spt'],
+            'prim_luminosity': 10 ** mods['prim_evol']['luminosity'],
+            'sec_luminosity': 10 ** mods['sec_evol']['luminosity'],
+            'is_binary': np.ones_like(mods['sec_spt'], dtype=bool)
+        }
 
-def _make_systems(mods, bfraction):
-    # singles
-    singles = mods['sing_evol']
-    singles['is_binary'] = np.zeros_like(mods['sing_spt'], dtype=bool)
-    singles['spt'] = mods['sing_spt']
-    singles['prim_spt'] = mods['sing_spt']
-    singles['sec_spt'] = np.full(mods['sing_spt'].shape, np.nan)
+        mask = binaries['spt'] > 20
+        teff_func = np.vectorize(lambda spt: spt_to_teff_kirkpatrick(spt)[0] if spt > 20 else spt_to_teff_pecaut(spt))
+        binaries['temperature'] = teff_func(binaries['spt'])
+        return binaries
 
-    # binary
-    binaries = {}
-    binaries['age'] = mods['prim_evol']['age']
-    binaries['mass'] = mods['prim_evol']['mass'] + mods['sec_evol']['mass']
-    binaries['pri_mass'] = mods['prim_evol']['mass']
-    binaries['sec_mass'] = mods['sec_evol']['mass']
+    def choose_binaries(binaries, n_draw):
+        random_int = np.random.choice(np.arange(len(binaries['spt'])), n_draw)
+        return {k: binaries[k][random_int] for k in binaries.keys()}
 
-    binaries['luminosity'] = np.log10(10 ** (mods['prim_evol']['luminosity'])  +
-                                       10 ** (mods['sec_evol']['luminosity']))
-    binaries['spt'] = np.random.normal(mods['binary_spt'], 0.3)
-    binaries['prim_spt'] = mods['prim_spt']
-    binaries['sec_spt'] = mods['sec_spt']
-    binaries['prim_luminosity'] = 10 ** (mods['prim_evol']['luminosity'])
-    binaries['sec_luminosity'] = 10 ** (mods['sec_evol']['luminosity'])
+    singles = create_singles(mods)
+    binaries = create_binaries(mods)
 
-    binaries['is_binary'] = np.ones_like(mods['sec_spt'], dtype=bool)
-
-    mask = binaries['spt'] > 20.
-    binaries['temperature'] = np.full(binaries['spt'].shape, np.nan)
-    binaries['temperature'] = np.where(mask, spt_to_teff_kirkpatrick(binaries['spt'])[0],
-                                       spt_to_teff_pecaut(binaries['spt']))
-
-    ndraw = int(len(mods['sing_spt']) / (1 - bfraction)) - int(len(mods['sing_spt']))
-
-    random_int = np.random.choice(np.arange(len(binaries['spt'])), ndraw)
-
-    chosen_binaries = {k: binaries[k][random_int] for k in binaries.keys()}
+    n_draw = int(len(mods['sing_spt']) / (1 - bfraction)) - len(mods['sing_spt'])
+    chosen_binaries = choose_binaries(binaries, n_draw)
 
     res = pd.concat([pd.DataFrame(singles), pd.DataFrame(chosen_binaries)])
-    scl = scale_to_local_lf(res.temperature)#.values)
-
-    res['scale'] = scl[0]
-    res['scale_unc'] = scl[1]
-    res['scale_times_model'] = scl[-1]
     return res
-
 
 def pop_mags(x, d=None, keys=[], object_type='dwarfs', get_from='spt', reference=None, pol=None):
     """
@@ -432,7 +425,7 @@ def pop_mags(x, d=None, keys=[], object_type='dwarfs', get_from='spt', reference
 
         fit=np.poly1d(pol[k]['fit'])
         #scat=pol[k]['scatter'] #ignore scatter for now
-        scat=0.1
+        scat=0.01
 
         #print (k, 'scatter', scat)
         rng=pol[k]['range']

@@ -6,3 +6,4 @@ __author__ = 'Christian Aganze'
 
 from .core import *
 from .core_tools import *
+from .simulator import *

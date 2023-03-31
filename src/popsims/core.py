@@ -83,31 +83,31 @@ def evolutionary_model_interpolator(mass, age, model, subset=None):
     return {'mass': mass * u.Msun, 'age': age * u.Gyr, 'temperature': 10**teffs * u.Kelvin, 'luminosity': lumn * u.Lsun}
 
 #need an evolutionary model class that automatically does the interpolations across mass, age and metallicity upon intialization
-
 class EvolutionaryModel:
-    def __init__(self,  dataframe, columns=['mass', 'age', 'metallicity', 'temperature']):
+    def __init__(self,  dataframe):
         #initialize model 
-        assert all(column in dataframe.columns for column in columns), "DataFrame is missing required columns"
+        req_columns=['mass', 'age']
+        assert all(column in dataframe.columns for column in req_columns), "DataFrame is missing required columns"
         self.columns=np.array(dataframe.columns)
         self.data = dataframe[self.columns].values
-        self.required_columns=columns
 
-    def interpolate(self, x_axis, y_axis, x_values, y_values, logscale=['mass', 'age', 'temperature']):
+    def interpolate(self, x_axis, y_axis, x_values, y_values, \
+                    logscale=['mass', 'age', 'temperature'], interp_columns=['temperature']):
+        
         assert x_axis in self.columns, f"x_axis '{x_axis}' not found in DataFrame columns"
         assert y_axis in self.columns, f"y_axis '{y_axis}' not found in DataFrame columns"
         
         #make a copy of data 
-        #put stuff on logscale if need to
+        #put stuff on logscale
         dt= self.data.copy()
         for c in logscale:
             col_idx = np.where(self.columns == c)[0][0]
             dt[:, col_idx] =np.log10(np.array(dt[:, col_idx]).astype(float))
             
         points = dt[:, [np.where(self.columns == x_axis)[0][0], np.where(self.columns == y_axis)[0][0]]]
-        remaining_columns = [col for col in self.required_columns if col not in [x_axis, y_axis]]
+        remaining_columns = [col for col in interp_columns if col not in [x_axis, y_axis]]
         results = {}
         
-        #interpolate over the remaining columns that are NOT the x or y axes
         for col in remaining_columns:
             col_idx = np.where(self.columns == col)[0][0]
             values =dt[:, col_idx]
