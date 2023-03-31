@@ -225,16 +225,6 @@ class Population(object):
                 for idx in range(len(l))
             ]
         )
-        #dists= np.concatenate([gmodel.sample_distances(dmin, dmax, \
-        #int(1.5*self.nsample/len(l)),l=l[idx], b=b[idx],  dsteps=dsteps ) for idx in range(len(l))])
-
-        #vals= {'l': l, 'b': b, 'distance': np.random.choice(dists, int(self.nsample))}
-        #compute r and z in cylindrical coordinates
-        #r, z= transform_tocylindrical(l, b, vals['distance'])
-        #vals['r']=r
-        #vals['z']=z
-        #for k, v in vals.items():
-        #   setattr(self, k, v)
         self.distance=np.random.choice(dists, len(self.temperature))
 
     def add_magnitudes(self, filters, get_from='spt', **kwargs):
@@ -274,13 +264,7 @@ class Population(object):
         #add these values as attributes of the object
         for k, v in vals.items():
             setattr(self, k, v)
-
-        
-
-    #def to_dataframe(self, columns):
-    #    df=pd.DataFrame.from_records([self.__dict__[x] for x in  columns]).T
-    #    df.columns=columns
-    #    return df
+            
     def to_dataframe(self, columns):
         data = {col: self.__dict__[col] for col in columns}
         df = pd.DataFrame(data)
@@ -447,60 +431,6 @@ def pop_mags(x, d=None, keys=[], object_type='dwarfs', get_from='spt', reference
 
     return pd.DataFrame(res)
 
-def pop_colors(x, d=None, keys=[], object_type='dwarfs', get_from='spt', reference=None, pol=None):
-    """
-    Compute colors from pre-computed absolute mag relations
-
-        Class for a poulation
-
-        Attributes:
-        ----
-            x_grid: grid of values ( array)
-            cdf:  corresponding values from the CDF
-            nsample: optional, number of samples
-
-        Properties:
-        -------
-            random draws
-
-        Methods:
-        --------
-
-        Example:
-        -------
-            > x = np.arange(0, 10)
-            > cdf = x**3/(x[-1]**3)
-            > res= random_draw(x, cdf)
-
-    """
-    from .abs_mag_relations import POLYNOMIALS
-    res={}
-    if pol is None: pol=POLYNOMIALS['colors_{}'.format(get_from)][object_type]
-    if reference is not None: pol=POLYNOMIALS['references'][reference]
-    for k in keys:
-        #sometimes sds don't have absolute magnitudes defined 
-        if k not in pol.keys():
-            warnings.warn("{} relation not available for {} ".format(k,object_type))
-
-        #if pol[k]['method']=='polynmial':
-        fit=np.poly1d(pol[k]['fit'])
-        #if pol[k]['method']=='spline':
-        #     fit=pol[k]['fit']
-
-        scat=pol[k]['scatter']
-        
-        rng=pol[k]['range']
-        mag_key=pol[k]['y']
-        offset=pol[k]['x0']
-        #put constraints on spt range
-        mask= np.logical_and(x >rng[0], x <=rng[-1])
-        absmag= np.random.normal(fit(x-offset),scat)
-
-        masked_abs_mag= np.ma.masked_array(data=absmag, mask=~mask)
-
-        res.update({ mag_key:masked_abs_mag.filled(np.nan)})
-
-    return pd.DataFrame(res)
 
 def compute_vols_and_numbers(df, gmodel, sptgrid, footprint, maglimits):
     from .abs_mag_relations import POLYNOMIALS
