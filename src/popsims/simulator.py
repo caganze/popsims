@@ -39,7 +39,7 @@ class Population(object):
         self.imfpower= kwargs.get('imf_power', -0.6)
         self.binaryfraction= kwargs.get('binary_fraction', 0.2)
         self.binaryq= kwargs.get('binary_q', 4)
-        self.evolmodel_name= kwargs.get('evolmodel', 'burrows1997')
+        self.evolmodel_name= kwargs.get('evol_model_name', 'burrows1997')
         self.metallicity=kwargs.get('metallicity', 'dwarfs')
         self.agerange= kwargs.get('age_range', [0.01, 14.])
         self.massrange= kwargs.get('mass_range', [0.01, 1.])
@@ -181,7 +181,7 @@ class Population(object):
         assert(len(self.temperature) == len(vals['temperature']))
         #return values
     
-    def add_distances(self, gmodel, l, b, dmin, dmax, dsteps=1000):
+    def add_distances(self, gmodel, l, b, dmin, dmax, dsteps=1000, lbrange=False):
         """
         Class for a poulation
 
@@ -208,6 +208,7 @@ class Population(object):
         #gmodel = galactic component o
         #pick distances from 0.1pc to 10kpc at l=45 deg and b=0
         #case where l and b are floats
+        #option 1: we pass a lis of l and b and a set of dmin, dmax
         l=np.array([l]).flatten()
         b=np.array([b]).flatten()
         assert len(l)== len(b)
@@ -227,6 +228,23 @@ class Population(object):
         )
         self.distance=np.random.choice(dists, len(self.temperature))
 
+    def assign_distance_from_spt_ranges(self, gmodel, l, b, drange, dsteps=100):
+        l=np.array([l]).flatten()
+        b=np.array([b]).flatten()
+        assert len(l)== len(b)
+        # Use NumPy broadcasting to avoid loops
+        dists = np.array(
+            [
+                 _draw_distances_by_spt(np.array(self.spt), gmodel, drange, l[idx], b[idx], dsteps, drange)
+                for idx in range(len(l))
+            ]
+        )
+        #choose one distance for each spt --> as this is stacked by l and b
+        random_order = np.random.permutation(dists.shape[0])
+        self.distance=dists[random_order, :][0]
+        del dists
+
+      
     def add_magnitudes(self, filters, get_from='spt', **kwargs):
         """
         Class for a poulation
@@ -309,9 +327,9 @@ class Population(object):
 
         for k in red_prop_motions_keys:
             #compute red 
-            mu= (vs.mu_alpha_cosdec**2+vs.mu_delta**2)**0.5
+            mu= (vs.mu_alpha_cosdec**2+vs.mu_delta**2)**0.5 #>> ch
             mag=np.array( getattr(self, k))
-            vs['redH_'+k]= mag+5*np.log10(mu)-10 #
+            vs['redH_'+k]= mag+5*np.log10(mu)-10 #mu must be in mas/yr -10
 
         #add these values as attributes of the object
         vals=vs.to_dict(orient='list')
@@ -326,6 +344,32 @@ class Population(object):
         #there must be a way to resample to nsample after making selection to not risk losing too many stars
         raise NotImplementedError
 
+def _draw_distances_by_spt(spts, gmodel, dranges, l, b, dsteps, drange):
+    #group by rounded spt value then draw 
+    spts_r= np.round(spts)
+    ds= np.empty_like(spts_r, dtype=float)*np.nan
+    #group by unique keys
+    unique_spts= np.unique(spts_r)
+    for val in unique_spts:
+        mask=spts_r==val
+        if val in drange.keys():
+            dmin, dmax=drange[val]
+            #only assign distance to columns
+            ds[mask]=gmodel.sample_distances(dmin, dmax, len(spts[mask]), dsteps=dsteps, l=l, b=b)
+    return ds
+        
+def _draw_distances_lb(gmodel, dmin, dmax, dsteps, l, b, nsample):
+    return gmodel.sample_distances(
+                        dmin,
+                        dmax,
+                        int(nsample),
+                        l=l,
+                        b=b,
+                        dsteps=dsteps,
+                    )
+    
+def _draw_distances_lbrange(gmodel, dmin, dmax, lbrange):
+    pass
 
 #need to rewrite to account for when magnitudes are passed as well
 def make_systems(mods, bfraction):
@@ -398,10 +442,12 @@ def pop_mags(x, d=None, keys=[], object_type='dwarfs', get_from='spt', reference
             > res= random_draw(x, cdf)
 
     """
-    from .abs_mag_relations import POLYNOMIALS
+    if pol is None:
+        from .abs_mag_relations import POLYNOMIALS
+        pol=POLYNOMIALS['absmags_{}'.format(get_from)][object_type]
     res={}
-    if pol is None: pol=POLYNOMIALS['absmags_{}'.format(get_from)][object_type]
-    if reference is not None: pol=POLYNOMIALS['references'][reference]
+    if reference is not None: 
+        pol=POLYNOMIALS['references'][reference]
     for k in keys:
         #print (keys)
         #sometimes sds don't have absolute magnitudes defined 
@@ -410,7 +456,7 @@ def pop_mags(x, d=None, keys=[], object_type='dwarfs', get_from='spt', reference
 
         fit=np.poly1d(pol[k]['fit'])
         #scat=pol[k]['scatter'] #ignore scatter for now
-        scat=0.01
+        scat=0.1
 
         #print (k, 'scatter', scat)
         rng=pol[k]['range']

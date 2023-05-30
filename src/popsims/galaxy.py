@@ -424,8 +424,8 @@ def get_velocities(ra, dec, d, population='thin_disk', age=None):
     #CHECK THAT ALL RA, DEC, D, AGE ARE THE SAME SIZE
     #s= SkyCoord(ra=ra*u.degree, dec=dec*u.degree, distance=d*u.pc )
     assert len(ra)==len(d)
-    s= SkyCoord([SkyCoord(ra=ra[idx]*u.degree, dec=dec[idx]*u.degree,\
-                      distance=d[idx]*u.pc ) for idx in range(len(ra))] )
+    assert len(dec)==len(d)
+    s= SkyCoord(ra=ra*u.degree, dec=dec*u.degree, distance=d*u.pc)
     r, z= transform_tocylindrical(s.galactic.l.radian, s.galactic.b.radian, d)
 
     vels['r']=r

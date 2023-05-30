@@ -119,3 +119,4 @@ class EvolutionaryModel:
         interp_df[x_axis]=x_values
         interp_df[y_axis]=y_values
         return interp_df
+    
