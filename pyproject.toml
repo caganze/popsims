@@ -15,3 +15,6 @@ dependencies = [
     "tqdm",
     "seaborn",
 ]
+authors = [
+    "Christian Aganze <#caganze>",
+]
