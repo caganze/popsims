@@ -297,13 +297,16 @@ class GalacticComponent(object):
 
         dens=self.stellar_density(grid[0], grid[1], grid[-1])
 
-        if log:
-            dens=np.log(self.stellar_density(grid[0], grid[1], grid[-1]))
-
-
         density_xy = np.sum(dens, axis=2)
 
         density_xz = np.sum(dens, axis=1)
+
+        if log:
+            dens=np.log10(dens)
+            density_xy= np.log10(density_xy)
+            density_xz= np.log10(density_xz)
+
+       
         #print (np.nansum(density_xz))
 
         X, Y, Z= grid
