@@ -370,6 +370,76 @@ class Disk(GalacticComponent):
 
         return exponential_density(r, z, self.H, self.L)
 
+class MWBulge(GalacticComponent):
+    #model adopted by the Bescanscon collaboration
+    #also used in Galaxia
+    #taken from Simion et al. 2018
+    def __init__(self, n=2, rot=-20):
+        super().__init__({'n': n, 'alpha': rot})
+
+    def stellar_density(self, x, y, z):
+        #change to galacto-centric coords
+        x= x-8300
+        z= z-27
+        #x, y, z in parsecs
+        x0=1.6*1000
+        y0=0.4*1000
+        z0=0.4*1000
+        alpha= self.alpha
+        n= self.n
+        cpl=4
+        cper=2
+        #should I rotatet first?
+        alpha=alpha* np.pi / 180
+        new_x = x * np.cos(alpha) - y * np.sin(alpha)
+        new_y = x * np.sin(alpha) + y * np.cos(alpha)
+        x= new_x
+        y=new_y
+        rs= ((x/x0)**cper+(y/y0)**cper)**(cpl/cper)+ (z/z0)**cpl
+        return np.exp(-0.5*(rs**n))
+
+    #overwrite some functions
+    def plot_countours(self, ymin=-5000, ymax=5000, xmin=0, xmax=15000, zmin=-5000, zmax=5000, npoints=100, log=False, grid=None, cmap='cividis'):
+        """
+        plot contours of density in cylindrical coordinates
+        """
+        import matplotlib.pyplot as plt
+        from .plot_style import  plot_style
+        plot_style()
+
+        xs= np.linspace(xmin,xmax, npoints)
+        ys= np.linspace(ymin,ymax, npoints)
+        zs= np.linspace(zmin,zmax, npoints)
+
+        if grid is None:
+            grid = np.meshgrid(xs, ys, zs, indexing='ij')
+
+        dens=self.stellar_density(grid[0], grid[1], grid[-1])
+
+        if log:
+            dens=np.log(self.stellar_density(grid[0], grid[1], grid[-1]))
+
+
+        density_xy = np.sum(dens, axis=2)
+
+        density_xz = np.sum(dens, axis=1)
+        #print (np.nansum(density_xz))
+
+        X, Y, Z= grid
+        
+        fig, ax=plt.subplots(ncols=2, figsize=(12, 4))
+
+        h = ax[0].contourf(X[:, :, 0], Y[:, :, 0], density_xy, cmap=cmap)
+        h = ax[0].contourf(X[:, :, 0], Y[:, :, 0], density_xy, cmap=cmap)
+        ax[0].set(xlabel='x (pc)', ylabel='y (pc)')
+
+
+        h = ax[1].contourf(X[:, :, 0], Z[:, 0, :], density_xz, cmap=cmap)
+        h = ax[1].contourf(X[:, :, 0], Z[:, 0, :], density_xz, cmap=cmap)
+        ax[1].set(xlabel='x (pc)', ylabel='z (pc)')
+
+        return ax
+
 class Halo(GalacticComponent):
     def __init__(self, q= 0.64, n=2.77):
         super().__init__({'q': q, 'n': n})
