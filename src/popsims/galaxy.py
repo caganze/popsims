@@ -170,7 +170,7 @@ class GalacticComponent(object):
             GalacticComponent: A new GalacticComponent object with the scaled stellar density.
         """
         new = GalacticComponent(self.__dict__)
-        new.stellar_density = lambda r, z: number * self.stellar_density(r, z)
+        new.stellar_density = lambda x,  y, z: number * self.stellar_density(x, y, z)
         return new
 
     def __rmul__(self, number):
