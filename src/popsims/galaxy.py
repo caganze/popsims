@@ -177,7 +177,7 @@ class GalacticComponent(object):
         return self.__mul__(number)
 
     @abstractmethod
-    def stellar_density(self, r, z):
+    def stellar_density(self, x, y, z):
         """
         Abstract method for computing the stellar density of the GalacticComponent object at a given
         position (r, z).
@@ -203,7 +203,7 @@ class GalacticComponent(object):
             function: A lambda function representing the combined densities of the input GalacticComponent objects.
         """
         def compose(f, g):
-            return lambda r, z: f(r, z) + g(r, z)
+            return lambda x, y, z: f(x, y, z) + g(x, y, z)
 
         return reduce(compose, fs)
         
@@ -280,125 +280,6 @@ class GalacticComponent(object):
         """
         raise NotImplementedError
 
-    def plot_countours(self, rmin=0.5, rmax=10000, zmin=-2000, zmax=2000, npoints=1000, log=False, grid=None, cmap='cividis'):
-        """
-        plot contours of density in cylindrical coordinates
-        """
-        import matplotlib.pyplot as plt
-        from .plot_style import  plot_style
-        plot_style()
-
-        rs= np.linspace(rmin,rmax, npoints)
-        zs= np.linspace(zmin,zmax, npoints)
-
-        if grid is None:
-            grid = np.meshgrid(rs, zs)
-
-        dens=self.stellar_density(grid[0], grid[1])
-
-        if log:
-            dens=np.log(self.stellar_density(grid[0], grid[1]))
-        
-        fig, ax=plt.subplots()
-
-        h = plt.contourf(rs, zs, dens, cmap=cmap)
-        h = plt.contour(rs, zs, dens, cmap= 'cubehelix')
-
-        ax.set(xlabel='r (pc)', ylabel='z (pc)')
-        return ax
-
-class Uniform(GalacticComponent):
-    """
-    Uniform stellar density
-    """
-    def __init__(self, rho=1):
-        super().__init__({'rho': rho})
-
-    def stellar_density(self, r, z):
-        return self.rho
-    
-class M31Halo(GalacticComponent):
-    """
-    power-law stellar density for M31's halo by Ibata et al. 2014
-    """
-    def __init__(self, q=1.11, gamma=-3):
-        super().__init__({'q': q, 'gamma': gamma})
-
-    def stellar_density(self, r, z):
-        """
-        Compute the stellar density at a particular position
-
-        Args:
-        ----
-            x, y, z: galacto-centric x, y,z ( astropy.quantity )
-        Returns:
-        -------
-            unit-less stellar density
-
-        Examples:
-        --------
-            > d = Disk.stellar_density(100*u.pc, -100*u.pc)
-        """
-        #add a raise error if r <0
-        
-        s= (r**2+(z/self.q)**2)**0.5
-
-        return s**self.gamma
-
-class Disk(GalacticComponent):
-    def __init__(self, H=300, L=2600):
-        super().__init__({'H': H, 'L': L})
-
-    def stellar_density(self, r, z):
-        """
-        Compute the stellar density at a particular position
-
-        Args:
-        ----
-            r: galacto-centric radius ( astropy.quantity )
-            z: galacto-centric height (astropy.quantity )
-
-        Returns:
-        -------
-            unit-less stellar density
-
-        Examples:
-        --------
-            > d = Disk.stellar_density(100*u.pc, -100*u.pc)
-        """
-        #add a raise error if r <0
-
-        return exponential_density(r, z, self.H, self.L)
-
-class MWBulge(GalacticComponent):
-    #model adopted by the Bescanscon collaboration
-    #also used in Galaxia
-    #taken from Simion et al. 2018
-    def __init__(self, n=2, rot=-20):
-        super().__init__({'n': n, 'alpha': rot})
-
-    def stellar_density(self, x, y, z):
-        #change to galacto-centric coords
-        x= x-8300
-        z= z-27
-        #x, y, z in parsecs
-        x0=1.6*1000
-        y0=0.4*1000
-        z0=0.4*1000
-        alpha= self.alpha
-        n= self.n
-        cpl=4
-        cper=2
-        #should I rotatet first?
-        alpha=alpha* np.pi / 180
-        new_x = x * np.cos(alpha) - y * np.sin(alpha)
-        new_y = x * np.sin(alpha) + y * np.cos(alpha)
-        x= new_x
-        y=new_y
-        rs= ((x/x0)**cper+(y/y0)**cper)**(cpl/cper)+ (z/z0)**cpl
-        return np.exp(-0.5*(rs**n))
-
-    #overwrite some functions
     def plot_countours(self, ymin=-5000, ymax=5000, xmin=0, xmax=15000, zmin=-5000, zmax=5000, npoints=100, log=False, grid=None, cmap='cividis'):
         """
         plot contours of density in cylindrical coordinates
@@ -440,10 +321,49 @@ class MWBulge(GalacticComponent):
 
         return ax
 
-class Halo(GalacticComponent):
-    def __init__(self, q= 0.64, n=2.77):
-        super().__init__({'q': q, 'n': n})
-    def stellar_density(self, r, z):
+class Uniform(GalacticComponent):
+    """
+    Uniform stellar density
+    """
+    def __init__(self, rho=1):
+        super().__init__({'rho': rho})
+
+    def stellar_density(self, x, y, z):
+        return self.rho
+    
+class M31Halo(GalacticComponent):
+    """
+    power-law stellar density for M31's halo by Ibata et al. 2014
+    """
+    def __init__(self, q=1.11, gamma=-3):
+        super().__init__({'q': q, 'gamma': gamma})
+
+    def stellar_density(self, x, y, z):
+        """
+        Compute the stellar density at a particular position
+
+        Args:
+        ----
+            x, y, z: galacto-centric x, y,z ( astropy.quantity )
+        Returns:
+        -------
+            unit-less stellar density
+
+        Examples:
+        --------
+            > d = Disk.stellar_density(100*u.pc, -100*u.pc)
+        """
+        #add a raise error if r <0
+        r= (x**2+y**2)**0.5
+        s= (r**2+(z/self.q)**2)**0.5
+
+        return s**self.gamma
+
+class Disk(GalacticComponent):
+    def __init__(self, H=300, L=2600):
+        super().__init__({'H': H, 'L': L})
+
+    def stellar_density(self, x, y, z):
         """
         Compute the stellar density at a particular position
 
@@ -460,6 +380,61 @@ class Halo(GalacticComponent):
         --------
             > d = Disk.stellar_density(100*u.pc, -100*u.pc)
         """
+        #add a raise error if r <0
+        r= (x**2+y**2)**0.5
+        return exponential_density(r, z, self.H, self.L)
+
+class MWBulge(GalacticComponent):
+    #model adopted by the Bescanscon collaboration
+    #also used in Galaxia
+    #taken from Simion et al. 2018
+    def __init__(self, n=2, rot=-20):
+        super().__init__({'n': n, 'alpha': rot})
+
+    def stellar_density(self, x, y, z):
+        #change to galacto-centric coords
+        x= x-8300
+        z= z-27
+        #x, y, z in parsecs
+        x0=1.6*1000
+        y0=0.4*1000
+        z0=0.4*1000
+        alpha= self.alpha
+        n= self.n
+        cpl=4
+        cper=2
+        #should I rotatet first?
+        alpha=alpha* np.pi / 180
+        new_x = x * np.cos(alpha) - y * np.sin(alpha)
+        new_y = x * np.sin(alpha) + y * np.cos(alpha)
+        x= new_x
+        y=new_y
+        rs= ((x/x0)**cper+(y/y0)**cper)**(cpl/cper)+ (z/z0)**cpl
+        return np.exp(-0.5*(rs**n))
+
+    
+
+class Halo(GalacticComponent):
+    def __init__(self, q= 0.64, n=2.77):
+        super().__init__({'q': q, 'n': n})
+    def stellar_density(self, x, y, z):
+        """
+        Compute the stellar density at a particular position
+
+        Args:
+        ----
+            r: galacto-centric radius ( astropy.quantity )
+            z: galacto-centric height (astropy.quantity )
+
+        Returns:
+        -------
+            unit-less stellar density
+
+        Examples:
+        --------
+            > d = Disk.stellar_density(100*u.pc, -100*u.pc)
+        """
+        r= (x**2+y**2)**0.5
         return spheroid_density(r, z, self.q, self.n)
 
 
