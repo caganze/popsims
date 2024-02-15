@@ -393,8 +393,8 @@ class MWBulge(GalacticComponent):
 
     def stellar_density(self, x, y, z):
         #change to galacto-centric coords
-        x= x-8300
-        z= z-27
+        #x= x-8300
+        #z= z-27
         #x, y, z in parsecs
         x0=1.6*1000
         y0=0.4*1000
